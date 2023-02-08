@@ -1,31 +1,37 @@
 import React from "react";
 import Link from "next/link";
-import NavItem from "./NavItem";
+import { Bars3Icon } from "@heroicons/react/24/outline";
+
+import User from "./User";
+import SearchBar from "./SearchBar";
+import Notice from "./Notice";
+
 export default function Navbar() {
   return (
-    <header className="bg-gray-50 shadow p-3">
-      <nav className="axum-rs-container flex justify-between space-x-4">
-        <Link href="/" className="flex">
+    <header className="bg-white shadow px-3 py-3 md:py-3">
+      <nav className="axum-rs-container grid grid-cols-12 items-center gap-x-1 md:gap-x-4">
+        <button className="block col-start-1  md:hidden md:col-auto ">
+          <Bars3Icon className="w-6 h-6" />
+        </button>
+
+        <Link
+          href="/"
+          className="col-start-2 col-span-2 flex justify-start items-center space-x-1 ml-3 md:col-start-1 md:ml-0"
+        >
           <img
             src="https://file.axum.rs/asset/logo.png"
             alt="AXUM.RS"
             className="w-6 h-6 object-cover"
           />
-          <h2>AXUM.RS</h2>
+          <h2 className="text-lg">AXUM.RS</h2>
         </Link>
 
-        <form></form>
+        <SearchBar className="md:col-span-8" />
+        <div className="col-start-10 col-span-3  flex justify-center items-center space-x-3 md:col-start-11 md:col-span-2">
+          <Notice />
 
-        <ul className="flex">
-          <NavItem href="/">首页</NavItem>
-          <NavItem href="/">专题</NavItem>
-          <NavItem href="/">文章</NavItem>
-        </ul>
-
-        <ul className="flex">
-          <NavItem href="/login">登录</NavItem>
-          <NavItem href="/register">注册</NavItem>
-        </ul>
+          <User className=" flex flex-col justify-start items-center" />
+        </div>
       </nav>
     </header>
   );

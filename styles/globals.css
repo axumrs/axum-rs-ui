@@ -2,8 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  * {
+    box-sizing: inherit;
+    @apply font-light;
+  }
+
+  body {
+    @apply bg-slate-50 relative box-border;
+  }
+}
+
 @layer components {
-    .axum-rs-container {
-        @apply container mx-auto;
-    }
+  .axum-rs-container {
+    @apply container mx-auto;
+  }
 }
