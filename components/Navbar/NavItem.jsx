@@ -1,9 +1,10 @@
 import React from "react";
+import A from "../A";
 
-export default function NavItem({ href, children }) {
+export default function NavItem(props) {
   return (
     <li>
-      <a href={href}>{children}</a>
+      <A {...props} />
     </li>
   );
 }

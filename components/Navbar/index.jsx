@@ -23,8 +23,8 @@ export default function Navbar() {
         </ul>
 
         <ul className="flex">
-          <NavItem href="/">登录</NavItem>
-          <NavItem href="/">注册</NavItem>
+          <NavItem href="/login">登录</NavItem>
+          <NavItem href="/register">注册</NavItem>
         </ul>
       </nav>
     </header>
