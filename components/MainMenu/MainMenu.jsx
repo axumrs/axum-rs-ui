@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   NewspaperIcon,
@@ -17,13 +17,13 @@ import Item from "./Item";
 import Mask from "./Mask";
 import { Blog, Email, Github, Telegram, Youtube } from "../Icons/Bootstrap";
 
-export default function MainMenu({ className }) {
-  const [openMorePop, setOpenMorePop] = useState(false);
-
-  const fullClassName = `fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md md:static md:w-full md:bg-transparent md:z-auto md:shadow-none ${className}`;
+export default function MainMenu({ className, open = true }) {
+  const fullClassName = `${
+    open ? "block" : "hidden"
+  } fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md md:static md:w-full md:bg-transparent md:z-auto md:shadow-none md:block ${className}`;
   return (
     <>
-      <Mask />
+      <Mask open={open} />
       <div className={fullClassName}>
         <div className="flex flex-col space-y-3 relative mt-14 bg-white py-3 h-full  md:mt-6 md:border md:rounded-md md:h-auto md:divide-y">
           {/* 全局菜单 */}
@@ -37,10 +37,8 @@ export default function MainMenu({ className }) {
               icon={<ChevronDoubleRightIcon />}
               isButton
               isRelative
-              onClick={() => {
-                setOpenMorePop(!openMorePop);
-              }}
-              ext={<_MoreMenuPop open={openMorePop} />}
+              isGroup
+              ext={<_MoreMenuPop />}
             >
               更多
             </Item>
@@ -91,13 +89,11 @@ export default function MainMenu({ className }) {
   );
 }
 
-function _MoreMenuPop({ open }) {
+function _MoreMenuPop() {
   return (
     <>
       <div
-        className={`${
-          open ? "" : "hidden"
-        } absolute bg-white border border-gray-200 rounded-md shadow-md z-30 p-3 md:-right-16 md:-top-[0.1rem]`}
+        className={`hidden group-hover:block absolute bg-white border border-gray-200 rounded-md shadow-md z-30 p-3 md:-right-[7.5rem] md:-top-[0.1rem]`}
       >
         <ul className="flex flex-col justify-center items-center">
           <li className="px-3 py-2">

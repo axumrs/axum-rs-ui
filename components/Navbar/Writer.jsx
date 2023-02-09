@@ -4,11 +4,7 @@ import { PopoverBar } from "./Popover";
 
 export default function Writer() {
   return (
-    <PopoverBar
-      icon={<PencilSquareIcon />}
-      className=""
-      iconClassName="text-blue-800"
-    >
+    <PopoverBar icon={<PencilSquareIcon />} className="">
       <ul className="flex flex-col space-y-3">
         <li>
           <a

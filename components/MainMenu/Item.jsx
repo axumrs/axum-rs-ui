@@ -6,6 +6,7 @@ export default function Item(props) {
     href = "",
     icon,
     isRelative = false,
+    isGroup = false,
     ext = <></>,
     ...others
   } = props;
@@ -13,7 +14,7 @@ export default function Item(props) {
     <li
       className={`px-6 py-2 text-gray-800 hover:bg-gray-200/70 ${
         isRelative ? "relative" : ""
-      }`}
+      } ${isGroup ? "group" : ""}`}
     >
       <_Item href={href} {...others}>
         <span className="w-6 h-6">{icon}</span>
