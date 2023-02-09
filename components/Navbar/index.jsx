@@ -16,14 +16,14 @@ export default function Navbar() {
 
         <Link
           href="/"
-          className="col-start-2 col-span-2 flex justify-start items-center space-x-1 ml-3 z-30 md:col-start-1 md:ml-0 md:z-auto"
+          className="col-start-2 col-span-6 flex justify-start items-center space-x-1 ml-3 z-30 md:col-start-1 md:ml-0 md:z-auto md:col-span-2"
         >
           <img
             src="https://file.axum.rs/asset/logo.png"
             alt="AXUM.RS"
             className="w-6 h-6 object-cover"
           />
-          <h2 className="text-lg">AXUM.RS</h2>
+          <h2 className="text-lg">AXUM中文网</h2>
         </Link>
 
         <SearchBar className="md:col-span-8" />

@@ -21,6 +21,7 @@ export default function MainMenu({ className, open = true }) {
   const fullClassName = `${
     open ? "block" : "hidden"
   } fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md md:static md:w-full md:bg-transparent md:z-auto md:shadow-none md:block ${className}`;
+  const thisYear = new Date().getFullYear();
   return (
     <>
       <Mask open={open} />
@@ -52,7 +53,7 @@ export default function MainMenu({ className, open = true }) {
             <Item icon={<ArrowRightOnRectangleIcon />}>退出登录</Item>
           </ul>
           {/* 社交媒体 */}
-          <ul className="py-1 pt-4 flex space-x-3 justify-center items-center">
+          <ul className="py-1 pt-4 flex space-x-3 justify-center items-center flex-wrap">
             <_SocialItem
               icon={<Blog />}
               href="https://axum.eu.org"
@@ -80,8 +81,8 @@ export default function MainMenu({ className, open = true }) {
             />
           </ul>
           {/* 版权 */}
-          <div className="py-1 pt-4 text-gray-600 text-sm text-center absolute bottom-16  w-full md:static">
-            &copy; 2023 <Link href="/">AXUM中文网</Link>
+          <div className="py-1 pt-4 text-gray-500 text-xs text-center absolute bottom-16  w-full md:static">
+            &copy; 2021-{thisYear} <Link href="/">AXUM中文网</Link>
           </div>
         </div>
       </div>
@@ -97,17 +98,26 @@ function _MoreMenuPop() {
       >
         <ul className="flex flex-col justify-center items-center">
           <li className="px-3 py-2">
-            <Link href="" className="hover:text-red-600 tracking-widest">
+            <Link
+              href=""
+              className="hover:text-red-600 tracking-widest font-normal"
+            >
               关于我们
             </Link>
           </li>
           <li className="px-3 py-2">
-            <Link href="" className="hover:text-red-600 tracking-widest">
+            <Link
+              href=""
+              className="hover:text-red-600 tracking-widest font-normal"
+            >
               用户权益
             </Link>
           </li>
           <li className="px-3 py-2">
-            <Link href="" className="hover:text-red-600 tracking-widest">
+            <Link
+              href=""
+              className="hover:text-red-600 tracking-widest font-normal"
+            >
               捐助我们
             </Link>
           </li>
