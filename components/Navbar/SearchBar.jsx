@@ -30,7 +30,7 @@ export default function SearchBar({ className }) {
 
       <button
         type="button"
-        className="hidden absolute  right-2 w-5 h-5 overflow-hidden text-xs group-focus-within:block text-gray-500 bg-green-50"
+        className="hidden absolute  right-2 w-5 h-5 overflow-hidden text-xs group-focus-within:block text-gray-500"
         onClick={() => {
           setKeyword("");
         }}
