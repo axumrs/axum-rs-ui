@@ -4,7 +4,7 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 
 import User from "./User";
 import SearchBar from "./SearchBar";
-import Notice from "./Notice";
+import Writer from "./Writer";
 
 export default function Navbar() {
   return (
@@ -16,7 +16,7 @@ export default function Navbar() {
 
         <Link
           href="/"
-          className="col-start-2 col-span-2 flex justify-start items-center space-x-1 ml-3 md:col-start-1 md:ml-0"
+          className="col-start-2 col-span-2 flex justify-start items-center space-x-1 ml-3 z-30 md:col-start-1 md:ml-0 md:z-auto"
         >
           <img
             src="https://file.axum.rs/asset/logo.png"
@@ -28,7 +28,7 @@ export default function Navbar() {
 
         <SearchBar className="md:col-span-8" />
         <div className="col-start-10 col-span-3  flex justify-center items-center space-x-3 md:col-start-11 md:col-span-2">
-          <Notice />
+          <Writer />
 
           <User className=" flex flex-col justify-start items-center" />
         </div>
