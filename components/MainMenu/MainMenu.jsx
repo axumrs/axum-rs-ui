@@ -17,7 +17,7 @@ import Item from "./Item";
 import Mask from "./Mask";
 import { Blog, Email, Github, Telegram, Youtube } from "../Icons/Bootstrap";
 
-export default function MainMenu({ className, open = true }) {
+export default function MainMenu({ className, open = false }) {
   const fullClassName = `${
     open ? "block" : "hidden"
   } fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md lg:static lg:w-full lg:bg-transparent lg:z-auto lg:shadow-none lg:block ${className}`;
@@ -140,13 +140,16 @@ function _MoreMenuPop() {
 function _SocialItem({ icon, href, title }) {
   return (
     <>
-      <li className="group/secial relative rounded p-1 lg:hover:-translate-y-1 lg:transition-all">
+      <li
+        className="group/secial relative rounded p-1 lg:hover:-translate-y-1 lg:transition-all"
+        title={title}
+      >
         <a href={href} target="_blank">
           {icon}
         </a>
-        <div className="hidden absolute p-3 bg-black/70 text-gray-100 min-w-[8.5rem] lg:group-hover/secial:block">
+        {/* <div className="hidden absolute p-3 bg-black/75 text-gray-100 min-w-[8.5rem] xl:group-hover/secial:block xl:z-1">
           {title}
-        </div>
+        </div> */}
       </li>
     </>
   );
