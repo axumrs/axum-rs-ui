@@ -9,13 +9,13 @@ export default function Popover({
 }) {
   const fullClassName = `${
     open ? "block" : "hidden"
-  } absolute top-[2.7rem] -right-3 bg-white border z-10 min-h-fit w-56 rounded-lg p-3 shadow-md md:w-60 md:p-6 md:top-12 md:-right-3`;
+  } absolute top-[2.7rem] -right-3 bg-white border z-10 min-h-fit w-56 rounded-lg p-3 shadow-md lg:w-60 lg:p-6 lg:top-12 lg:-right-3`;
   return (
     <>
       <div
         className={`${
           open ? "block" : "hidden"
-        } absolute top-[1.98rem] w-6 h-6  z-[11] bg-white text-gray-200 md:top-8`}
+        } absolute top-[1.98rem] w-6 h-6  z-[11] bg-white text-gray-200 lg:top-8`}
       >
         <ChevronUpIcon />
       </div>

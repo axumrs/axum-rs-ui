@@ -11,7 +11,7 @@ export default function SearchBar({ className }) {
     <Form
       action=""
       method="get"
-      className={`hidden md:flex relative  justify-start items-center border rounded-full px-2 py-2 bg-gray-50 group focus-within:border-gray-700 ${className} transition-all`}
+      className={`hidden lg:flex relative  justify-start items-center border rounded-full px-2 py-2 bg-gray-50 group focus-within:border-gray-700 ${className} transition-all`}
       submiter={submiter}
     >
       <div className="block absolute w-6 h-6 bg-transparent">

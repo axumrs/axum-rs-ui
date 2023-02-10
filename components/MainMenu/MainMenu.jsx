@@ -20,13 +20,13 @@ import { Blog, Email, Github, Telegram, Youtube } from "../Icons/Bootstrap";
 export default function MainMenu({ className, open = true }) {
   const fullClassName = `${
     open ? "block" : "hidden"
-  } fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md md:static md:w-full md:bg-transparent md:z-auto md:shadow-none md:block ${className}`;
+  } fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md lg:static lg:w-full lg:bg-transparent lg:z-auto lg:shadow-none lg:block ${className}`;
   const thisYear = new Date().getFullYear();
   return (
     <>
       <Mask open={open} />
       <div className={fullClassName}>
-        <div className="flex flex-col space-y-3 relative mt-14 bg-white py-3 h-full  md:mt-6 md:border md:rounded-md md:h-auto md:divide-y">
+        <div className="flex flex-col space-y-3 relative mt-14 bg-white py-3 h-full  lg:mt-6 lg:border lg:rounded-md lg:h-auto lg:divide-y">
           {/* 全局菜单 */}
           <ul className="py-1">
             <Item icon={<NewspaperIcon />}>专题</Item>
@@ -45,7 +45,7 @@ export default function MainMenu({ className, open = true }) {
             </Item>
           </ul>
           {/* 用户中心-已登录 */}
-          <ul className="py-1 pt-4 hidden md:block">
+          <ul className="py-1 pt-4 hidden lg:block">
             <Item icon={<CreditCardIcon />}>订阅信息</Item>
             <Item icon={<DocumentTextIcon />}>学习记录</Item>
             <Item icon={<UserIcon />}>个人信息</Item>
@@ -81,7 +81,7 @@ export default function MainMenu({ className, open = true }) {
             />
           </ul>
           {/* 版权 */}
-          <div className="py-1 pt-4 text-gray-500 text-xs text-center absolute bottom-16  w-full md:static">
+          <div className="py-1 pt-4 text-gray-500 text-xs text-center absolute bottom-16  w-full lg:static">
             &copy; 2021-{thisYear} <Link href="/">AXUM中文网</Link>
           </div>
         </div>
@@ -94,7 +94,7 @@ function _MoreMenuPop() {
   return (
     <>
       <div
-        className={`hidden group-hover:block absolute bg-white border border-gray-200 rounded-md shadow-md z-30 p-3 md:-right-[7.5rem] md:-top-[0.1rem]`}
+        className={`hidden group-hover:block absolute bg-white border border-gray-200 rounded-md shadow-md z-30 p-3 lg:-right-[7.5rem] lg:-top-[0.1rem]`}
       >
         <ul className="flex flex-col justify-center items-center">
           <li className="px-3 py-2">
@@ -130,11 +130,11 @@ function _MoreMenuPop() {
 function _SocialItem({ icon, href, title }) {
   return (
     <>
-      <li className="group/secial relative rounded p-1 md:hover:-translate-y-1 md:transition-all">
+      <li className="group/secial relative rounded p-1 lg:hover:-translate-y-1 lg:transition-all">
         <a href={href} target="_blank">
           {icon}
         </a>
-        <div className="hidden absolute p-3 bg-black/70 text-gray-100 min-w-[8.5rem] md:group-hover/secial:block">
+        <div className="hidden absolute p-3 bg-black/70 text-gray-100 min-w-[8.5rem] lg:group-hover/secial:block">
           {title}
         </div>
       </li>

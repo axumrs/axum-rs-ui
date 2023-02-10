@@ -8,15 +8,15 @@ import Writer from "./Writer";
 
 export default function Navbar() {
   return (
-    <header className="bg-white shadow px-3 py-3 md:py-3">
-      <nav className="axum-rs-container grid grid-cols-12 items-center gap-x-1 md:gap-x-4">
-        <button className="block col-start-1  md:hidden md:col-auto ">
+    <header className="bg-white shadow px-3 py-3 lg:py-3">
+      <nav className="axum-rs-container grid grid-cols-12 items-center gap-x-1 lg:gap-x-4">
+        <button className="block col-start-1  lg:hidden lg:col-auto ">
           <Bars3Icon className="w-6 h-6" />
         </button>
 
         <Link
           href="/"
-          className="col-start-2 col-span-6 flex justify-start items-center space-x-1 ml-3 z-30 md:col-start-1 md:ml-0 md:z-auto md:col-span-2"
+          className="col-start-2 col-span-6 flex justify-start items-center space-x-1 ml-3 z-30 lg:col-start-1 lg:ml-0 lg:z-auto lg:col-span-2"
         >
           <img
             src="https://file.axum.rs/asset/logo.png"
@@ -26,8 +26,8 @@ export default function Navbar() {
           <h2 className="text-lg">AXUM中文网</h2>
         </Link>
 
-        <SearchBar className="md:col-span-8" />
-        <div className="col-start-10 col-span-3  flex justify-center items-center space-x-3 md:col-start-11 md:col-span-2">
+        <SearchBar className="lg:col-span-8" />
+        <div className="col-start-10 col-span-3  flex justify-center items-center space-x-3 lg:col-start-11 lg:col-span-2">
           <Writer />
 
           <User className=" flex flex-col justify-start items-center" />
