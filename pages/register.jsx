@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Form, { Text } from "../components/Form";
 import PageMeta from "../components/PageMeta";
+import { SinLayout } from "../components/Layout";
+
 export default function Register() {
   const [foo, setFoo] = useState("");
   const submiter = (e) => {
@@ -25,3 +27,5 @@ export default function Register() {
     </>
   );
 }
+
+Register.getLayout = SinLayout;
