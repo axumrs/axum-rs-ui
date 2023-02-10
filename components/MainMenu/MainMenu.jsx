@@ -46,14 +46,24 @@ export default function MainMenu({ className, open = true }) {
           </ul>
           {/* 用户中心-已登录 */}
           <ul className="py-1 pt-4 hidden lg:block">
-            <Item icon={<CreditCardIcon />}>订阅信息</Item>
-            <Item icon={<DocumentTextIcon />}>学习记录</Item>
-            <Item icon={<UserIcon />}>个人信息</Item>
-            <Item icon={<KeyIcon />}>修改密码</Item>
-            <Item icon={<ArrowRightOnRectangleIcon />}>退出登录</Item>
+            <Item icon={<CreditCardIcon />} isWidest={false}>
+              订阅信息
+            </Item>
+            <Item icon={<DocumentTextIcon />} isWidest={false}>
+              学习记录
+            </Item>
+            <Item icon={<UserIcon />} isWidest={false}>
+              个人信息
+            </Item>
+            <Item icon={<KeyIcon />} isWidest={false}>
+              修改密码
+            </Item>
+            <Item icon={<ArrowRightOnRectangleIcon />} isWidest={false}>
+              退出登录
+            </Item>
           </ul>
           {/* 社交媒体 */}
-          <ul className="py-1 pt-4 flex space-x-3 justify-center items-center flex-wrap">
+          <ul className="py-1 pt-4 px-1 flex space-x-3 justify-center items-center flex-wrap">
             <_SocialItem
               icon={<Blog />}
               href="https://axum.eu.org"

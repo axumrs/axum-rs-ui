@@ -7,6 +7,7 @@ export default function Item(props) {
     icon,
     isRelative = false,
     isGroup = false,
+    isWidest = true,
     ext = <></>,
     ...others
   } = props;
@@ -18,7 +19,13 @@ export default function Item(props) {
     >
       <_Item href={href} {...others}>
         <span className="w-6 h-6">{icon}</span>
-        <span className="text-lg font-normal tracking-widest">{children}</span>
+        <span
+          className={`text-lg font-normal ${
+            isWidest ? "tracking-widest" : ""
+          } xl:tracking-widest`}
+        >
+          {children}
+        </span>
       </_Item>
       {ext}
     </li>
