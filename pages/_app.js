@@ -4,12 +4,13 @@ import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || false;
+  const enableBgVideo = true;
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {getLayout ? getLayout(<Component {...pageProps} />) : <Layout><Component {...pageProps} /></Layout>}
+      {getLayout ? getLayout(<Component {...pageProps} />, enableBgVideo) : <Layout enableBgVideo={enableBgVideo}><Component {...pageProps} /></Layout>}
      
     </>
   );

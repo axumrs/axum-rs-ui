@@ -2,12 +2,13 @@ import React from "react";
 
 export default function Form(props) {
   const {
-    submiter = (e) => {
+    onSubmit = (e) => {
       console.log(e);
     },
     children = <></>,
     action = "",
     method = "post",
+    enableAutoComplete = false,
     ...others
   } = props;
   return (
@@ -17,8 +18,9 @@ export default function Form(props) {
       {...others}
       onSubmit={(e) => {
         e.preventDefault();
-        return submiter(e);
+        return onSubmit(e);
       }}
+      autoComplete={enableAutoComplete ? "on" : "off"}
     >
       {children}
     </form>

@@ -1,21 +1,17 @@
 import React from "react";
+import Row from "./Row";
 
 export default function Text(props) {
-  const { label, type = "text", id, ...others } = props;
-  if (id) {
-    return (
-      <div>
-        <label htmlFor={id}>{label}</label>
-        <input {...others} type={type} id={id} />
-      </div>
-    );
-  }
+  const {
+    className = "",
+    rowClassName = "",
+    labelClassName = "",
+    ...others
+  } = props;
+  const css = `form-input ${className}`;
   return (
-    <div>
-      <label>
-        {label}
-        <input {...others} type={type} />
-      </label>
-    </div>
+    <Row {...others} className={rowClassName}>
+      <input {...others} className={css} />
+    </Row>
   );
 }

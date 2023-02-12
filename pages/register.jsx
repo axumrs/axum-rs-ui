@@ -14,7 +14,7 @@ export default function Register() {
   return (
     <>
       <PageMeta>用户注册</PageMeta>
-      <Form submiter={submiter} className="bg-red-100">
+      <Form onSubmit={submiter} className="bg-red-100">
         <Text
           label="foo"
           onChange={fooHandler}
