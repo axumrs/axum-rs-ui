@@ -9,7 +9,7 @@ export default function Login() {
   return (
     <>
       <PageMeta>用户登录</PageMeta>
-      <div className="mt-14 max-w-xs mx-auto border rounded shadow bg-white/80 lg:mt-48 lg:max-w-md">
+      <div className="mt-32 max-w-sm mx-auto border rounded shadow bg-white/80 lg:mt-48 lg:max-w-md">
         <Form className="p-6">
           <TextField label="邮箱" type="email" id="email" required />
           <TextField label="密码" type="password" id="password" required />
