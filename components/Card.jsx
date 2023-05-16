@@ -1,9 +1,25 @@
 import React from "react";
+import MoreButton from "./Button/MoreButton";
 
-export default function Card({ children, className = "", ...other }) {
+function Card({ children, className = "", ...other }) {
   return (
     <div className={`border rounded-md bg-white p-3 ${className}`} {...other}>
       {children}
     </div>
   );
 }
+
+function CardHeader({ title, moreText, href, className = "" }) {
+  return (
+    <div
+      className={`flex justify-start items-center space-x-2 mb-3 ${className}`}
+    >
+      <h2 className="text-xl font-semibold">{title}</h2>
+      <MoreButton href={href}>{moreText}</MoreButton>
+    </div>
+  );
+}
+
+Card.Header = CardHeader;
+
+export default Card;
