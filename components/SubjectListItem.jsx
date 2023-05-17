@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function SubjectListItem({
@@ -9,7 +10,7 @@ export default function SubjectListItem({
   truncate = true,
 }) {
   const truncateCss = truncate ? "truncate" : "";
-  const itemsCss = truncate ? "items-center" : "items-start";
+
   return (
     <>
       <div
@@ -20,9 +21,9 @@ export default function SubjectListItem({
         </div>
         <div className="w-11/12">
           <h3 className={truncateCss}>
-            <a href={href} className="text-lg font-semibold">
+            <Link href={href} className="text-lg font-semibold hover:underline">
               {name}
-            </a>
+            </Link>
           </h3>
           <div className={truncateCss}>{summary}</div>
         </div>

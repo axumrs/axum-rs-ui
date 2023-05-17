@@ -25,9 +25,9 @@ export default function TopicListItem({
         </a>
       </div>
       <div className="flex  flex-col-reverse justify-start items-start space-y-6 lg:flex-row lg:space-x-1 lg:space-y-0">
-        <div className="my-2">
+        <div className="my-2 flex-shrink-0 w-full lg:w-3/4 ">
           <div className="flex justify-start items-center space-x-1">
-            <h3 className="my-2">
+            <h3 className="my-2 flex-shrink-0">
               <a
                 href={`/topic/${subject.slug}/${topic.slug}`}
                 className="text-lg font-bold lg:text-xl lg:font-extrabold hover:text-rose-800"
