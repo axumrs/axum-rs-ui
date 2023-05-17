@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 
-export default function PageTitle({ children, keyword, description }) {
+export default function PageMeta({ children, keyword, description }) {
   return (
     <Head>
       <meta
