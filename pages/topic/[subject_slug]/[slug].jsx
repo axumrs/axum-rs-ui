@@ -100,7 +100,7 @@ export default function TopicDetail() {
       <Card className="my-3">
         <div
           dangerouslySetInnerHTML={{ __html: testContent() }}
-          className="prose prose-slate max-w-none lg:prose-xl"
+          className="prose max-w-none lg:prose-xl"
         ></div>
       </Card>
     </>
