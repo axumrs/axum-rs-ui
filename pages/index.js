@@ -40,7 +40,7 @@ export default function Home() {
         </Card>
         {/* 文章 */}
 
-        <Card className="mt-3 ">
+        <Card className="my-3 ">
           <Card.Header
             title="热门文章"
             moreText="全部文章"
