@@ -10,7 +10,7 @@ export default function Home() {
       <div className="px-3 lg:px-0">
         {/* 专题 */}
         <Card>
-          <Card.Header title="专题列表" moreText="全部专题" href="" />
+          <Card.Header title="专题列表" moreText="全部专题" href="/subject" />
           <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-2">
             <SubjectListItem
               img="https://cdn.hashnode.com/res/hashnode/image/upload/v1607082785538/EryuLRriM.png?w=200&h=200&fit=crop&crop=entropy&auto=compress,format&format=webp"
@@ -41,7 +41,12 @@ export default function Home() {
         {/* 文章 */}
 
         <Card className="mt-3 ">
-          <Card.Header title="热门文章" moreText="全部文章" href="" />
+          <Card.Header
+            title="热门文章"
+            moreText="全部文章"
+            href="/topic"
+            className="pb-3 border-b"
+          />
           <ul className="flex flex-col divide-y -mt-2">
             <li className="py-2">
               <TopicListItem
