@@ -15,6 +15,7 @@ export default function TopicDetail() {
   useEffect(() => {
     hljs.highlightAll();
   }, []);
+
   return (
     <>
       <PageMeta>

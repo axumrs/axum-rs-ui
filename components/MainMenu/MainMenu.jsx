@@ -29,10 +29,18 @@ export default function MainMenu({ className, open = false }) {
         <div className="flex flex-col space-y-3 relative mt-14 bg-white py-3 h-full  lg:mt-6 lg:border lg:rounded-md lg:h-auto lg:divide-y">
           {/* 全局菜单 */}
           <ul className="py-1">
-            <Item icon={<NewspaperIcon />}>专题</Item>
-            <Item icon={<DocumentDuplicateIcon />}>文章</Item>
-            <Item icon={<HashtagIcon />}>标签</Item>
-            <Item icon={<MagnifyingGlassIcon />}>探索</Item>
+            <Item icon={<NewspaperIcon />} href="/subject">
+              专题
+            </Item>
+            <Item icon={<DocumentDuplicateIcon />} href="/topic">
+              文章
+            </Item>
+            <Item icon={<HashtagIcon />} href="/tag">
+              标签
+            </Item>
+            <Item icon={<MagnifyingGlassIcon />} href="/search">
+              搜索
+            </Item>
             <Item icon={<BanknotesIcon />}>订阅</Item>
             <Item
               icon={<ChevronDoubleRightIcon />}
@@ -66,7 +74,7 @@ export default function MainMenu({ className, open = false }) {
           <ul className="py-1 pt-4 px-1 flex space-x-3 justify-center items-center flex-wrap">
             <_SocialItem
               icon={<Blog />}
-              href="https://axum.eu.org"
+              href="https://s39x.com"
               title="浏览我们的博客"
             />
             <_SocialItem
@@ -109,7 +117,7 @@ function _MoreMenuPop() {
         <ul className="flex flex-col justify-center items-center">
           <li className="px-3 py-2">
             <Link
-              href=""
+              href="/about"
               className="hover:text-red-600 tracking-widest font-normal"
             >
               关于我们
@@ -117,7 +125,7 @@ function _MoreMenuPop() {
           </li>
           <li className="px-3 py-2">
             <Link
-              href=""
+              href="user-rights"
               className="hover:text-red-600 tracking-widest font-normal"
             >
               用户权益
@@ -125,7 +133,7 @@ function _MoreMenuPop() {
           </li>
           <li className="px-3 py-2">
             <Link
-              href=""
+              href="donate"
               className="hover:text-red-600 tracking-widest font-normal"
             >
               捐助我们

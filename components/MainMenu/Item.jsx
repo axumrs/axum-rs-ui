@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Item(props) {
@@ -49,8 +50,8 @@ function _Item(props) {
     );
   }
   return (
-    <a href={href} className={css} {...others}>
+    <Link href={href} className={css} {...others}>
       {children}
-    </a>
+    </Link>
   );
 }
