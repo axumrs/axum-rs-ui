@@ -13,6 +13,7 @@ export default function TopicListItem({
   },
   showSubject = true,
 }) {
+  const css = topic.cover ? "lg:w-3/4" : "";
   return (
     <div className="p-1 hover:bg-slate-50 hover:rounded-md">
       {showSubject && (
@@ -30,7 +31,7 @@ export default function TopicListItem({
       )}
 
       <div className="flex  flex-col-reverse justify-start items-start space-y-6 lg:flex-row lg:space-x-1 lg:space-y-0">
-        <div className="my-2 flex-shrink-0 w-full lg:w-3/4 ">
+        <div className={`my-2 flex-shrink-0 w-full ${css}`}>
           <div className="flex justify-start items-center space-x-1">
             <h3 className="my-2 flex-shrink-0">
               <Link
@@ -65,15 +66,17 @@ export default function TopicListItem({
         <span className="inline-block flex-shrink-0">
           <BookmarkIcon className="w-4 h-4" />
         </span>
-        {topic.tags.map((tag) => (
-          <Link
-            key={`topic-${subject.slug}-${topic.slug}-tag-${tag}`}
-            href={`/tag/${tag}`}
-            className="inline-block flex-shrink-0 text-xs before:content-['#'] hover:underline"
-          >
-            {tag}
-          </Link>
-        ))}
+        {topic.tags
+          .filter((tag) => tag.trim().length > 0)
+          .map((tag) => (
+            <Link
+              key={`topic-${subject.slug}-${topic.slug}-tag-${tag}`}
+              href={`/tag/${tag}`}
+              className="inline-block flex-shrink-0 text-xs before:content-['#'] hover:underline"
+            >
+              {tag}
+            </Link>
+          ))}
       </div>
     </div>
   );
