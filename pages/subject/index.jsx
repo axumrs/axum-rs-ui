@@ -76,7 +76,6 @@ export default function SubjectIndex({ subjectPaginate }) {
           <Paginate
             totalPage={subjectPaginate.total_page}
             page={subjectPaginate.page}
-            pageSize={subjectPaginate.page_size}
             baseUrl="/subject"
           />
         </div>
