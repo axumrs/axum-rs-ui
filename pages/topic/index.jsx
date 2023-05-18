@@ -4,6 +4,7 @@ import PageTitle from "../../components/PageTitle";
 import Card from "../../components/Card";
 import TopicListItem from "../../components/TopicListItem";
 import Paginate from "../../components/Paginate";
+import { get } from "../../fetcher/fetcher";
 
 export default function TopicIndex() {
   return (
@@ -128,3 +129,9 @@ export default function TopicIndex() {
     </>
   );
 }
+
+// export async function getServerSideProps() {
+//   const { data: subjectList } = await get("/subject");
+
+//   return { props: { subjectList } };
+// }
