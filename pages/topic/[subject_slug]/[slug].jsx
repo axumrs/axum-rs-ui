@@ -23,7 +23,7 @@ export default function TopicDetail({ topic }) {
         {topic.title} - {topic.subject_name}
       </PageMeta>
 
-      <div>{JSON.stringify(topic)}</div>
+      {/* <div>{JSON.stringify(topic)}</div> */}
 
       {topic.cover && (
         <div className="mb-3">
@@ -61,7 +61,7 @@ export default function TopicDetail({ topic }) {
               <span>
                 <CalendarDaysIcon className="w-4 h-4" />
               </span>
-              <span>{topic.dateline}</span>
+              <span>{datelineFormat(topic.dateline)}</span>
             </div>
           </div>
           <div className="flex justify-start items-center text-gray-500 text-xs space-x-1 mt-3">
@@ -100,4 +100,11 @@ export async function getServerSideProps({ params }) {
   const { data: topic } = await get(`/topic/${subject_slug}/${slug}`);
 
   return { props: { topic } };
+}
+
+function datelineFormat(dateline) {
+  const d = new Date(dateline);
+  return `${d.getFullYear()}/${
+    d.getMonth() + 1
+  }/${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 }
