@@ -4,27 +4,30 @@ import PageMeta from "../../components/PageMeta";
 import PageTitle from "../../components/PageTitle";
 import Card from "../../components/Card";
 import Paginate from "../../components/Paginate";
+import { get } from "../../fetcher/fetcher";
 
-export default function TagIndex() {
-  let testArr = [];
-  for (let i = 1; i <= 30; i++) {
-    testArr.push(i);
-  }
+export default function TagIndex({ tagPaginate }) {
+  const { data: tagList } = tagPaginate;
   return (
     <>
       <PageMeta>标签</PageMeta>
       <PageTitle>标签</PageTitle>
+      {/* <div>{JSON.stringify(tagPaginate)}</div> */}
 
       <Card>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-2 lg:gap-6">
-          {testArr.map((v) => (
-            <TagItem key={v} name={`标签${v}`} topicNum={v} />
+          {tagList.map((t) => (
+            <TagItem key={t.name} name={t.name} topicNum={t.topic_total} />
           ))}
         </div>
       </Card>
 
       <div className="my-3 text-right">
-        <Paginate />
+        <Paginate
+          totalPage={tagPaginate.total_page}
+          page={tagPaginate.page}
+          baseUrl="/tag"
+        />
       </div>
     </>
   );
@@ -42,4 +45,13 @@ function TagItem({ name, topicNum = 0 }) {
       </Link>
     </>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  const { page: pageStr } = query;
+  const page = parseInt(pageStr, 10) || 0;
+
+  const { data: tagPaginate } = await get(`/tag?page=${page}&page_size=30`);
+
+  return { props: { tagPaginate } };
 }
