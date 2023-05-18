@@ -107,7 +107,7 @@ export async function getServerSideProps({ params, query }) {
 
   const [{ data: subject }, { data: topicPaginate }] = await Promise.all([
     get(`/subject/${slug}`),
-    get(`/topic?subject_slug=${slug}&page=${page}&page_size=30`),
+    get(`/topic?subject_slug=${slug}&page=${page}&page_size=30&asc_order=true`),
   ]);
 
   return { props: { subject, topicPaginate } };
