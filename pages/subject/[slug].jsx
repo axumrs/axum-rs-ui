@@ -13,9 +13,9 @@ export default function SubjectDetail({ subject, topicPaginate }) {
   const { data: topicList } = topicPaginate;
   return (
     <>
-      <PageMeta>全栈：AXUM、React、NextJS 和 TailWindCSS</PageMeta>
-      <div>{JSON.stringify(subject)}</div>
-      <div>{JSON.stringify(topicPaginate)}</div>
+      <PageMeta>{subject.name}</PageMeta>
+      {/* <div>{JSON.stringify(subject)}</div>
+      <div>{JSON.stringify(topicPaginate)}</div> */}
       <Card className="">
         <div className="p-8">
           <div

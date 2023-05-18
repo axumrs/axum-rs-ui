@@ -10,7 +10,7 @@ export default function TagDetail({ tag, topicPaginate }) {
   const { data: ts } = topicPaginate;
   return (
     <>
-      <PageMeta>标签1</PageMeta>
+      <PageMeta>{tag.name}</PageMeta>
       {/* <div>{JSON.stringify(tag)}</div>
       <div>{JSON.stringify(topicPaginate)}</div> */}
 
