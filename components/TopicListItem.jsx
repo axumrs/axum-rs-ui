@@ -1,5 +1,6 @@
 import React from "react";
 import { NewspaperIcon, BookmarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 export default function TopicListItem({
   subject = { slug: "", name: "" },
   topic = {
@@ -10,30 +11,34 @@ export default function TopicListItem({
     tags: [],
     try_readable: false,
   },
+  showSubject = true,
 }) {
   return (
     <div className="p-1 hover:bg-slate-50 hover:rounded-md">
-      <div className="flex justify-start items-center space-x-1 text-gray-500 text-sm">
-        <span>
-          <NewspaperIcon className="w-4 h-4" />
-        </span>
-        <a
-          href={`/subject/${subject.slug}`}
-          className="hover:underline hover:decoration-dashed"
-        >
-          {subject.name}
-        </a>
-      </div>
+      {showSubject && (
+        <div className="flex justify-start items-center space-x-1 text-gray-500 text-sm">
+          <span>
+            <NewspaperIcon className="w-4 h-4" />
+          </span>
+          <Link
+            href={`/subject/${subject.slug}`}
+            className="hover:underline hover:decoration-dashed"
+          >
+            {subject.name}
+          </Link>
+        </div>
+      )}
+
       <div className="flex  flex-col-reverse justify-start items-start space-y-6 lg:flex-row lg:space-x-1 lg:space-y-0">
         <div className="my-2 flex-shrink-0 w-full lg:w-3/4 ">
           <div className="flex justify-start items-center space-x-1">
             <h3 className="my-2 flex-shrink-0">
-              <a
+              <Link
                 href={`/topic/${subject.slug}/${topic.slug}`}
                 className="text-lg font-bold lg:text-xl lg:font-extrabold hover:text-rose-800"
               >
                 {topic.title}
-              </a>
+              </Link>
             </h3>
             {topic.try_readable ? (
               <span className="bg-cyan-500 text-white text-xs rounded-md py-[0.125rem] px-1 border border-cyan-600">
@@ -61,13 +66,13 @@ export default function TopicListItem({
           <BookmarkIcon className="w-4 h-4" />
         </span>
         {topic.tags.map((tag) => (
-          <a
+          <Link
             key={`topic-${subject.slug}-${topic.slug}-tag-${tag}`}
-            href=""
+            href={`/tag/${tag}`}
             className="inline-block flex-shrink-0 text-xs before:content-['#'] hover:underline"
           >
             {tag}
-          </a>
+          </Link>
         ))}
       </div>
     </div>

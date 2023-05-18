@@ -64,25 +64,9 @@ function PaginateNumList({ pages, baseUrl, page }) {
     </li>
   );
 }
-function PaginateMore() {
-  return <li className="before:content-['...'] before:text-gray-500"></li>;
-}
-function calShowPages(totalPage, page) {
-  // const limit = 5;
+
+function calShowPages(totalPage) {
   let pages = [];
-  // if (totalPage <= limit) {
-  //   for (let i = 0; i < totalPage; i++) {
-  //     pages.push(i);
-  //   }
-  // } else {
-  //   if (page < limit - 1) {
-  //     for (let i = 1; i < limit - 1; i++) {
-  //       pages.push(i);
-  //     }
-  //     pages.push(page);
-  //   }
-  //   pages.push();
-  // }
 
   for (let i = 0; i < totalPage; i++) {
     pages.push(i);
