@@ -30,3 +30,11 @@ const apiUrl = (url) => `${process.env.NEXT_PUBLIC_API_URL}/web${url}`;
 
 export const get = (url) =>
   fetch(apiUrl(url), fetchOption).then((res) => res.json());
+
+export const post = (url, data, option = {}) =>
+  fetch(apiUrl(url), {
+    ...fetchOption,
+    ...option,
+    method: "POST",
+    body: JSON.stringify(data),
+  }).then((res) => res.json());

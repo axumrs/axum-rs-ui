@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "../Loading";
 
 export default function Form(props) {
   const {
@@ -9,6 +10,8 @@ export default function Form(props) {
     action = "",
     method = "post",
     enableAutoComplete = false,
+    isLoading = false,
+    loadingText = "正在提交，请稍候",
     ...others
   } = props;
   return (
@@ -22,6 +25,7 @@ export default function Form(props) {
       }}
       autoComplete={enableAutoComplete ? "on" : "off"}
     >
+      {isLoading && <Loading>{loadingText}</Loading>}
       {children}
     </form>
   );
