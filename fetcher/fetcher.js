@@ -20,9 +20,17 @@
 //     fetcher.post(url, data).then(({ data }) => data);
 // export default fetcher;
 
+function getUserAgent() {
+  if (typeof window === "undefined") {
+    return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/113.0";
+  }
+  return window?.navigator?.userAgent;
+}
+
 const fetchOption = {
   headers: {
     "Content-Type": "application/json",
+    "User-Agent": getUserAgent(),
   },
 };
 
