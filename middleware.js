@@ -6,7 +6,11 @@ export function middleware(req) {
   if (!token) {
     const loginUrl = new URL("/login", req.url);
     // Add ?from=/incoming-url to the /login URL
-    loginUrl.searchParams.set("r", req.nextUrl.pathname);
+    let pathname = req.nextUrl.pathname;
+    if (pathname === "/user/logout") {
+      pathname = "/user";
+    }
+    loginUrl.searchParams.set("r", pathname);
     return NextResponse.redirect(loginUrl);
   }
   return NextResponse.next();

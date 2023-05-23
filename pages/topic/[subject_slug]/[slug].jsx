@@ -11,6 +11,7 @@ import {
 import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
 import { get } from "../../../fetcher/fetcher";
+import datelineFormat from "../../../utils/dtf";
 
 export default function TopicDetail({ topic }) {
   useEffect(() => {
@@ -100,11 +101,4 @@ export async function getServerSideProps({ params }) {
   const { data: topic } = await get(`/topic/${subject_slug}/${slug}`);
 
   return { props: { topic } };
-}
-
-function datelineFormat(dateline) {
-  const d = new Date(dateline);
-  return `${d.getFullYear()}/${
-    d.getMonth() + 1
-  }/${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 }

@@ -9,13 +9,13 @@ function Card({ children, className = "", ...other }) {
   );
 }
 
-function CardHeader({ title, moreText, href, className = "" }) {
+function CardHeader({ title, moreText, href, className = "", hasMore = true }) {
   return (
     <div
       className={`flex justify-start items-center space-x-2 mb-3 ${className}`}
     >
       <h2 className="text-xl font-semibold">{title}</h2>
-      <MoreButton href={href}>{moreText}</MoreButton>
+      {hasMore && <MoreButton href={href}>{moreText}</MoreButton>}
     </div>
   );
 }

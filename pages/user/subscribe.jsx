@@ -15,12 +15,12 @@ export default function UserSubscribe() {
 
 // UserSubscribe.getLayout = UserCenterLayout;
 
-export async function getServerSideProps({ req, res }) {
-  const token = getCookie(process.env.NEXT_PUBLIC_TOKEN_COOKIE_NAME, {
-    req,
-    res,
-  });
-  const { data } = await geta(`/user`, token);
+// export async function getServerSideProps({ req, res }) {
+//   const token = getCookie(process.env.NEXT_PUBLIC_TOKEN_COOKIE_NAME, {
+//     req,
+//     res,
+//   });
+//   const { data } = await geta(`/user`, token);
 
-  return { props: { data } };
-}
+//   return { props: { data } };
+// }
