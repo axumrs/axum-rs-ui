@@ -54,19 +54,31 @@ export default function MainMenu({ className, open = false }) {
           </ul>
           {/* 用户中心-已登录 */}
           <ul className="py-1 pt-4 hidden lg:block">
-            <Item icon={<CreditCardIcon />} isWidest={false}>
+            <Item
+              icon={<CreditCardIcon />}
+              isWidest={false}
+              href="/user/subscribe"
+            >
               订阅信息
             </Item>
-            <Item icon={<DocumentTextIcon />} isWidest={false}>
+            <Item
+              icon={<DocumentTextIcon />}
+              isWidest={false}
+              href="/user/history"
+            >
               学习记录
             </Item>
-            <Item icon={<UserIcon />} isWidest={false}>
+            <Item icon={<UserIcon />} isWidest={false} href="/user/profile">
               个人信息
             </Item>
-            <Item icon={<KeyIcon />} isWidest={false}>
+            <Item icon={<KeyIcon />} isWidest={false} href="/user/changepwd">
               修改密码
             </Item>
-            <Item icon={<ArrowRightOnRectangleIcon />} isWidest={false}>
+            <Item
+              icon={<ArrowRightOnRectangleIcon />}
+              isWidest={false}
+              href="/user/logout"
+            >
               退出登录
             </Item>
           </ul>

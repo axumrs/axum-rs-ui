@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import Form from "../components/Form";
 import PageMeta from "../components/PageMeta";
@@ -8,6 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import MsgBox from "../components/MsgBox";
 import { post } from "../fetcher/fetcher";
+// import { useAuthContext } from "../contexts/AuthContext";
+import { setCookie } from "cookies-next";
 
 const defaultMsg = {
   email: "输入你的邮箱地址",
@@ -15,7 +17,7 @@ const defaultMsg = {
   response: "请完成人机验证",
 };
 
-export default function Login({ ip }) {
+export default function Login() {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -27,9 +29,34 @@ export default function Login({ ip }) {
   const [isLoading, setLoading] = useState(false);
   const [msgIsErr, setMsgIsErr] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
+  const [ip, setIp] = useState("");
+  const [loadingText, setLoadingText] = useState("");
 
   const captchaRef = useRef();
   const router = useRouter();
+  // const { setAuth } = useAuthContext();
+  const {
+    query: { r },
+  } = router;
+
+  useEffect(() => {
+    setLoading(true);
+    setLoadingText("正在载入");
+    fetch("https://httpbin.org/ip", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then(({ origin }) => {
+        setIp(origin);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   const onChangeHandler = (key) => {
     return (e) => {
@@ -40,12 +67,18 @@ export default function Login({ ip }) {
 
   const loginHandler = async () => {
     setLoading(true);
+    setLoadingText("正在登录");
     try {
       const res = await post("/../auth/user/login", { ...input, ip });
       // console.log(res);
       if (res?.code === 0) {
-        setAlterMsg("登录成功");
+        // setAlterMsg("登录成功");
         setSuccess(true);
+        const { data } = res;
+        // setAuth({ ...data });
+        setCookie(process.env.NEXT_PUBLIC_TOKEN_COOKIE_NAME, data?.token);
+        const returnUrl = r ? r : "/user";
+        router.push(returnUrl);
         return;
       }
       if (res?.code !== 0) {
@@ -84,7 +117,8 @@ export default function Login({ ip }) {
           okHandler={() => {
             setAlterMsg("");
             if (isSuccess) {
-              router.push("/user");
+              const returnUrl = r ? r : "/user";
+              router.push(returnUrl);
             }
           }}
           hasCancelButton={false}
@@ -94,7 +128,12 @@ export default function Login({ ip }) {
       )}
       <div className="mt-32 max-w-sm mx-auto border rounded shadow bg-white/80 lg:mt-48 lg:max-w-md">
         <div className="relative">
-          <Form className="p-6" isLoading={isLoading} onSubmit={loginHandler}>
+          <Form
+            className="p-6"
+            isLoading={isLoading}
+            onSubmit={loginHandler}
+            loadingText={loadingText}
+          >
             <TextField
               label="邮箱"
               type="email"
@@ -148,12 +187,12 @@ export default function Login({ ip }) {
 }
 Login.getLayout = SinLayout;
 
-export async function getServerSideProps() {
-  const res = await fetch("https://httpbin.org/ip", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
-  const { origin: ip } = await res.json();
+// export async function getServerSideProps() {
+//   const res = await fetch("https://httpbin.org/ip", {
+//     method: "GET",
+//     headers: { "Content-Type": "application/json" },
+//   });
+//   const { origin: ip } = await res.json();
 
-  return { props: { ip } };
-}
+//   return { props: { ip } };
+// }

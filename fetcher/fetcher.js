@@ -1,5 +1,7 @@
 // import axios from "axios";
 
+import { getCookie } from "cookies-next";
+
 // const fetcher = axios.create({
 //   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/web`,
 //   timeout: process.env.NEXT_PUBLIC_FETCHER_TIMEOUT,
@@ -34,6 +36,17 @@ const fetchOption = {
   },
 };
 
+function authFetchOption(token) {
+  const clientToken = getCookie(process.env.NEXT_PUBLIC_TOKEN_COOKIE_NAME);
+  const opt = {
+    headers: {
+      ...fetchOption.headers,
+      Authorization: `Bearer ${token || clientToken}`,
+    },
+  };
+  return opt;
+}
+
 const apiUrl = (url) => `${process.env.NEXT_PUBLIC_API_URL}/web${url}`;
 
 export const get = (url) =>
@@ -46,3 +59,6 @@ export const post = (url, data, option = {}) =>
     method: "POST",
     body: JSON.stringify(data),
   }).then((res) => res.json());
+
+export const geta = (url, token) =>
+  fetch(apiUrl(url), authFetchOption(token)).then((res) => res.json());

@@ -17,7 +17,7 @@ export default function TopicIndex({ topicPaginate }) {
       <Card>
         <ul className="flex flex-col divide-y">
           {topicList.map((t) => (
-            <li className="py-2">
+            <li className="py-2" key={t.id}>
               <TopicListItem
                 subject={{
                   slug: t.subject_slug,
