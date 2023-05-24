@@ -27,7 +27,7 @@ export default function TopicDetail({ topic }) {
       {/* <div>{JSON.stringify(topic)}</div> */}
 
       {topic.cover && (
-        <div className="mb-3">
+        <div className="mb-3 mx-3 lg:mx-0">
           <img
             src="https://cdn.hashnode.com/res/hashnode/image/upload/v1684170814296/50fd7774-8684-45b1-ab70-6e5f82707b3f.png?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp"
             className="w-full object-cover rounded-md border"
@@ -35,7 +35,7 @@ export default function TopicDetail({ topic }) {
         </div>
       )}
 
-      <Card className="">
+      <Card className="mx-3 lg:mx-3">
         <div className="flex flex-col justify-center items-center">
           <h1 className="text-xl font-bold lg:text-3xl lg:font-extrabold">
             {topic.title}
@@ -85,7 +85,7 @@ export default function TopicDetail({ topic }) {
         </div>
       </Card>
 
-      <Card className="my-3">
+      <Card className="my-3 mx-3 lg:mx-0">
         <div
           dangerouslySetInnerHTML={{ __html: topic.html }}
           className="prose max-w-none lg:prose-xl"

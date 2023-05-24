@@ -1,5 +1,11 @@
 import React from "react";
+import Toast from "../components/Toast";
 
 export default function About() {
-  return <div>About</div>;
+  return (
+    <>
+      <Toast.Success msg="恭喜，操作成功" />
+      <div>About</div>
+    </>
+  );
 }

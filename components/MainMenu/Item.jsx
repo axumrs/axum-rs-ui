@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { useMainMenuContext } from "../../contexts/MainMenuContext";
 
 export default function Item(props) {
   const {
@@ -12,6 +13,7 @@ export default function Item(props) {
     ext = <></>,
     ...others
   } = props;
+
   return (
     <li
       className={`px-6 py-2 text-gray-800 hover:bg-gray-200/70 ${
@@ -41,6 +43,7 @@ function _Item(props) {
     onClick = () => {},
     ...others
   } = props;
+  const { toggle } = useMainMenuContext();
   const css = `flex justify-start items-center space-x-3 ${className}`;
   if (isButton) {
     return (
@@ -50,7 +53,7 @@ function _Item(props) {
     );
   }
   return (
-    <Link href={href} className={css} {...others}>
+    <Link href={href} className={css} onClick={() => toggle()} {...others}>
       {children}
     </Link>
   );

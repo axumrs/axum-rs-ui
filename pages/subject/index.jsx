@@ -72,7 +72,7 @@ export default function SubjectIndex({ subjectPaginate }) {
         ))}
       </div>
       {subjectPaginate.total_page > 0 ? (
-        <div className="my-3 text-right">
+        <div className="my-3 text-right mx-3 lg:mx-0">
           <Paginate
             totalPage={subjectPaginate.total_page}
             page={subjectPaginate.page}

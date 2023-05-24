@@ -14,7 +14,7 @@ export default function TagDetail({ tag, topicPaginate }) {
       {/* <div>{JSON.stringify(tag)}</div>
       <div>{JSON.stringify(topicPaginate)}</div> */}
 
-      <Card>
+      <Card className="mx-3 lg:mx-0">
         <div>
           <div
             className={`flex p-4  rounded-lg justify-center items-center space-x-2`}
@@ -35,7 +35,7 @@ export default function TagDetail({ tag, topicPaginate }) {
         </div>
       </Card>
 
-      <Card className="my-3">
+      <Card className="my-3 mx-3 lg:mx-0">
         <ul className="flex flex-col divide-y">
           {ts.map((t) => (
             <li className="py-2" key={t.id}>
@@ -54,7 +54,7 @@ export default function TagDetail({ tag, topicPaginate }) {
         </ul>
       </Card>
 
-      <div className="mb-3 text-right">
+      <div className="mb-3 text-right mx-3 lg:mx-0">
         <Paginate
           baseUrl={`/tag/${tag.name}`}
           page={topicPaginate.page}

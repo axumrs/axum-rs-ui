@@ -45,45 +45,41 @@ export default function UserHome() {
     <>
       <PageMeta>用户中心</PageMeta>
       <PageTitle>用户中心</PageTitle>
-      {/* {
-	"0": {
-		"id": 1,
-		"email": "team@axum.rs",
-		"nickname": "root",
-		"status": "Actived",
-		"dateline": "2023-05-22T13:08:54+08:00",
-		"types": "Normal",
-		"sub_exp": "2023-04-30T16:08:16+08:00",
-		"points": 123,
-		"allow_device_num": 3,
-		"available_device_num": 3,
-		"login_id": 34,
-		"online_id": "a05bc357-ee7b-4a6e-b81f-6e28099b6bfb",
-		"ip": "72.18.214.237",
-		"uai": {
-			"device": "Mac",
-			"os": "Mac OS X 10",
-			"browser": "Firefox 113"
-		}
-	}
-} */}
 
-      <Card>
+      <Card className="mx-3 lg:mx-0">
         <Card.Header title="个人信息" moreText="签到"></Card.Header>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 text-xs lg:text-base">
           <div>
             账户类型：
             {onlineDerives[0]?.types === "Normal" ? "普通用户" : "订阅用户"}
           </div>
           <div>
             订阅到期时间：
-            {onlineDerives[0]?.types === "Normal"
-              ? "-"
-              : datelineFormat(onlineDerives[0]?.sub_exp)}
+            {onlineDerives[0]?.types === "Normal" ? (
+              "-"
+            ) : (
+              <>
+                <span>
+                  {datelineFormat(onlineDerives[0]?.sub_exp, {
+                    dateOnly: true,
+                  })}
+                </span>
+                <span className="hidden lg:inline">
+                  {datelineFormat(onlineDerives[0]?.sub_exp, {
+                    timeOnly: true,
+                  })}
+                </span>
+              </>
+            )}
           </div>
           <div>
             注册时间：
-            {datelineFormat(onlineDerives[0]?.dateline)}
+            <span>
+              {datelineFormat(onlineDerives[0]?.dateline, { dateOnly: true })}
+            </span>
+            <span className="hidden lg:inline">
+              {datelineFormat(onlineDerives[0]?.dateline, { timeOnly: true })}
+            </span>
           </div>
           <div>
             点数：
@@ -92,10 +88,10 @@ export default function UserHome() {
         </div>
       </Card>
 
-      <Card className="my-3">
+      <Card className="my-3 mx-3 lg:mx-0">
         <Card.Header title="在线设备" hasMore={false} />
-        <div className="prose max-w-none ">
-          <table>
+        <div className="prose max-w-none w-full overflow-x-auto">
+          <table className="text-xs lg:text-base">
             <thead>
               <tr>
                 <th>登录ID</th>
@@ -104,7 +100,6 @@ export default function UserHome() {
                 <th>操作系统</th>
                 <th>浏览器</th>
                 <th>IP</th>
-                <th>登录时间</th>
               </tr>
             </thead>
             <tbody>
@@ -116,7 +111,6 @@ export default function UserHome() {
                   <td>{d?.uai?.os}</td>
                   <td>{d?.uai?.browser}</td>
                   <td>{d?.ip}</td>
-                  <td>{datelineFormat(d?.dateline)}</td>
                 </tr>
               ))}
             </tbody>
@@ -124,10 +118,10 @@ export default function UserHome() {
         </div>
       </Card>
 
-      <Card>
+      <Card className="mx-3 lg:mx-0">
         <Card.Header title="登录记录" hasMore={false} />
-        <div className="prose max-w-none ">
-          <table>
+        <div className="prose max-w-none w-full overflow-x-auto">
+          <table className="text-xs lg:text-base">
             <thead>
               <tr>
                 <th>登录ID</th>
@@ -160,7 +154,7 @@ export default function UserHome() {
         </div>
       </Card>
 
-      <div className="my-3 text-right">
+      <div className="my-3 text-right mx-3 lg:mx-0">
         <Paginate
           page={loginLogPaginate.page}
           totalPage={loginLogPaginate.total_page}

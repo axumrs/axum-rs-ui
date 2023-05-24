@@ -1,18 +1,36 @@
 import React from "react";
 import Link from "next/link";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { HomeIcon } from "@heroicons/react/24/solid";
 
-import User from "./User";
+// import User from "./User";
 import SearchBar from "./SearchBar";
-import Writer from "./Writer";
+import { useMainMenuContext } from "../../contexts/MainMenuContext";
+import User from "./User";
+// import Writer from "./Writer";
 
-export default function Navbar() {
+export default function Navbar({ showBarButton = true }) {
+  const { toggle } = useMainMenuContext();
   return (
     <header className="bg-white shadow px-3 py-3 lg:py-3">
       <nav className="axum-rs-container grid grid-cols-12 items-center gap-x-1 lg:gap-x-4">
-        <button className="block col-start-1  lg:hidden lg:col-auto ">
-          <Bars3Icon className="w-6 h-6" />
-        </button>
+        {showBarButton ? (
+          <button
+            className="block col-start-1  lg:hidden lg:col-auto "
+            onClick={() => {
+              toggle();
+            }}
+          >
+            <Bars3Icon className="w-6 h-6" />
+          </button>
+        ) : (
+          <Link
+            href="/"
+            className="block col-start-1 text-gray-600  lg:hidden lg:col-auto "
+          >
+            <HomeIcon className="w-6 h-6" />
+          </Link>
+        )}
 
         <Link
           href="/"
@@ -27,10 +45,12 @@ export default function Navbar() {
         </Link>
 
         <SearchBar className="lg:col-span-8" />
-        <div className="col-start-10 col-span-3  flex justify-center items-center space-x-3 lg:col-start-11 lg:col-span-2">
-          <Writer />
+        <div className="col-start-10 col-span-3  flex justify-center items-center lg:space-x-3 lg:col-start-11 lg:col-span-2">
+          {/* <Writer /> */}
 
-          <User className=" flex flex-col justify-start items-center" />
+          {/* <User className=" flex flex-col justify-start items-center" /> */}
+
+          <User />
         </div>
       </nav>
     </header>

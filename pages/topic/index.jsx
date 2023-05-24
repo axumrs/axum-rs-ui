@@ -14,7 +14,7 @@ export default function TopicIndex({ topicPaginate }) {
       <PageTitle>文章</PageTitle>
       {/* <div>{JSON.stringify(topicPaginate)}</div> */}
 
-      <Card>
+      <Card className="mx-3 lg:mx-0">
         <ul className="flex flex-col divide-y">
           {topicList.map((t) => (
             <li className="py-2" key={t.id}>
@@ -30,7 +30,7 @@ export default function TopicIndex({ topicPaginate }) {
         </ul>
       </Card>
 
-      <div className="my-3 text-right">
+      <div className="my-3 text-right mx-3 lg:mx-0">
         <Paginate
           page={topicPaginate.page}
           totalPage={topicPaginate.total_page}

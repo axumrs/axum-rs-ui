@@ -16,7 +16,7 @@ export default function SubjectDetail({ subject, topicPaginate }) {
       <PageMeta>{subject.name}</PageMeta>
       {/* <div>{JSON.stringify(subject)}</div>
       <div>{JSON.stringify(topicPaginate)}</div> */}
-      <Card className="">
+      <Card className="mx-3 lg:mx-0">
         <div className="p-8">
           <div
             className={`flex p-4  rounded-lg justify-center items-center space-x-2`}
@@ -64,7 +64,7 @@ export default function SubjectDetail({ subject, topicPaginate }) {
         </div>
       </Card>
 
-      <Card className="my-3">
+      <Card className="my-3 mx-3 lg:mx-0">
         {topicList.length ? (
           <ul className="flex flex-col divide-y">
             {topicList.map((t) => (
@@ -86,7 +86,7 @@ export default function SubjectDetail({ subject, topicPaginate }) {
       </Card>
 
       {topicPaginate.total_page > 0 ? (
-        <div className="my-3 text-right">
+        <div className="my-3 text-right mx-3 lg:mx-0">
           <Paginate
             totalPage={topicPaginate.total_page}
             page={topicPaginate.page}

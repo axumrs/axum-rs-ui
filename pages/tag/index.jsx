@@ -14,7 +14,7 @@ export default function TagIndex({ tagPaginate }) {
       <PageTitle>标签</PageTitle>
       {/* <div>{JSON.stringify(tagPaginate)}</div> */}
 
-      <Card>
+      <Card className="mx-3 lg:mx-0">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-2 lg:gap-6">
           {tagList.map((t) => (
             <TagItem key={t.name} name={t.name} topicNum={t.topic_total} />

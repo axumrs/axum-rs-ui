@@ -98,71 +98,73 @@ export default function Register() {
           {alterMsg}
         </MsgBox>
       )}
-      <div className="relative mt-32 max-w-sm mx-auto border rounded shadow bg-white/80 lg:mt-32 lg:max-w-md">
-        <Form className="p-6" onSubmit={submiter} isLoading={isLoading}>
-          <TextField
-            label="邮箱"
-            type="email"
-            id="email"
-            helpText={msg.email}
-            isErrText={msgIsErr}
-            onChange={onChangeHandler("email")}
-            required
-          />
-          <TextField
-            label="昵称"
-            type="text"
-            id="nickname"
-            helpText={msg.nickname}
-            onChange={onChangeHandler("nickname")}
-            isErrText={msgIsErr}
-            required
-          />
-          <TextField
-            label="密码"
-            type="password"
-            id="password"
-            helpText={msg.password}
-            isErrText={msgIsErr}
-            onChange={onChangeHandler("password")}
-            required
-          />
-          <TextField
-            label="重复密码"
-            type="password"
-            id="re_password"
-            helpText={msg.re_password}
-            isErrText={msgIsErr}
-            onChange={onChangeHandler("re_password")}
-            required
-          />
-
-          <div className="mb-3">
-            <HCaptcha
-              sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY}
-              ref={captchaRef}
-              onVerify={(token, ekey) => {
-                setInput({ ...input, response: token });
-              }}
+      <div className="mx-3 lg:mx-0">
+        <div className="relative mt-16 max-w-sm mx-auto border rounded shadow bg-white/80 lg:mt-32 lg:max-w-md">
+          <Form className="p-6" onSubmit={submiter} isLoading={isLoading}>
+            <TextField
+              label="邮箱"
+              type="email"
+              id="email"
+              helpText={msg.email}
+              isErrText={msgIsErr}
+              onChange={onChangeHandler("email")}
+              required
             />
-            <TextField.HelpText isErrText={msgIsErr}>
-              {msg.response}
-            </TextField.HelpText>
-          </div>
-          <div className="flex justify-between items-center space-x-4">
-            <div className="flex flex-col text-sm">
-              <Link
-                href="/login"
-                className="hover:text-blue-700 hover:underline"
-              >
-                登录已有账号
-              </Link>
+            <TextField
+              label="昵称"
+              type="text"
+              id="nickname"
+              helpText={msg.nickname}
+              onChange={onChangeHandler("nickname")}
+              isErrText={msgIsErr}
+              required
+            />
+            <TextField
+              label="密码"
+              type="password"
+              id="password"
+              helpText={msg.password}
+              isErrText={msgIsErr}
+              onChange={onChangeHandler("password")}
+              required
+            />
+            <TextField
+              label="重复密码"
+              type="password"
+              id="re_password"
+              helpText={msg.re_password}
+              isErrText={msgIsErr}
+              onChange={onChangeHandler("re_password")}
+              required
+            />
+
+            <div className="mb-3">
+              <HCaptcha
+                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY}
+                ref={captchaRef}
+                onVerify={(token, ekey) => {
+                  setInput({ ...input, response: token });
+                }}
+              />
+              <TextField.HelpText isErrText={msgIsErr}>
+                {msg.response}
+              </TextField.HelpText>
             </div>
-            <button className="border rounded bg-blue-500 text-white border-blue-600 px-6 py-2 hover:bg-blue-600 hover:border-blue-700">
-              注册
-            </button>
-          </div>
-        </Form>
+            <div className="flex justify-between items-center space-x-4">
+              <div className="flex flex-col text-sm">
+                <Link
+                  href="/login"
+                  className="hover:text-blue-700 hover:underline"
+                >
+                  登录已有账号
+                </Link>
+              </div>
+              <button className="border rounded bg-blue-500 text-white border-blue-600 px-6 py-2 hover:bg-blue-600 hover:border-blue-700">
+                注册
+              </button>
+            </div>
+          </Form>
+        </div>
       </div>
     </>
   );

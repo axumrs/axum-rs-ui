@@ -126,60 +126,62 @@ export default function Login() {
           {alterMsg}
         </MsgBox>
       )}
-      <div className="mt-32 max-w-sm mx-auto border rounded shadow bg-white/80 lg:mt-48 lg:max-w-md">
-        <div className="relative">
-          <Form
-            className="p-6"
-            isLoading={isLoading}
-            onSubmit={loginHandler}
-            loadingText={loadingText}
-          >
-            <TextField
-              label="邮箱"
-              type="email"
-              id="email"
-              helpText={msg.email}
-              isErrText={msgIsErr}
-              onChange={onChangeHandler("email")}
-              required
-            />
-
-            <TextField
-              label="密码"
-              type="password"
-              id="password"
-              helpText={msg.password}
-              isErrText={msgIsErr}
-              onChange={onChangeHandler("password")}
-              required
-            />
-
-            <div className="mb-3">
-              <HCaptcha
-                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY}
-                ref={captchaRef}
-                onVerify={(token, ekey) => {
-                  setInput({ ...input, response: token });
-                }}
+      <div className="mx-3 lg:mx-0">
+        <div className="mt-32 max-w-sm mx-auto border rounded shadow bg-white/80 lg:mt-48 lg:max-w-md">
+          <div className="relative">
+            <Form
+              className="p-6"
+              isLoading={isLoading}
+              onSubmit={loginHandler}
+              loadingText={loadingText}
+            >
+              <TextField
+                label="邮箱"
+                type="email"
+                id="email"
+                helpText={msg.email}
+                isErrText={msgIsErr}
+                onChange={onChangeHandler("email")}
+                required
               />
-              <TextField.HelpText isErrText={msgIsErr}>
-                {msg.response}
-              </TextField.HelpText>
-            </div>
-            <div className="flex justify-between items-center space-x-4">
-              <div className="flex flex-col text-sm">
-                <Link
-                  href="/register"
-                  className="hover:text-blue-700 hover:underline"
-                >
-                  注册新用户
-                </Link>
+
+              <TextField
+                label="密码"
+                type="password"
+                id="password"
+                helpText={msg.password}
+                isErrText={msgIsErr}
+                onChange={onChangeHandler("password")}
+                required
+              />
+
+              <div className="mb-3">
+                <HCaptcha
+                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY}
+                  ref={captchaRef}
+                  onVerify={(token, ekey) => {
+                    setInput({ ...input, response: token });
+                  }}
+                />
+                <TextField.HelpText isErrText={msgIsErr}>
+                  {msg.response}
+                </TextField.HelpText>
               </div>
-              <button className="border rounded bg-blue-500 text-white border-blue-600 px-6 py-2 hover:bg-blue-600 hover:border-blue-700">
-                登录
-              </button>
-            </div>
-          </Form>
+              <div className="flex justify-between items-center space-x-4">
+                <div className="flex flex-col text-sm">
+                  <Link
+                    href="/register"
+                    className="hover:text-blue-700 hover:underline"
+                  >
+                    注册新用户
+                  </Link>
+                </div>
+                <button className="border rounded bg-blue-500 text-white border-blue-600 px-6 py-2 hover:bg-blue-600 hover:border-blue-700">
+                  登录
+                </button>
+              </div>
+            </Form>
+          </div>
         </div>
       </div>
     </>
