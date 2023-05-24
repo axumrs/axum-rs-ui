@@ -9,9 +9,22 @@ import PageTitle from "../../components/PageTitle";
 import Paginate from "../../components/Paginate";
 import { get } from "../../fetcher/fetcher";
 import Link from "next/link";
+import { useCartContent } from "../../contexts/CartContext";
+import { useRouter } from "next/router";
 
 export default function SubjectIndex({ subjectPaginate }) {
   const { data: subjectList } = subjectPaginate;
+  const { newItem, addItem } = useCartContent();
+  const router = useRouter();
+
+  const addToCart = (s) => {
+    return () => {
+      // type, service, serviceID, price, number
+      const item = newItem("专题", s.name, s.id, s.price / 100, 1);
+      addItem(item);
+      router.push("/cart");
+    };
+  };
   return (
     <>
       <PageMeta>专题</PageMeta>
@@ -55,12 +68,12 @@ export default function SubjectIndex({ subjectPaginate }) {
                     <CurrencyDollarIcon className="w-4 h-4" />
                     <span className="">{s.price / 100}</span>
                   </div>
-                  <a
-                    href=""
+                  <button
                     className="border border-blue-700 text-white bg-blue-600 px-2 py-1 rounded"
+                    onClick={addToCart({ ...s })}
                   >
                     <ShoppingCartIcon className="w-6 h-6" />
-                  </a>
+                  </button>
                 </>
               ) : (
                 <span className="text-sm border bg-emerald-600 text-white rounded px-2 py-1">

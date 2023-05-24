@@ -3,8 +3,18 @@ import PageMeta from "../components/PageMeta";
 import PageTitle from "../components/PageTitle";
 import Card from "../components/Card";
 import Link from "next/link";
+import { useCartContent } from "../contexts/CartContext";
+import { useRouter } from "next/router";
 
 export default function Subscribe() {
+  const { newItem, addItem } = useCartContent();
+  const router = useRouter();
+  const addToCart = () => {
+    // type, service, serviceID, price, number
+    const item = newItem("订阅", "成为尊贵的订阅用户", 1, 1, 1);
+    addItem(item);
+    router.push("/cart");
+  };
   return (
     <>
       <PageMeta>订阅</PageMeta>
@@ -36,12 +46,12 @@ export default function Subscribe() {
               </Link>
             </li>
             <li>
-              <Link
-                className="px-3 py-1  bg-orange-500 text-white hover:bg-orange-600 lg:font-normal lg:py-2"
-                href=""
+              <button
+                className="px-3 py-1  bg-orange-500 text-white hover:bg-orange-600 lg:font-normal lg:py-2 lg:px-6"
+                onClick={addToCart}
               >
                 订阅
-              </Link>
+              </button>
             </li>
           </ul>
           <ul className="grid grid-cols-4 border-y py-3">

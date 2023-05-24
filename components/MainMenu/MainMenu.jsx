@@ -13,6 +13,7 @@ import {
   DocumentTextIcon,
   CreditCardIcon,
   IdentificationIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import Item from "./Item";
 import Mask from "./Mask";
@@ -51,6 +52,9 @@ export default function MainMenu({ className, open = false }) {
             </Item> */}
             <Item icon={<BanknotesIcon />} href="/subscribe">
               订阅
+            </Item>
+            <Item icon={<ShoppingCartIcon />} href="/cart">
+              购物车
             </Item>
             <Item
               icon={<ChevronDoubleRightIcon />}
