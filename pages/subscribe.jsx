@@ -3,11 +3,11 @@ import PageMeta from "../components/PageMeta";
 import PageTitle from "../components/PageTitle";
 import Card from "../components/Card";
 import Link from "next/link";
-import { useCartContent } from "../contexts/CartContext";
+import { useCartContext } from "../contexts/CartContext";
 import { useRouter } from "next/router";
 
 export default function Subscribe() {
-  const { newItem, addItem } = useCartContent();
+  const { newItem, addItem } = useCartContext();
   const router = useRouter();
   const addToCart = () => {
     // type, service, serviceID, price, number

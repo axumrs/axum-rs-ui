@@ -41,6 +41,13 @@ export function CartContextProvider({ value, children }) {
     setItems([]);
   };
 
+  const hasItems = () => {
+    return items && items.length > 0;
+  };
+  const amount = () => {
+    return items.reduce((a, b) => a + b.price * b.number, 0);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -51,6 +58,8 @@ export function CartContextProvider({ value, children }) {
         newItem,
         updateItem,
         clearItems,
+        hasItems,
+        amount,
       }}
     >
       {children}
@@ -58,4 +67,4 @@ export function CartContextProvider({ value, children }) {
   );
 }
 
-export const useCartContent = () => useContext(CartContext);
+export const useCartContext = () => useContext(CartContext);

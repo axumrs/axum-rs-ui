@@ -9,12 +9,12 @@ import PageTitle from "../../components/PageTitle";
 import Paginate from "../../components/Paginate";
 import { get } from "../../fetcher/fetcher";
 import Link from "next/link";
-import { useCartContent } from "../../contexts/CartContext";
+import { useCartContext } from "../../contexts/CartContext";
 import { useRouter } from "next/router";
 
 export default function SubjectIndex({ subjectPaginate }) {
   const { data: subjectList } = subjectPaginate;
-  const { newItem, addItem } = useCartContent();
+  const { newItem, addItem } = useCartContext();
   const router = useRouter();
 
   const addToCart = (s) => {

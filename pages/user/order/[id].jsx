@@ -1,0 +1,244 @@
+import React, { useEffect, useState } from "react";
+import Card from "../../../components/Card";
+import Link from "next/link";
+import { geta } from "../../../fetcher/fetcher";
+import { useRouter } from "next/router";
+import { getToken } from "../../../utils/cookie";
+import Toast from "../../../components/Toast";
+import usdt2rmb from "../../../utils/usdt2rmb";
+import PageMeta from "../../../components/PageMeta";
+import PageTitle from "../../../components/PageTitle";
+/*
+{
+  "id": 15,
+  "user_id": 1,
+  "price": 100,
+  "status": "Pending",
+  "code": "950c7da",
+  "full_code": "950c7daa61509c855d3c65f7c6e664736d1e1082556c4fc2de9a9dece2cadc5e",
+  "order_num": "CHNHRIG3LCJCQ95JT710",
+  "dateline": "2023-05-25T16:35:22+08:00",
+  "pay_id": 0,
+  "is_del": false,
+  "snap": "[{\"type\":\"订阅\",\"service\":\"成为尊贵的订阅用户\",\"serviceID\":1,\"price\":1,\"number\":1,\"idx\":1,\"id\":\"订阅成为尊贵的订阅用户1\"}]"
+}
+*/
+export default function OrderDetail() {
+  const [order, setOrder] = useState({});
+  const [orderSnap, setOrderSnap] = useState([]);
+  const [toastMsg, setToastMsg] = useState("");
+  const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    geta(`/user/order/${id}`, getToken())
+      .then((res) => {
+        if (res?.code === 0) {
+          const { data } = res;
+          console.log(data);
+          const snap = data?.snap || "[]";
+          setOrder({ ...data });
+          setOrderSnap(JSON.parse(snap));
+          return;
+        }
+        if (res?.code === 9527) {
+          router.push(`/login?r=/user/order/${id}`);
+          return;
+        }
+        if (res?.code !== 0) {
+          setToastMsg("获取失败，请检查你的网络");
+          return;
+        }
+      })
+      .catch((e) => {
+        setToastMsg("获取失败，请检查你的网络");
+        console.log(e);
+      })
+      .finally(() => {});
+  }, []);
+  return (
+    <>
+      <PageMeta>订单详情</PageMeta>
+      <PageTitle>订单详情</PageTitle>
+      <Toast.Error isShow={toastMsg && toastMsg.length} msg={toastMsg} />
+      <Card className="mx-3 lg:mx-0">
+        <Card.Header hasMore={false} title="订单摘要" />
+        <div className="grid grid-cols-2">
+          <div>订单编号：{order?.order_num}</div>
+          <div>订单金额：$ {order?.price / 100}</div>
+        </div>
+        <div className="grid grid-cols-2">
+          <div>
+            订单识别码（非常重要）：
+            <span className="font-mono bg-cyan-600 text-white px-2 py-1">
+              {order?.code}
+            </span>
+          </div>
+          <div>
+            订单状态：
+            {order?.status === "Finished" ? (
+              <span className="text-green-600">已完成</span>
+            ) : (
+              <span className="text-rose-600">待支付</span>
+            )}
+          </div>
+        </div>
+      </Card>
+
+      <Card className="mx-3 lg:mx-0 my-3">
+        <Card.Header hasMore={false} title="支付方式" />
+
+        <PayMethod order={order} />
+      </Card>
+
+      <Card className="mx-3 lg:mx-0">
+        <Card.Header hasMore={false} title="本次购买的服务" />
+        <div className="prose max-w-none w-full overflow-x-auto">
+          <table>
+            <thead>
+              <tr>
+                <th>类型</th>
+                <th>服务</th>
+                <th>金额</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderSnap.map((s) => (
+                <tr key={s.idx}>
+                  <td>{s.type}</td>
+                  <td>{s.service}</td>
+                  <td>
+                    $ {s.price} x {s.number} = $ {s.price * s.number}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </>
+  );
+}
+
+function PayMethod({ order }) {
+  const [activedIndex, setActivedIndex] = useState(0);
+  const css = "bg-gray-50 px-3 py-1";
+  const activedCss = "bg-white px-3 py-2 font-semibold";
+  return (
+    <>
+      <ul className="flex justify-start items-end cursor-pointer space-x-1">
+        <li
+          className={`border ${activedIndex === 0 ? activedCss : css}`}
+          onClick={() => setActivedIndex(0)}
+        >
+          TronLink钱包
+        </li>
+        <li
+          className={`border ${activedIndex === 1 ? activedCss : css}`}
+          onClick={() => setActivedIndex(1)}
+        >
+          USDT手动转账
+        </li>
+        <li
+          className={`border ${activedIndex === 2 ? activedCss : css}`}
+          onClick={() => setActivedIndex(2)}
+        >
+          支付宝扫码
+        </li>
+      </ul>
+
+      <div className={`${activedIndex === 0 ? "block" : "hidden"}`}>
+        <div className="my-3">
+          <button
+            type="button"
+            className="border px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white border-blue-700"
+          >
+            使用 TronLink 在线支付
+          </button>
+        </div>
+        <ul className="list-decimal translate-x-4">
+          <li>该支付方式快速到账，并自动确认订单</li>
+          <li>为了快速处理潜在的争议，请在钱包的备注栏填写本次交易的识别码</li>
+          <li>
+            你需要先安装
+            <a
+              href="https://www.tronlink.org/cn/dlDetails/"
+              target="_blank"
+              className="underline decoration-dashed"
+            >
+              TronLink
+            </a>
+            钱包
+          </li>
+          <li>点击支付按钮后，会调用 TronLink 钱包的浏览器扩展版</li>
+        </ul>
+      </div>
+      <div className={`${activedIndex === 1 ? "block" : "hidden"}`}>
+        <div className="mt-3 border-l-4 inline-block px-3 py-1  bg-gray-100">
+          支付金额{" "}
+          <span className="text-emerald-600 font-normal">
+            $ {order?.price / 100} USDT
+          </span>
+        </div>
+        <div className="my-3">
+          <div>收款地址：</div>
+          <div>二维码</div>
+        </div>
+        <ul className="list-decimal translate-x-4">
+          <li>该支付方式需要管理员手动确认订单</li>
+          <li>
+            为了快速确认订单及处理潜在的争议，请在钱包的备注栏填写本次交易的识别码：
+            <span className="font-mono bg-cyan-600 text-white px-2 py-1">
+              {order?.code}
+            </span>
+          </li>
+          <li>请再三核对收款地址是我们的钱包地址</li>
+          <li>我们只接受 USDT (TRC 20)，请不要转账其它代币</li>
+          <li>
+            请选择支持 USDT (TRC 20) 的钱包，收款地址转账。你可以试试
+            <a
+              href="https://www.tronlink.org/cn/dlDetails/"
+              target="_blank"
+              className="underline decoration-dashed"
+            >
+              TronLink
+            </a>
+            钱包
+          </li>
+          <li>
+            通常会在转账完成后24小时内确认订单，如果长时间未进行处理，请
+            <Link href="/about" className="underline decoration-dashed">
+              请联系站长
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div className={`${activedIndex === 2 ? "block" : "hidden"}`}>
+        <div className="mt-3 border-l-4 inline-block px-3 py-1  bg-gray-100">
+          支付金额{" "}
+          <span className="text-amber-600 font-normal">
+            ¥ {usdt2rmb(order?.price, 100)} 人民币
+          </span>
+        </div>
+        <div className="my-3">二维码</div>
+
+        <ul className="list-decimal translate-x-4">
+          <li>该支付方式需要管理员手动确认订单</li>
+          <li>
+            为了快速确认订单及处理潜在的争议，请在钱包的备注栏填写本次交易的识别码：
+            <span className="font-mono bg-cyan-600 text-white px-2 py-1">
+              {order?.code}
+            </span>
+          </li>
+          <li>我们会将金额转换成人民币，你需要支付这个人民币金额</li>
+          <li>
+            通常会在转账完成后24小时内确认订单，如果长时间未进行处理，请
+            <Link href="/about" className="underline decoration-dashed">
+              联系站长
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </>
+  );
+}

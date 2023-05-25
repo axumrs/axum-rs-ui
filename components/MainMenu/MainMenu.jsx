@@ -71,12 +71,8 @@ export default function MainMenu({ className, open = false }) {
             <Item icon={<IdentificationIcon />} isWidest={false} href="/user">
               个人中心
             </Item>
-            <Item
-              icon={<CreditCardIcon />}
-              isWidest={false}
-              href="/user/subscribe"
-            >
-              订阅信息
+            <Item icon={<CreditCardIcon />} isWidest={false} href="/user/order">
+              订单列表
             </Item>
             <Item
               icon={<DocumentTextIcon />}

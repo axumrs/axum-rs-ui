@@ -62,3 +62,10 @@ export const post = (url, data, option = {}) =>
 
 export const geta = (url, token) =>
   fetch(apiUrl(url), authFetchOption(token)).then((res) => res.json());
+
+export const posta = (url, data, token) =>
+  fetch(apiUrl(url), {
+    ...authFetchOption(token),
+    method: "POST",
+    body: JSON.stringify(data),
+  }).then((res) => res.json());

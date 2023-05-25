@@ -8,12 +8,12 @@ import {
 import TopicListItem from "../../components/TopicListItem";
 import { get } from "../../fetcher/fetcher";
 import Paginate from "../../components/Paginate";
-import { useCartContent } from "../../contexts/CartContext";
+import { useCartContext } from "../../contexts/CartContext";
 import { useRouter } from "next/router";
 
 export default function SubjectDetail({ subject, topicPaginate }) {
   const { data: topicList } = topicPaginate;
-  const { newItem, addItem } = useCartContent();
+  const { newItem, addItem } = useCartContext();
   const router = useRouter();
 
   const addToCart = (s) => {
