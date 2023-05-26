@@ -203,7 +203,9 @@ function PayMethod({ order, setToastMsg, txId, setTxId }) {
               getToken()
             );
             if (res?.code === 0) {
-              setMsg("恭喜，支付成功");
+              setMsg(
+                "恭喜，支付成功。如果你购买了订阅服务，需要重新登录才能生效。"
+              );
               setTxId(txId);
               return;
             }
@@ -252,7 +254,7 @@ function PayMethod({ order, setToastMsg, txId, setTxId }) {
           {msg}
         </MsgBox>
       )}
-      <div>交易ID: {txId}</div>
+      {/* <div>交易ID: {txId}</div> */}
       <ul className="flex justify-start items-end cursor-pointer space-x-1">
         <li
           className={`border ${activedIndex === 0 ? activedCss : css}`}
@@ -281,7 +283,10 @@ function PayMethod({ order, setToastMsg, txId, setTxId }) {
             <>
               <div className="mt-3">
                 {fromAddress ? (
-                  <>你的钱包地址:{fromAddress}</>
+                  <>
+                    你的钱包地址：
+                    <span className="font-mono">{fromAddress}</span>
+                  </>
                 ) : (
                   <>当前未连接钱包</>
                 )}
@@ -340,8 +345,17 @@ function PayMethod({ order, setToastMsg, txId, setTxId }) {
           </span>
         </div>
         <div className="my-3">
-          <div>收款地址：</div>
-          <div>二维码</div>
+          <div>
+            收款地址：
+            <span className="font-mono px-2 py-1 bg-gray-100">{toAddr}</span>
+          </div>
+          <div className="p-1 my-3">
+            <img
+              src={process.env.NEXT_PUBLIC_TRC_QRCODE}
+              className="w-48 object-cover border rounded lg:w-64"
+              alt={toAddr}
+            />
+          </div>
         </div>
         <ul className="list-decimal translate-x-4">
           <li>该支付方式需要管理员手动确认订单</li>
@@ -379,7 +393,13 @@ function PayMethod({ order, setToastMsg, txId, setTxId }) {
             ¥ {usdt2rmb(order?.price, 100)} 人民币
           </span>
         </div>
-        <div className="my-3">二维码</div>
+        <div className="my-3 p-1">
+          <img
+            src={process.env.NEXT_PUBLIC_ALIPAY_QRCODE}
+            className="w-48 object-cover border rounded lg:w-64"
+            alt="支付宝"
+          />
+        </div>
 
         <ul className="list-decimal translate-x-4">
           <li>该支付方式需要管理员手动确认订单</li>

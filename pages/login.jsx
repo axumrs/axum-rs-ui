@@ -29,7 +29,7 @@ export default function Login() {
   const [isLoading, setLoading] = useState(false);
   const [msgIsErr, setMsgIsErr] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
-  const [ip, setIp] = useState("");
+  const [ip, setIp] = useState("未获取");
   const [loadingText, setLoadingText] = useState("");
 
   const captchaRef = useRef();

@@ -11,7 +11,7 @@ export default function Subscribe() {
   const router = useRouter();
   const addToCart = () => {
     // type, service, serviceID, price, number
-    const item = newItem("订阅", "成为尊贵的订阅用户", 1, 1, 1);
+    const item = newItem("订阅", "成为尊贵的订阅用户(30天)", 1, 1, 1);
     addItem(item);
     router.push("/cart");
   };

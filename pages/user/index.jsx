@@ -11,6 +11,7 @@ import Paginate from "../../components/Paginate";
 export default function UserHome() {
   const [onlineDerives, setOnlineDerives] = useState([]);
   const [loginLogPaginate, setloginLogPaginate] = useState({ data: [] });
+  const [info, setInfo] = useState({});
   const router = useRouter();
   const { page: pageStr } = router.query;
 
@@ -19,16 +20,19 @@ export default function UserHome() {
     Promise.all([
       geta("/user/online_derive"),
       geta(`/user/login_log?page=${page}&page_size=30`),
+      geta(`/user/info`),
     ])
-      .then(([odResult, llResult]) => {
+      .then(([odResult, llResult, infoResult]) => {
         const odCode = odResult?.code;
         const llCode = llResult?.code;
-        if (odCode === 0 && llCode === 0) {
+        const infoCode = infoResult?.code;
+        if (odCode === 0 && llCode === 0 && infoCode === 0) {
           setOnlineDerives(odResult?.data);
           setloginLogPaginate(llResult?.data);
+          setInfo(infoResult?.data);
           return;
         }
-        if (odCode === 9527 || llCode === 9527) {
+        if (odCode === 9527 || llCode === 9527 || infoCode === 9527) {
           deleteCookie(process.env.NEXT_PUBLIC_TOKEN_COOKIE_NAME);
           router.push("/login?r=/user");
           return;
@@ -41,31 +45,57 @@ export default function UserHome() {
         console.log(e);
       });
   }, [pageStr]);
+  const checkInHandler = async () => {
+    const res = await geta("/user/check-in");
+    if (res?.code === 0) {
+      setInfo(res?.data);
+      return;
+    }
+    if (res?.code === 9527) {
+      router.push("/login?r=/user");
+      return;
+    }
+    console.log(res);
+    if (res?.code !== 0) {
+      window.alert(res.msg);
+    }
+  };
   return (
     <>
       <PageMeta>用户中心</PageMeta>
       <PageTitle>用户中心</PageTitle>
 
       <Card className="mx-3 lg:mx-0">
-        <Card.Header title="个人信息" moreText="签到"></Card.Header>
+        <Card.Header
+          title="个人信息"
+          moreText="签到"
+          isBtn={true}
+          onClick={checkInHandler}
+        ></Card.Header>
         <div className="grid grid-cols-2 text-xs lg:text-base">
           <div>
             账户类型：
-            {onlineDerives[0]?.types === "Normal" ? "普通用户" : "订阅用户"}
+            {info?.types === "Normal" ? (
+              <span className="border p-1 text-xs">普通用户</span>
+            ) : (
+              <span className="border p-1 text-xs bg-amber-600 text-white border-amber-600">
+                订阅用户
+              </span>
+            )}
           </div>
           <div>
             订阅到期时间：
-            {onlineDerives[0]?.types === "Normal" ? (
+            {info?.types === "Normal" ? (
               "-"
             ) : (
               <>
                 <span>
-                  {datelineFormat(onlineDerives[0]?.sub_exp, {
+                  {datelineFormat(info?.sub_exp, {
                     dateOnly: true,
                   })}
                 </span>
-                <span className="hidden lg:inline">
-                  {datelineFormat(onlineDerives[0]?.sub_exp, {
+                <span className="hidden lg:inline lg:ml-1">
+                  {datelineFormat(info?.sub_exp, {
                     timeOnly: true,
                   })}
                 </span>
@@ -74,16 +104,14 @@ export default function UserHome() {
           </div>
           <div>
             注册时间：
-            <span>
-              {datelineFormat(onlineDerives[0]?.dateline, { dateOnly: true })}
-            </span>
-            <span className="hidden lg:inline">
-              {datelineFormat(onlineDerives[0]?.dateline, { timeOnly: true })}
+            <span>{datelineFormat(info?.dateline, { dateOnly: true })}</span>
+            <span className="hidden lg:inline lg:ml-1">
+              {datelineFormat(info?.dateline, { timeOnly: true })}
             </span>
           </div>
           <div>
             点数：
-            {onlineDerives[0]?.points}
+            {info?.points}
           </div>
         </div>
       </Card>
