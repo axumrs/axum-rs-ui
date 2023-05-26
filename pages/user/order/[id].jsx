@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../../components/Card";
 import Link from "next/link";
-import { geta } from "../../../fetcher/fetcher";
+import { geta, posta } from "../../../fetcher/fetcher";
 import { useRouter } from "next/router";
 import { getToken } from "../../../utils/cookie";
 import Toast from "../../../components/Toast";
 import usdt2rmb from "../../../utils/usdt2rmb";
 import PageMeta from "../../../components/PageMeta";
 import PageTitle from "../../../components/PageTitle";
+import { getTronWeb, sendUSDT } from "../../../utils/tronlink";
+import MsgBox from "../../../components/MsgBox";
+import Loading from "../../../components/Loading";
 /*
 {
   "id": 15,
@@ -27,7 +30,9 @@ export default function OrderDetail() {
   const [order, setOrder] = useState({});
   const [orderSnap, setOrderSnap] = useState([]);
   const [toastMsg, setToastMsg] = useState("");
+  const [txId, setTxId] = useState("");
   const router = useRouter();
+
   const { id } = router.query;
 
   useEffect(() => {
@@ -55,12 +60,12 @@ export default function OrderDetail() {
         console.log(e);
       })
       .finally(() => {});
-  }, []);
+  }, [txId]);
   return (
     <>
       <PageMeta>订单详情</PageMeta>
       <PageTitle>订单详情</PageTitle>
-      <Toast.Error isShow={toastMsg && toastMsg.length} msg={toastMsg} />
+      <Toast.Error isShow={toastMsg} msg={toastMsg} />
       <Card className="mx-3 lg:mx-0">
         <Card.Header hasMore={false} title="订单摘要" />
         <div className="grid grid-cols-2">
@@ -87,8 +92,11 @@ export default function OrderDetail() {
 
       <Card className="mx-3 lg:mx-0 my-3">
         <Card.Header hasMore={false} title="支付方式" />
-
-        <PayMethod order={order} />
+        {order?.status === "Finished" ? (
+          <>你已完成支付</>
+        ) : (
+          <PayMethod {...{ order, setToastMsg, txId, setTxId }} />
+        )}
       </Card>
 
       <Card className="mx-3 lg:mx-0">
@@ -120,12 +128,131 @@ export default function OrderDetail() {
   );
 }
 
-function PayMethod({ order }) {
+function PayMethod({ order, setToastMsg, txId, setTxId }) {
   const [activedIndex, setActivedIndex] = useState(0);
+  const [tronWeb, setTronWeb] = useState();
+  const [fromAddress, setFromAddress] = useState("");
+  const [msg, setMsg] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [isLoadingMsg, setLoadingMsg] = useState("");
+
+  const toAddr = process.env.NEXT_PUBLIC_TRC_ADDR;
   const css = "bg-gray-50 px-3 py-1";
   const activedCss = "bg-white px-3 py-2 font-semibold";
+
+  useEffect(() => {
+    if (window.tronLink) {
+      window.addEventListener("message", function (e) {
+        // 连接
+        if (e.data.message && e.data.message.action == "connect") {
+          console.log("连接");
+          setFromAddress(tronWeb?.defaultAddress?.base58);
+        }
+
+        if (e.data.message && e.data.message.action == "disconnect") {
+          console.log("断开连接");
+          setFromAddress("");
+          setTronWeb(undefined);
+        }
+      });
+    }
+  }, [tronWeb]);
+
+  useEffect(() => {
+    connect2tronLink();
+  }, []);
+
+  useEffect(() => {
+    if (tronWeb) {
+      setFromAddress(tronWeb.defaultAddress.base58);
+    }
+  }, [tronWeb]);
+
+  function errHandler(e) {
+    setMsg(e?.message || "发生错误");
+    console.log(e);
+  }
+
+  const sendUsdtHandler = async (price) => {
+    setLoading(true);
+    setLoadingMsg("等待支付");
+    try {
+      // tryGetTronWeb(setTronWeb, errHandler);
+      await sendUSDT(
+        tronWeb,
+        toAddr,
+        price / 100,
+        setLoading,
+        setLoadingMsg,
+        setMsg,
+        // setTxId,
+        async (txId) => {
+          try {
+            setLoadingMsg("正在更新订单状态");
+            console.log("id:", order.id, "txId:", txId);
+            const res = await posta(
+              `/user/order/pay`,
+              {
+                order_id: order.id,
+                price: order.price,
+                currency: "USDT",
+                types: "TronLink",
+                tx_id: txId,
+                status: "Finished",
+              },
+              getToken()
+            );
+            if (res?.code === 0) {
+              setMsg("恭喜，支付成功");
+              setTxId(txId);
+              return;
+            }
+            if (res?.code === 9527) {
+              router.push(`/login?r=/user/order/${id}`);
+              return;
+            }
+            if (res?.code !== 0) {
+              setMsg("获取失败，请检查你的网络");
+              return;
+            }
+          } catch (e) {
+            setMsg("获取失败，请检查你的网络");
+            console.log(e);
+          } finally {
+            setLoading(false);
+          }
+        }
+      );
+    } catch (e) {
+      errHandler(e);
+    } finally {
+      // setLoading(false);
+    }
+
+    console.log("sendusdt", tronWeb);
+  };
+
+  function connect2tronLink() {
+    try {
+      tryGetTronWeb(setTronWeb, errHandler);
+    } catch (e) {
+      errHandler(e);
+    }
+  }
+
   return (
     <>
+      {msg && (
+        <MsgBox
+          hasCancelButton={false}
+          okHandler={() => {
+            setMsg("");
+          }}
+        >
+          {msg}
+        </MsgBox>
+      )}
+      <div>交易ID: {txId}</div>
       <ul className="flex justify-start items-end cursor-pointer space-x-1">
         <li
           className={`border ${activedIndex === 0 ? activedCss : css}`}
@@ -148,30 +275,62 @@ function PayMethod({ order }) {
       </ul>
 
       <div className={`${activedIndex === 0 ? "block" : "hidden"}`}>
-        <div className="my-3">
-          <button
-            type="button"
-            className="border px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white border-blue-700"
-          >
-            使用 TronLink 在线支付
-          </button>
+        <div className="relative">
+          {isLoading && <Loading>{isLoadingMsg}</Loading>}
+          {tronWeb && fromAddress ? (
+            <>
+              <div className="mt-3">
+                {fromAddress ? (
+                  <>你的钱包地址:{fromAddress}</>
+                ) : (
+                  <>当前未连接钱包</>
+                )}
+              </div>
+              <div className="my-3">
+                <button
+                  type="button"
+                  className="border px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white border-blue-700"
+                  onClick={() => {
+                    sendUsdtHandler(order.price);
+                  }}
+                >
+                  使用 TronLink 在线支付
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="my-3">
+                <button
+                  type="button"
+                  className="border px-3 py-1 bg-teal-500 hover:bg-teal-600 text-white border-teal-600 "
+                  onClick={connect2tronLink}
+                >
+                  连接 TronLink 钱包
+                </button>
+              </div>
+            </>
+          )}
+
+          <ul className="list-decimal translate-x-4">
+            <li>该支付方式快速到账，并自动确认订单</li>
+            <li>
+              为了快速处理潜在的争议，请在钱包的备注栏填写本次交易的识别码
+            </li>
+            <li>
+              你需要先安装
+              <a
+                href="https://www.tronlink.org/cn/dlDetails/"
+                target="_blank"
+                className="underline decoration-dashed"
+              >
+                TronLink
+              </a>
+              钱包
+            </li>
+            <li>点击支付按钮后，会调用 TronLink 钱包的浏览器扩展版</li>
+          </ul>
         </div>
-        <ul className="list-decimal translate-x-4">
-          <li>该支付方式快速到账，并自动确认订单</li>
-          <li>为了快速处理潜在的争议，请在钱包的备注栏填写本次交易的识别码</li>
-          <li>
-            你需要先安装
-            <a
-              href="https://www.tronlink.org/cn/dlDetails/"
-              target="_blank"
-              className="underline decoration-dashed"
-            >
-              TronLink
-            </a>
-            钱包
-          </li>
-          <li>点击支付按钮后，会调用 TronLink 钱包的浏览器扩展版</li>
-        </ul>
       </div>
       <div className={`${activedIndex === 1 ? "block" : "hidden"}`}>
         <div className="mt-3 border-l-4 inline-block px-3 py-1  bg-gray-100">
@@ -241,4 +400,8 @@ function PayMethod({ order }) {
       </div>
     </>
   );
+}
+
+function tryGetTronWeb(setter, errHandler) {
+  getTronWeb(setter, errHandler);
 }
