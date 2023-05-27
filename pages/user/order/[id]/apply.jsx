@@ -41,10 +41,12 @@ export default function OrderPayApply() {
   const [input, setInput] = useState({ ...defaultInputData });
 
   const [toastMsg, setToastMsg] = useState("");
+  const [toastType, setToastType] = useState("default");
 
   const [isSubmiting, setSubmiting] = useState(false);
 
   const [hasPayApply, setHasPayApply] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
@@ -61,6 +63,7 @@ export default function OrderPayApply() {
         }
         if (orderRes?.code !== 0) {
           setToastMsg("获取失败，请检查你的网络");
+          setToastType("error");
           return;
         }
 
@@ -73,21 +76,23 @@ export default function OrderPayApply() {
             const { data: paData } = payApplyRes;
             setInput({ ...paData });
             setHasPayApply(true);
-          } else if (payApplyRes?.code === 9528) {
+          } else if (payApplyRes?.code === 9529) {
             setInput({ ...defaultInputData });
             setHasPayApply(false);
           } else {
             setToastMsg("获取失败，请检查你的网络");
+            setToastType("error");
           }
           return;
         }
       })
       .catch((e) => {
         setToastMsg("获取失败，请检查你的网络");
+        setToastType("error");
         console.log(e);
       })
       .finally(() => {});
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     let price = order?.price || 0;
@@ -119,7 +124,9 @@ export default function OrderPayApply() {
       setSubmiting(true);
       const res = await posta("/user/pay-apply", { ...postData });
       if (res?.code === 0) {
-        alert("提交成功");
+        setToastMsg("提交成功");
+        setToastType("success");
+        setReload(true);
         return;
       }
       if (res?.code === 9527) {
@@ -128,6 +135,7 @@ export default function OrderPayApply() {
       }
       if (res?.code === 9528) {
         setToastMsg("表单输入有误，请检查你的输入");
+        setToastType("error");
         return;
       }
       if (res?.code !== 0) {
@@ -145,7 +153,11 @@ export default function OrderPayApply() {
     <>
       <PageMeta>支付证明</PageMeta>
       <PageTitle>支付证明</PageTitle>
-      <Toast isShow={toastMsg} msg={toastMsg} />
+      {toastMsg && (
+        <Toast type={toastType} callback={() => setToastMsg("")}>
+          {toastMsg}
+        </Toast>
+      )}
 
       {/* <div>{JSON.stringify(input)}</div> */}
 

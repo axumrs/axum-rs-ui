@@ -34,7 +34,7 @@ export default function Toast({
   }
   return (
     <div
-      className={`fixed z-[101] top-[10%] left-[50%] px-3 py-1 border rounded-md shadow-md bg-gradient-to-b  ${css} text-sm ${className}`}
+      className={`fixed z-[101] top-0 left-[50%] px-3 py-1 border rounded-md shadow-md bg-gradient-to-b  -translate-x-1/2  translate-y-[10%] ${css} text-sm ${className}`}
     >
       {children}
     </div>
@@ -44,3 +44,5 @@ export default function Toast({
 Toast.Success = (props) => <Toast {...props} type="success" />;
 Toast.Warning = (props) => <Toast {...props} type="warning" />;
 Toast.Error = (props) => <Toast {...props} type="error" />;
+
+export const ToastDefaultOption = { type: "default", msg: "" };
