@@ -11,26 +11,20 @@ import PageTitle from "../../../../components/PageTitle";
 import { getTronWeb, sendUSDT } from "../../../../utils/tronlink";
 import MsgBox from "../../../../components/MsgBox";
 import Loading from "../../../../components/Loading";
-/*
-{
-  "id": 15,
-  "user_id": 1,
-  "price": 100,
-  "status": "Pending",
-  "code": "950c7da",
-  "full_code": "950c7daa61509c855d3c65f7c6e664736d1e1082556c4fc2de9a9dece2cadc5e",
-  "order_num": "CHNHRIG3LCJCQ95JT710",
-  "dateline": "2023-05-25T16:35:22+08:00",
-  "pay_id": 0,
-  "is_del": false,
-  "snap": "[{\"type\":\"订阅\",\"service\":\"成为尊贵的订阅用户\",\"serviceID\":1,\"price\":1,\"number\":1,\"idx\":1,\"id\":\"订阅成为尊贵的订阅用户1\"}]"
-}
-*/
+import datelineFormat from "../../../../utils/dtf";
+
+const payTypesDict = {
+  TronLink: "TronLink钱包",
+  USDT: "USDT转账",
+  Alipay: "支付宝转账",
+};
+
 export default function OrderDetail() {
   const [order, setOrder] = useState({});
   const [orderSnap, setOrderSnap] = useState([]);
   const [toastMsg, setToastMsg] = useState("");
   const [txId, setTxId] = useState("");
+  const [payInfo, setPayInfo] = useState({});
   const router = useRouter();
 
   const { id } = router.query;
@@ -61,6 +55,34 @@ export default function OrderDetail() {
       })
       .finally(() => {});
   }, [txId]);
+
+  useEffect(() => {
+    if (!(order && order.status && order.status === "Finished")) {
+      return;
+    }
+    geta(`/user/pay/${order.pay_id}`, getToken())
+      .then((res) => {
+        if (res?.code === 0) {
+          const { data } = res;
+          console.log(data);
+          setPayInfo(data);
+          return;
+        }
+        if (res?.code === 9527) {
+          router.push(`/login?r=/user/order/${id}`);
+          return;
+        }
+        if (res?.code !== 0) {
+          setToastMsg("获取失败，请检查你的网络");
+          return;
+        }
+      })
+      .catch((e) => {
+        setToastMsg("获取失败，请检查你的网络");
+        console.log(e);
+      })
+      .finally(() => {});
+  }, [order]);
   return (
     <>
       <PageMeta>订单详情</PageMeta>
@@ -101,13 +123,50 @@ export default function OrderDetail() {
       <Card className="mx-3 lg:mx-0 my-3">
         <Card.Header hasMore={false} title="支付方式" />
         {order?.status === "Finished" ? (
-          <>你已完成支付</>
+          <>
+            <div className="flex flex-col divide-y">
+              <div className="grid grid-cols-2 py-3 lg:py-6 px-1 lg:px-3 odd:bg-gray-50 first:border-t">
+                <div className="after:content-['：']">支付方式</div>
+                <div>{payTypesDict[payInfo?.types]}</div>
+              </div>
+              <div className="grid grid-cols-2 py-3 lg:py-6 px-1 lg:px-3 odd:bg-gray-50 first:border-t">
+                <div className="after:content-['：']">交易号</div>
+                <div>
+                  {payInfo.currency === "USDT" ? (
+                    <a
+                      href={`https://tronscan.org/#/transaction/${payInfo?.tx_id}`}
+                      target="_blank"
+                      className="underline decoration-dashed"
+                    >
+                      {payInfo?.tx_id}
+                    </a>
+                  ) : (
+                    payInfo?.tx_id
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 py-3 lg:py-6 px-1 lg:px-3 odd:bg-gray-50 first:border-t">
+                <div className="after:content-['：']">转账金额</div>
+                <div>
+                  {payInfo?.types === "TronLink"
+                    ? payInfo?.price / 100 / 100000
+                    : payInfo?.price / 100}{" "}
+                  {payInfo?.currency}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 py-3 lg:py-6 px-1 lg:px-3 odd:bg-gray-50 first:border-t">
+                <div className="after:content-['：']">支付时间</div>
+                <div>{datelineFormat(payInfo?.dateline)}</div>
+              </div>
+            </div>
+          </>
         ) : (
           <PayMethod {...{ order, setToastMsg, txId, setTxId }} />
         )}
       </Card>
 
-      <Card className="mx-3 lg:mx-0">
+      <Card className="mx-3 mb-3 lg:mx-0">
         <Card.Header hasMore={false} title="本次购买的服务" />
         <div className="prose max-w-none w-full overflow-x-auto">
           <table>
