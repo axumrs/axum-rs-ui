@@ -7,6 +7,8 @@ import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import datelineFormat from "../../utils/dtf";
 import Paginate from "../../components/Paginate";
+import Toast from "../../components/Toast";
+import Loading from "../../components/Loading";
 
 export default function UserHome() {
   const [onlineDerives, setOnlineDerives] = useState([]);
@@ -14,8 +16,15 @@ export default function UserHome() {
   const [info, setInfo] = useState({});
   const router = useRouter();
   const { page: pageStr } = router.query;
+  const [toast, setToast] = useState({ msg: "", type: "default" });
+  const [loading, setLoading] = useState({ show: false, msg: "正在载入" });
+
+  const newToad = ({ msg, type }) => {
+    setToast({ type, msg });
+  };
 
   useEffect(() => {
+    setLoading({ ...loading, show: true });
     const page = parseInt(pageStr, 10) || 0;
     Promise.all([
       geta("/user/online_derive"),
@@ -43,27 +52,53 @@ export default function UserHome() {
       })
       .catch((e) => {
         console.log(e);
+      })
+      .finally(() => {
+        setLoading({ ...loading, show: false });
       });
   }, [pageStr]);
+
   const checkInHandler = async () => {
-    const res = await geta("/user/check-in");
-    if (res?.code === 0) {
-      setInfo(res?.data);
-      return;
-    }
-    if (res?.code === 9527) {
-      router.push("/login?r=/user");
-      return;
-    }
-    console.log(res);
-    if (res?.code !== 0) {
-      window.alert(res.msg);
+    setLoading({ msg: "正在提交", show: true });
+    try {
+      const res = await geta("/user/check-in");
+      if (res?.code === 0) {
+        setInfo(res?.data);
+        setToast({ type: "success", msg: "签到成功" });
+        return;
+      }
+      if (res?.code === 9527) {
+        router.push("/login?r=/user");
+        return;
+      }
+      console.log(res);
+      if (res?.code !== 0) {
+        newToad({ type: "error", msg: res?.msg });
+      }
+    } catch (e) {
+      console.log(e);
+      setToast({ type: "error", msg: "操作失败，请检查你的网络" });
+    } finally {
+      setLoading({ ...loading, show: false });
     }
   };
+
   return (
     <>
       <PageMeta>用户中心</PageMeta>
       <PageTitle>用户中心</PageTitle>
+
+      {toast.msg && (
+        <Toast
+          {...toast}
+          callback={() => {
+            setToast({ ...toast, msg: "" });
+          }}
+        >
+          {toast.msg}
+        </Toast>
+      )}
+      {loading.show && <Loading>{loading.msg}</Loading>}
 
       <Card className="mx-3 lg:mx-0">
         <Card.Header

@@ -65,7 +65,15 @@ export default function OrderDetail() {
     <>
       <PageMeta>订单详情</PageMeta>
       <PageTitle>订单详情</PageTitle>
-      <Toast.Error isShow={toastMsg} msg={toastMsg} />
+      {toastMsg && (
+        <Toast.Error
+          callback={() => {
+            setToastMsg("");
+          }}
+        >
+          {toastMsg}
+        </Toast.Error>
+      )}
       <Card className="mx-3 lg:mx-0">
         <Card.Header hasMore={false} title="订单摘要" />
         <div className="grid grid-cols-2">
