@@ -72,13 +72,13 @@ export default function UserHome() {
           isBtn={true}
           onClick={checkInHandler}
         ></Card.Header>
-        <div className="grid grid-cols-2 text-xs lg:text-base">
+        <div className="grid grid-cols-2 text-xs gap-2 lg:text-base">
           <div>
             账户类型：
             {info?.types === "Normal" ? (
               <span className="border p-1 text-xs">普通用户</span>
             ) : (
-              <span className="border p-1 text-xs bg-amber-600 text-white border-amber-600">
+              <span className="border p-1 text-xs bg-rose-600 text-white border-rose-600">
                 订阅用户
               </span>
             )}

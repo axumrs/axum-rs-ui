@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../../components/Card";
+import Card from "../../../../components/Card";
 import Link from "next/link";
-import { geta, posta } from "../../../fetcher/fetcher";
+import { geta, posta } from "../../../../fetcher/fetcher";
 import { useRouter } from "next/router";
-import { getToken } from "../../../utils/cookie";
-import Toast from "../../../components/Toast";
-import usdt2rmb from "../../../utils/usdt2rmb";
-import PageMeta from "../../../components/PageMeta";
-import PageTitle from "../../../components/PageTitle";
-import { getTronWeb, sendUSDT } from "../../../utils/tronlink";
-import MsgBox from "../../../components/MsgBox";
-import Loading from "../../../components/Loading";
+import { getToken } from "../../../../utils/cookie";
+import Toast from "../../../../components/Toast";
+import usdt2rmb from "../../../../utils/usdt2rmb";
+import PageMeta from "../../../../components/PageMeta";
+import PageTitle from "../../../../components/PageTitle";
+import { getTronWeb, sendUSDT } from "../../../../utils/tronlink";
+import MsgBox from "../../../../components/MsgBox";
+import Loading from "../../../../components/Loading";
 /*
 {
   "id": 15,

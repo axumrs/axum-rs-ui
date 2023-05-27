@@ -48,42 +48,52 @@ export default function OrderIndex({ page }) {
       <PageMeta>订单列表</PageMeta>
       <PageTitle>订单列表</PageTitle>
 
-      <Card>
+      <Card className="mx-3 lg:mx-0">
         <div className="prose max-w-none w-full overflow-x-auto">
-          <table>
+          <table className="text-xs lg:text-base">
             <thead>
               <tr>
-                <th>订单编号</th>
-                <th>订单金额</th>
-                <th>订单识别码</th>
-                <th>订单状态</th>
-                <th>订单时间</th>
-                <th>操作</th>
+                <th className="w-1/6">订单编号</th>
+                <th className="w-1/6">订单金额</th>
+                <th className="w-1/6">订单识别码</th>
+                <th className="w-1/6">订单状态</th>
+                <th className="w-1/6">订单时间</th>
+                <th className="w-1/6">操作</th>
               </tr>
             </thead>
             <tbody>
               {orderPaginate?.data.map((o) => (
                 <tr key={o.id}>
-                  <td>{o.order_num}</td>
-                  <td>
+                  <td className="w-1/6 truncate">{o.order_num}</td>
+                  <td className="w-1/6 truncate">
                     $ {o.price / 100} (¥{usdt2rmb(o.price, 100)})
                   </td>
-                  <td>{o.code}</td>
-                  <td>
+                  <td className="w-1/6 truncate">{o.code}</td>
+                  <td className="w-1/6 truncate">
                     {o.status === "Finished" ? (
                       <span className="text-green-600">已完成</span>
                     ) : (
                       <span className="text-rose-600">待支付</span>
                     )}
                   </td>
-                  <td>{datetimeFormat(o.dateline)}</td>
-                  <td>
+                  <td className="w-1/6 truncate">
+                    {datetimeFormat(o.dateline)}
+                  </td>
+                  <td className="w-1/6 truncate">
                     <Link
                       href={`/user/order/${o.id}`}
                       className="border no-underline px-3 py-1 bg-blue-500 font-light text-white hover:bg-blue-600"
                     >
-                      {o.status === "Finished" ? "详情" : "支付"}
+                      {o.status === "Finished" ? "订单详情" : "支付"}
                     </Link>
+                    {o.status !== "Finished" && (
+                      <Link
+                        href={`/user/order/${o.id}/apply`}
+                        className="border no-underline px-3 py-1 bg-cyan-500 font-light text-white hover:bg-cyan-600"
+                      >
+                        支付证明
+                      </Link>
+                    )}
                   </td>
                 </tr>
               ))}
