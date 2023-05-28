@@ -36,13 +36,13 @@ export default function SubjectIndex({ subjectPaginate }) {
         {subjectList.map(({ subject: s, is_purchased }) => (
           <Card className="hover:shadow" key={s.id}>
             <div className="grid grid-cols-12 gap-x-2">
-              <div className="col-span-2">
+              <div className="col-span-2 lg:col-span-2">
                 <img
                   src="https://cdn.hashnode.com/res/hashnode/image/upload/v1607082785538/EryuLRriM.png?w=200&h=200&fit=crop&crop=entropy&auto=compress,format&format=webp"
                   className="w-full object-cover"
                 />
               </div>
-              <div className="col-span-10">
+              <div className="col-span-10 lg:col-span-10">
                 <h3 className="">
                   <Link
                     href={`/subject/${s.slug}`}

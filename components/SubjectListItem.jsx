@@ -14,12 +14,12 @@ export default function SubjectListItem({
   return (
     <>
       <div
-        className={`flex p-4 bg-gray-100 rounded-lg justify-start items-center space-x-2 hover:bg-gray-200 ${className}`}
+        className={`grid grid-cols-12 p-4 bg-gray-100 rounded-lg gap-x-2 hover:bg-gray-200 ${className}`}
       >
-        <div className="flex-shrink-0 w-1/12 bg-red-50 flex flex-col justify-center items-center">
-          <img src={img} className="w-full" />
+        <div className=" col-span-2 lg:col-span-1">
+          <img src={img} className="w-full h-full object-scale-down" />
         </div>
-        <div className="w-11/12">
+        <div className="col-span-10 lg:col-span-11">
           <h3 className={truncateCss}>
             <Link href={href} className="text-lg font-semibold hover:underline">
               {name}
