@@ -12,6 +12,7 @@ import { getTronWeb, sendUSDT } from "../../../../utils/tronlink";
 import MsgBox from "../../../../components/MsgBox";
 import Loading from "../../../../components/Loading";
 import datelineFormat from "../../../../utils/dtf";
+import code from "../../../../utils/code";
 
 const payTypesDict = {
   TronLink: "TronLink钱包",
@@ -32,7 +33,7 @@ export default function OrderDetail() {
   useEffect(() => {
     geta(`/user/order/${id}`, getToken())
       .then((res) => {
-        if (res?.code === 0) {
+        if (res?.code === code.OK) {
           const { data } = res;
           console.log(data);
           const snap = data?.snap || "[]";
@@ -40,11 +41,11 @@ export default function OrderDetail() {
           setOrderSnap(JSON.parse(snap));
           return;
         }
-        if (res?.code === 9527) {
+        if (res?.code === code.Jwt) {
           router.push(`/login?r=/user/order/${id}`);
           return;
         }
-        if (res?.code !== 0) {
+        if (res?.code !== code.OK) {
           setToastMsg("获取失败，请检查你的网络");
           return;
         }

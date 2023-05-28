@@ -9,6 +9,7 @@ import Paginate from "../../../components/Paginate";
 import Link from "next/link";
 import usdt2rmb from "../../../utils/usdt2rmb";
 import datetimeFormat from "../../../utils/dtf";
+import code from "../../../utils/code";
 
 export default function OrderIndex({ page }) {
   const [orderPaginate, setOrderPaginate] = useState({
@@ -22,17 +23,17 @@ export default function OrderIndex({ page }) {
   useEffect(() => {
     geta(`/user/order?page_size=30&page=${page}`, getToken())
       .then((res) => {
-        if (res?.code === 0) {
+        if (res?.code === code.OK) {
           const { data } = res;
           console.log(data);
           setOrderPaginate({ ...data });
           return;
         }
-        if (res?.code === 9527) {
+        if (res?.code === code.Jwt) {
           router.push(`/login?r=/user/order`);
           return;
         }
-        if (res?.code !== 0) {
+        if (res?.code !== code.OK) {
           setToastMsg("获取失败，请检查你的网络");
           return;
         }
@@ -62,53 +63,60 @@ export default function OrderIndex({ page }) {
               </tr>
             </thead>
             <tbody>
-              {orderPaginate?.data.map((o) => (
-                <tr key={o.id}>
-                  <td className="w-1/6 truncate">{o.order_num}</td>
-                  <td className="w-1/6 truncate">
-                    $ {o.price / 100} (¥{usdt2rmb(o.price, 100)})
-                  </td>
-                  <td className="w-1/6 truncate">{o.code}</td>
-                  <td className="w-1/6 truncate">
-                    {o.status === "Finished" ? (
-                      <span className="text-green-600">已完成</span>
-                    ) : (
-                      <span className="text-rose-600">待支付</span>
-                    )}
-                  </td>
-                  <td className="w-1/6 truncate">
-                    {datetimeFormat(o.dateline)}
-                  </td>
-                  <td className="w-1/6 truncate">
-                    <Link
-                      href={`/user/order/${o.id}`}
-                      className="border no-underline px-3 py-1 bg-blue-500 font-light text-white hover:bg-blue-600"
-                    >
-                      {o.status === "Finished" ? "订单详情" : "支付"}
-                    </Link>
-                    {o.status !== "Finished" && (
+              {orderPaginate?.data && orderPaginate?.data.length ? (
+                orderPaginate?.data.map((o) => (
+                  <tr key={o.id}>
+                    <td className="w-1/6 truncate">{o.order_num}</td>
+                    <td className="w-1/6 truncate">
+                      $ {o.price / 100} (¥{usdt2rmb(o.price, 100)})
+                    </td>
+                    <td className="w-1/6 truncate">{o.code}</td>
+                    <td className="w-1/6 truncate">
+                      {o.status === "Finished" ? (
+                        <span className="text-green-600">已完成</span>
+                      ) : (
+                        <span className="text-rose-600">待支付</span>
+                      )}
+                    </td>
+                    <td className="w-1/6 truncate">
+                      {datetimeFormat(o.dateline)}
+                    </td>
+                    <td className="w-1/6 truncate">
                       <Link
-                        href={`/user/order/${o.id}/apply`}
-                        className="border no-underline px-3 py-1 bg-cyan-500 font-light text-white hover:bg-cyan-600"
+                        href={`/user/order/${o.id}`}
+                        className="border no-underline px-3 py-1 bg-blue-500 font-light text-white hover:bg-blue-600"
                       >
-                        支付证明
+                        {o.status === "Finished" ? "订单详情" : "支付"}
                       </Link>
-                    )}
-                  </td>
+                      {o.status !== "Finished" && (
+                        <Link
+                          href={`/user/order/${o.id}/apply`}
+                          className="border no-underline px-3 py-1 bg-cyan-500 font-light text-white hover:bg-cyan-600"
+                        >
+                          支付证明
+                        </Link>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6}>没有记录</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
       </Card>
-
-      <div className="my-3 text-right mx-3 lg:mx-0">
-        <Paginate
-          page={orderPaginate.page}
-          totalPage={orderPaginate.total_page}
-          baseUrl="/user/order"
-        />
-      </div>
+      {orderPaginate.total_page > 0 && (
+        <div className="my-3 text-right mx-3 lg:mx-0">
+          <Paginate
+            page={orderPaginate.page}
+            totalPage={orderPaginate.total_page}
+            baseUrl="/user/order"
+          />
+        </div>
+      )}
     </>
   );
 }

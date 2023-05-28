@@ -10,8 +10,9 @@ import {
 } from "@heroicons/react/24/outline";
 import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
-import { get } from "../../../fetcher/fetcher";
+import { get, geta } from "../../../fetcher/fetcher";
 import datelineFormat from "../../../utils/dtf";
+import { getTokenSSR } from "../../../utils/cookie";
 
 export default function TopicDetail({ topic }) {
   useEffect(() => {
@@ -95,10 +96,11 @@ export default function TopicDetail({ topic }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, req, res }) {
   const { subject_slug, slug } = params;
+  const token = getTokenSSR({ req, res });
 
-  const { data: topic } = await get(`/topic/${subject_slug}/${slug}`);
+  const { data: topic } = await geta(`/topic/${subject_slug}/${slug}`, token);
 
   return { props: { topic } };
 }
