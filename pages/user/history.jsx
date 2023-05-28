@@ -42,6 +42,10 @@ export default function UserHistory({ page }) {
 
           return;
         }
+        if (res?.code !== code.OK) {
+          setToast("操作失败，请检查你的网络");
+          return;
+        }
       })
       .catch((e) => {
         console.log(e);
