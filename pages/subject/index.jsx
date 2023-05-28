@@ -4,13 +4,15 @@ import Card from "../../components/Card";
 import {
   ShoppingCartIcon,
   CurrencyDollarIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/solid";
 import PageTitle from "../../components/PageTitle";
 import Paginate from "../../components/Paginate";
-import { get } from "../../fetcher/fetcher";
+import { get, geta } from "../../fetcher/fetcher";
 import Link from "next/link";
 import { useCartContext } from "../../contexts/CartContext";
 import { useRouter } from "next/router";
+import { getTokenSSR } from "../../utils/cookie";
 
 export default function SubjectIndex({ subjectPaginate }) {
   const { data: subjectList } = subjectPaginate;
@@ -31,7 +33,7 @@ export default function SubjectIndex({ subjectPaginate }) {
       <PageTitle>专题</PageTitle>
 
       <div className="px-3 grid grid-cols-1 gap-3 lg:grid-cols-2 lg:px-0">
-        {subjectList.map((s) => (
+        {subjectList.map(({ subject: s, is_purchased }) => (
           <Card className="hover:shadow" key={s.id}>
             <div className="grid grid-cols-12 gap-x-2">
               <div className="col-span-2">
@@ -63,18 +65,27 @@ export default function SubjectIndex({ subjectPaginate }) {
                 </span>
               )}
               {s.price > 0 ? (
-                <>
-                  <div className="flex justify-start items-center space-x-1 text-red-600 rounded px-2 py-1 border border-red-600">
-                    <CurrencyDollarIcon className="w-4 h-4" />
-                    <span className="">{s.price / 100}</span>
-                  </div>
-                  <button
-                    className="border border-blue-700 text-white bg-blue-600 px-2 py-1 rounded"
-                    onClick={addToCart({ ...s })}
-                  >
-                    <ShoppingCartIcon className="w-6 h-6" />
-                  </button>
-                </>
+                is_purchased ? (
+                  <>
+                    <div className="flex justify-start items-center space-x-1 bg-blue-500 text-white px-2 py-1 border text-sm border-blue-500 rounded">
+                      <CheckCircleIcon className="w-4 h-4" />
+                      <span>你已购买本专题</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex justify-start items-center space-x-1 text-red-600 rounded px-2 py-1 border border-red-600">
+                      <CurrencyDollarIcon className="w-4 h-4" />
+                      <span className="">{s.price / 100}</span>
+                    </div>
+                    <button
+                      className="border border-blue-700 text-white bg-blue-600 px-2 py-1 rounded"
+                      onClick={addToCart({ ...s })}
+                    >
+                      <ShoppingCartIcon className="w-6 h-6" />
+                    </button>
+                  </>
+                )
               ) : (
                 <span className="text-sm border bg-emerald-600 text-white rounded px-2 py-1">
                   免费
@@ -99,12 +110,14 @@ export default function SubjectIndex({ subjectPaginate }) {
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query, req, res }) {
   const { page: pageStr } = query;
   const page = parseInt(pageStr, 10) || 0;
+  const token = getTokenSSR({ req, res });
 
-  const { data: subjectPaginate } = await get(
-    `/subject?page=${page}&page_size=30`
+  const { data: subjectPaginate } = await geta(
+    `/subject?page=${page}&page_size=30`,
+    token
   );
 
   return { props: { subjectPaginate } };
