@@ -52,10 +52,11 @@ export default function TopicListItem({
           <p className="font-normal">{topic.summary}</p>
         </div>
         {topic.cover ? (
-          <div className="w-full bg-green-50 mt-6 shrink-0 lg:w-1/4">
+          <div className="w-full  mt-6 shrink-0 lg:w-1/4">
             <img
-              src="https://cdn.hashnode.com/res/hashnode/image/upload/v1684170814296/50fd7774-8684-45b1-ab70-6e5f82707b3f.png?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp"
+              src={topic.cover}
               className="w-full object-cover rounded-lg"
+              alt={topic.title}
             />
           </div>
         ) : (

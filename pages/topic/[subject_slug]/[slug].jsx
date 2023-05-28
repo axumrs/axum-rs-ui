@@ -41,8 +41,9 @@ export default function TopicDetail({ resp }) {
         {topic?.cover && (
           <div className="mb-3 mx-3 lg:mx-0">
             <img
-              src="https://cdn.hashnode.com/res/hashnode/image/upload/v1684170814296/50fd7774-8684-45b1-ab70-6e5f82707b3f.png?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp"
+              src={topic?.cover}
               className="w-full object-cover rounded-md border"
+              alt={topic?.title}
             />
           </div>
         )}

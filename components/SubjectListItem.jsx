@@ -17,7 +17,11 @@ export default function SubjectListItem({
         className={`grid grid-cols-12 p-4 bg-gray-100 rounded-lg gap-x-2 hover:bg-gray-200 ${className}`}
       >
         <div className=" col-span-2 lg:col-span-1">
-          <img src={img} className="w-full h-full object-scale-down" />
+          <img
+            src={img}
+            className="w-full h-full object-scale-down"
+            alt={name}
+          />
         </div>
         <div className="col-span-10 lg:col-span-11">
           <h3 className={truncateCss}>

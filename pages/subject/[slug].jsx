@@ -38,10 +38,15 @@ export default function SubjectDetail({ subjectIfPurchased, topicPaginate }) {
           <div
             className={`flex p-4  rounded-lg justify-center items-center space-x-2`}
           >
-            <div className="flex-shrink-0 bg-red-50 flex flex-col justify-center items-center">
+            <div className="flex-shrink-0  flex flex-col justify-center items-center">
               <img
-                src="https://cdn.hashnode.com/res/hashnode/image/upload/v1607082785538/EryuLRriM.png?w=200&h=200&fit=crop&crop=entropy&auto=compress,format&format=webp"
+                src={
+                  subject.cover
+                    ? subject.cover
+                    : "https://file.axum.rs/icons/rust/rust-plain.svg"
+                }
                 className="w-10 object-cover rounded"
+                alt={subject.name}
               />
             </div>
             <div className="">

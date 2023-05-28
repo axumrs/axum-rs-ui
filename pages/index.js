@@ -18,7 +18,11 @@ export default function Home({ subjectList = [], topicList = [] }) {
             {subjectList.map((s) => (
               <SubjectListItem
                 key={s.id}
-                img="https://cdn.hashnode.com/res/hashnode/image/upload/v1607082785538/EryuLRriM.png?w=200&h=200&fit=crop&crop=entropy&auto=compress,format&format=webp"
+                img={
+                  s.cover
+                    ? s.cover
+                    : "https://file.axum.rs/icons/rust/rust-plain.svg"
+                }
                 href={`/subject/${s.slug}`}
                 name={s.name}
                 summary={s.summary}

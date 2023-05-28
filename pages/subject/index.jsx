@@ -38,8 +38,13 @@ export default function SubjectIndex({ subjectPaginate }) {
             <div className="grid grid-cols-12 gap-x-2">
               <div className="col-span-2 lg:col-span-2">
                 <img
-                  src="https://cdn.hashnode.com/res/hashnode/image/upload/v1607082785538/EryuLRriM.png?w=200&h=200&fit=crop&crop=entropy&auto=compress,format&format=webp"
+                  src={
+                    s.cover
+                      ? s.cover
+                      : "https://file.axum.rs/icons/rust/rust-plain.svg"
+                  }
                   className="w-full object-cover"
+                  alt={s.name}
                 />
               </div>
               <div className="col-span-10 lg:col-span-10">
