@@ -30,10 +30,10 @@ export default function TopicListItem({
         </div>
       )}
 
-      <div className="flex  flex-col-reverse justify-start items-start space-y-6 lg:flex-row lg:space-x-1 lg:space-y-0">
-        <div className={`my-2 flex-shrink-0 w-full ${css}`}>
-          <div className="flex justify-start items-center space-x-1">
-            <h3 className="my-2 flex-shrink-0 w-full">
+      <div className="flex  flex-col-reverse justify-start items-start space-y-6 lg:flex-row lg:space-x-1 lg:space-y-0 ">
+        <div className={`my-2  w-full  ${css}`}>
+          <div className="flex justify-start items-center space-x-1 ">
+            <h3 className="my-2 shrink-0">
               <Link
                 href={`/topic/${subject.slug}/${topic.slug}`}
                 className="text-lg font-bold lg:text-xl lg:font-extrabold hover:text-rose-800"
@@ -42,7 +42,7 @@ export default function TopicListItem({
               </Link>
             </h3>
             {topic.try_readable ? (
-              <span className="bg-cyan-500 text-white text-xs rounded-md py-[0.125rem] px-1 border border-cyan-600">
+              <span className="bg-orange-600/75 shrink-0 text-white text-xs rounded-md py-[0.125rem] px-1 border border-orange-600 z-10 inline-block ">
                 支持试读
               </span>
             ) : (
@@ -51,8 +51,8 @@ export default function TopicListItem({
           </div>
           <p className="font-normal">{topic.summary}</p>
         </div>
-        {topic.cover ? (
-          <div className="w-full mt-6 lg:w-1/4">
+        {topic.cover || topic.id % 2 === 0 ? (
+          <div className="w-full bg-green-50 mt-6 shrink-0 lg:w-1/4">
             <img
               src="https://cdn.hashnode.com/res/hashnode/image/upload/v1684170814296/50fd7774-8684-45b1-ab70-6e5f82707b3f.png?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp"
               className="w-full object-cover rounded-lg"
@@ -63,7 +63,7 @@ export default function TopicListItem({
         )}
       </div>
       <div className="flex justify-start items-start w-full  overflow-x-auto space-x-1 text-gray-500">
-        <span className="inline-block flex-shrink-0">
+        <span className="inline-block shrink-0">
           <BookmarkIcon className="w-4 h-4" />
         </span>
         {topic.tags

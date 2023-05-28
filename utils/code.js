@@ -5,4 +5,5 @@ export default {
   Notfound: 9529,
   AlreadyExists: 9530,
   MustSubscribe: 9531,
+  UnPurchased: 9532,
 };

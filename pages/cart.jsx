@@ -65,7 +65,17 @@ export default function Cart() {
       <PageMeta>购物车</PageMeta>
       <PageTitle>购物车</PageTitle>
 
-      <Toast.Error isShow={toastMsg && toastMsg.length} msg={toastMsg} />
+      {toastMsg && (
+        <Toast.Error
+          callback={() => {
+            setToastMsg("");
+          }}
+        >
+          {toastMsg}
+        </Toast.Error>
+      )}
+
+      {/* <div>{JSON.stringify(items)}</div> */}
 
       <div className="relative">
         {isLoading && <Loading>正在创建订单</Loading>}
