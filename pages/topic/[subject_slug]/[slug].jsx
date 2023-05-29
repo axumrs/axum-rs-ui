@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../../components/Card";
 import PageMeta from "../../../components/PageMeta";
 import Link from "next/link";
@@ -10,34 +10,101 @@ import {
 } from "@heroicons/react/24/outline";
 import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
-import { get, geta } from "../../../fetcher/fetcher";
+import { geta, posta } from "../../../fetcher/fetcher";
 import datelineFormat from "../../../utils/dtf";
 import { getTokenSSR } from "../../../utils/cookie";
 import code from "../../../utils/code";
-import PageTitle from "../../../components/PageTitle";
 import { useCartContext } from "../../../contexts/CartContext";
 import { useRouter } from "next/router";
 import {
   CurrencyDollarIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/solid";
+import CaptchaForTopic from "../../../components/CaptchaForTopic";
+import Toast, { ToastDefaultOption } from "../../../components/Toast";
 
 export default function TopicDetail({ resp }) {
-  const topic = resp?.data || { tag_names: "" };
+  const {
+    data: { detail: topic, protect_ids, captcha_type },
+  } = resp;
+
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const [toast, setToast] = useState({ ...ToastDefaultOption });
+  const [captchaIsLoading, setCaptchaLoading] = useState(false);
+  const [protectedContentList, setProtectedContentList] = useState([]);
 
   useEffect(() => {
     hljs.highlightAll();
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    document.querySelectorAll(".protected_content").forEach((e) => {
+      e.classList.add("protected_content");
+      e.addEventListener("click", () => {
+        setShowCaptcha(true);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    setShowCaptcha(
+      captcha_type !== "WithOut" && protect_ids && protect_ids.length > 0
+    );
+  }, []);
+
+  useEffect(() => {
+    if (protectedContentList && protectedContentList.length > 0) {
+      protectedContentList.map(({ id, content }) => {
+        const element = document.getElementById(`protected_content_${id}`);
+        element.classList.remove("protected_content");
+        element.innerHTML = content;
+      });
+      hljs.highlightAll();
+    }
+  }, [protectedContentList]);
+
+  function fetchProtectdContent(token, ekey, ref) {
+    setCaptchaLoading(true);
+    posta("/topic/protected-content", { response: token, protect_ids })
+      .then((res) => {
+        const resCode = res?.code;
+        if (resCode === code.OK) {
+          setProtectedContentList([...res.data]);
+          setToast({ type: "success", msg: "内容获取成功" });
+          return;
+        }
+        setToast({ type: "error", msg: res?.msg });
+      })
+      .catch((e) => {
+        setToast({ type: "error", msg: "操作失败，请检查你的网络" });
+        console.log(e);
+      })
+      .finally(() => {
+        setShowCaptcha(false);
+        setCaptchaLoading(false);
+        ref.current.resetCaptcha();
+      });
+  }
 
   return (
     <>
       <>
-        <PageMeta>
-          {topic?.title} - {topic?.subject_name}
-        </PageMeta>
-        {/* <div>{JSON.stringify(resp)}</div> */}
+        <PageMeta>{`${topic?.title} - ${topic?.subject_name}`}</PageMeta>
+        {showCaptcha && (
+          <CaptchaForTopic
+            callback={fetchProtectdContent}
+            isLoading={captchaIsLoading}
+          />
+        )}
+        {toast.msg && (
+          <Toast
+            {...toast}
+            callback={() => setToast({ ...ToastDefaultOption })}
+          >
+            {toast.msg}
+          </Toast>
+        )}
+        {/* <div>{JSON.stringify(protectedContentList)}</div> */}
         {topic?.cover && (
           <div className="mb-3 mx-3 lg:mx-0">
             <img
@@ -82,18 +149,20 @@ export default function TopicDetail({ resp }) {
               <span>
                 <TagIcon className="w-4 h-4" />
               </span>
-              {topic?.tag_names
-                .split(",")
-                .filter((t) => t.trim().length > 0)
-                .map((t) => (
-                  <Link
-                    key={`topic-${topic?.id}-tag-${t}`}
-                    className="before:content-['#'] hover:underline hover:decoration-dashed"
-                    href={`/tag/${t}`}
-                  >
-                    {t}
-                  </Link>
-                ))}
+              {topic &&
+                topic.tag_names &&
+                topic?.tag_names
+                  .split(",")
+                  .filter((t) => t.trim().length > 0)
+                  .map((t) => (
+                    <Link
+                      key={`topic-${topic?.id}-tag-${t}`}
+                      className="before:content-['#'] hover:underline hover:decoration-dashed"
+                      href={`/tag/${t}`}
+                    >
+                      {t}
+                    </Link>
+                  ))}
             </div>
           </div>
         </Card>

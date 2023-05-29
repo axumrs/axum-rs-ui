@@ -1,4 +1,5 @@
 export default {
+  Unknown: -1,
   OK: 0,
   Jwt: 9527,
   Validator: 9528,
