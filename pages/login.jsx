@@ -17,7 +17,7 @@ const defaultMsg = {
   response: "请完成人机验证",
 };
 
-export default function Login() {
+export default function Login({ referer }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -39,6 +39,18 @@ export default function Login() {
     query: { r },
   } = router;
 
+  const [refererUrl, setRefererUrl] = useState("");
+
+  const returnPageUrl = () => {
+    return r ? r : refererUrl ? refererUrl : "/user";
+  };
+
+  useEffect(() => {
+    if (referer) {
+      const url = new URL(referer);
+      setRefererUrl(url.pathname);
+    }
+  }, []);
   useEffect(() => {
     setLoading(true);
     setLoadingText("正在载入");
@@ -77,7 +89,7 @@ export default function Login() {
         const { data } = res;
         // setAuth({ ...data });
         setCookie(process.env.NEXT_PUBLIC_TOKEN_COOKIE_NAME, data?.token);
-        const returnUrl = r ? r : "/user";
+        const returnUrl = returnPageUrl();
         router.push(returnUrl);
         return;
       }
@@ -111,7 +123,7 @@ export default function Login() {
   return (
     <>
       <PageMeta>用户登录</PageMeta>
-      {/* <div>{JSON.stringify(ip)}</div> */}
+      {/* <div>{JSON.stringify(returnPageUrl())}</div> */}
       {alterMsg && (
         <MsgBox
           okHandler={() => {
@@ -189,12 +201,8 @@ export default function Login() {
 }
 Login.getLayout = SinLayout;
 
-// export async function getServerSideProps() {
-//   const res = await fetch("https://httpbin.org/ip", {
-//     method: "GET",
-//     headers: { "Content-Type": "application/json" },
-//   });
-//   const { origin: ip } = await res.json();
+export async function getServerSideProps({ req }) {
+  const referer = req.headers.referer || "";
 
-//   return { props: { ip } };
-// }
+  return { props: { referer } };
+}

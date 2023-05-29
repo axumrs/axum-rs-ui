@@ -9,9 +9,14 @@ export default function User() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const token = getToken();
-    setToken(token);
-  }, [open]);
+    const t = setTimeout(() => {
+      const token = getToken();
+      setToken(token);
+    }, 1000);
+    return () => {
+      clearTimeout(t);
+    };
+  });
 
   if (!token) {
     return (
@@ -21,12 +26,14 @@ export default function User() {
     );
   }
   return (
-    <UserActions
-      open={open}
-      setOpen={() => {
-        setOpen(!open);
-      }}
-    />
+    <>
+      <UserActions
+        open={open}
+        setOpen={() => {
+          setOpen(!open);
+        }}
+      />
+    </>
   );
 }
 
