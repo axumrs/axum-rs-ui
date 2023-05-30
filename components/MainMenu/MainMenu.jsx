@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   NewspaperIcon,
@@ -14,14 +14,29 @@ import {
   CreditCardIcon,
   IdentificationIcon,
   ShoppingCartIcon,
+  UserPlusIcon,
+  ServerIcon,
 } from "@heroicons/react/24/outline";
 import Item from "./Item";
 import Mask from "./Mask";
 import { Blog, Email, Github, Telegram, Youtube } from "../Icons/Bootstrap";
 import { useMainMenuContext } from "../../contexts/MainMenuContext";
+import { getToken } from "../../utils/cookie";
 
 export default function MainMenu({ className, open = false }) {
   const { toggle } = useMainMenuContext();
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setToken(getToken());
+    }, 1000);
+    return () => {
+      clearTimeout(t);
+    };
+  });
+
   const fullClassName = `${
     open ? "block" : "hidden"
   } fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md lg:static lg:w-full lg:bg-transparent lg:z-auto lg:shadow-none lg:block ${className}`;
@@ -66,35 +81,72 @@ export default function MainMenu({ className, open = false }) {
               更多
             </Item>
           </ul>
-          {/* 用户中心-已登录 */}
-          <ul className="py-1 pt-4 hidden lg:block">
-            <Item icon={<IdentificationIcon />} isWidest={false} href="/user">
-              个人中心
-            </Item>
-            <Item icon={<CreditCardIcon />} isWidest={false} href="/user/order">
-              订单列表
-            </Item>
-            <Item
-              icon={<DocumentTextIcon />}
-              isWidest={false}
-              href="/user/history"
-            >
-              学习记录
-            </Item>
-            <Item icon={<UserIcon />} isWidest={false} href="/user/profile">
-              个人信息
-            </Item>
-            <Item icon={<KeyIcon />} isWidest={false} href="/user/changepwd">
-              修改密码
-            </Item>
-            <Item
-              icon={<ArrowRightOnRectangleIcon />}
-              isWidest={false}
-              href="/user/logout"
-            >
-              退出登录
-            </Item>
-          </ul>
+          {token ? (
+            <>
+              {/* 用户中心-已登录 */}
+              <ul className="py-1 pt-4 hidden lg:block">
+                <Item
+                  icon={<IdentificationIcon />}
+                  isWidest={false}
+                  href="/user"
+                >
+                  个人中心
+                </Item>
+                <Item
+                  icon={<CreditCardIcon />}
+                  isWidest={false}
+                  href="/user/order"
+                >
+                  订单列表
+                </Item>
+                <Item
+                  icon={<ServerIcon />}
+                  isWidest={false}
+                  href="/user/purchased_service"
+                >
+                  已购项目
+                </Item>
+                <Item
+                  icon={<DocumentTextIcon />}
+                  isWidest={false}
+                  href="/user/history"
+                >
+                  学习记录
+                </Item>
+                <Item icon={<UserIcon />} isWidest={false} href="/user/profile">
+                  个人信息
+                </Item>
+                <Item
+                  icon={<KeyIcon />}
+                  isWidest={false}
+                  href="/user/changepwd"
+                >
+                  修改密码
+                </Item>
+                <Item
+                  icon={<ArrowRightOnRectangleIcon />}
+                  isWidest={false}
+                  href="/user/logout"
+                >
+                  退出登录
+                </Item>
+              </ul>
+            </>
+          ) : (
+            <>
+              {/* 用户中心-未登录 */}
+              <ul className="py-1 pt-4 hidden lg:block">
+                <Item icon={<UserPlusIcon />} isWidest={false} href="/register">
+                  用户注册
+                </Item>
+
+                <Item icon={<KeyIcon />} isWidest={false} href="/login">
+                  用户登录
+                </Item>
+              </ul>
+            </>
+          )}
+
           {/* 社交媒体 */}
           <ul className="py-1 pt-4 px-1 flex space-x-3 justify-center items-center flex-wrap">
             <_SocialItem

@@ -77,6 +77,9 @@ function UserActions({ open = false, setOpen = () => {} }) {
           <UserActionItem onClick={setOpen} href="/user/order">
             订单列表
           </UserActionItem>
+          <UserActionItem onClick={setOpen} href="/user/purchased_service">
+            已购项目
+          </UserActionItem>
           <UserActionItem onClick={setOpen} href="/user/history">
             学习记录
           </UserActionItem>

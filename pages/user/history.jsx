@@ -10,6 +10,7 @@ import { geta } from "../../fetcher/fetcher";
 import datelineFormat from "../../utils/dtf";
 import code from "../../utils/code";
 import { useRouter } from "next/router";
+import { nanoid } from "nanoid";
 
 export default function UserHistory({ page }) {
   const [historyPaginate, setHistoryPaginate] = useState({
@@ -23,7 +24,7 @@ export default function UserHistory({ page }) {
 
   useEffect(() => {
     setLoading(true);
-    geta(`/user/history?page=${page}&page_size=1`)
+    geta(`/user/history?page=${page}&page_size=30`)
       .then((res) => {
         if (res?.code === code.OK) {
           setHistoryPaginate({ ...res?.data });
@@ -76,7 +77,7 @@ export default function UserHistory({ page }) {
         {historyPaginate.data && historyPaginate.data.length > 0 ? (
           <ul className="flex flex-col divide-y">
             {historyPaginate.data.map((h) => (
-              <li key={h?.id} className="py-2">
+              <li key={`history-${h?.id}-${nanoid()}`} className="py-2">
                 <Item
                   subject={{ slug: h.subject_slug, name: h.subject_name }}
                   topic={{ ...h, tags: h.tag_names.split(",") }}

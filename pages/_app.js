@@ -11,6 +11,11 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://file.axum.rs/asset/logo.png"
+        />
       </Head>
 
       <MainMenuContextProvider value={false}>
