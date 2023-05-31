@@ -31,7 +31,7 @@ export default function Cart() {
     setLoading(true);
     posta(
       "/user/order",
-      { snap: JSON.stringify(items), price: amount() },
+      { snap: JSON.stringify(items), price: amount() * 100 },
       getToken()
     )
       .then((data) => {
