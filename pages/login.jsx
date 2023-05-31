@@ -42,7 +42,15 @@ export default function Login({ referer }) {
   const [refererUrl, setRefererUrl] = useState("");
 
   const returnPageUrl = () => {
-    return r ? r : refererUrl ? refererUrl : "/user";
+    if (r) {
+      return r;
+    }
+    if (refererUrl) {
+      if (refererUrl !== "/register") {
+        return refererUrl;
+      }
+    }
+    return "/user";
   };
 
   useEffect(() => {
