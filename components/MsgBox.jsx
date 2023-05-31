@@ -11,7 +11,7 @@ export default function MsgBox({
 }) {
   return (
     <div className="fixed inset-0 w-screen h-screen bg-gray-900/50 z-[100] flex flex-col justify-center items-center">
-      <div className="min-w-[32rem] p-6 border bg-white rounded-md shadow-md">
+      <div className="w-[90%] max-w-md p-6 border bg-white rounded-md shadow-md">
         <div className="flex justify-start items-center space-x-1">
           <img
             src="https://file.axum.rs/asset/logo.png"
