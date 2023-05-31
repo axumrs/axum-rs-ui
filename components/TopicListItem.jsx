@@ -32,7 +32,7 @@ export default function TopicListItem({
 
       <div className="flex  flex-col-reverse justify-start items-start space-y-6 lg:flex-row lg:space-x-1 lg:space-y-0 ">
         <div className={`my-2  w-full  ${css}`}>
-          <div className="flex justify-start items-center space-x-1 ">
+          <div className="flex justify-start items-center space-x-1 flex-wrap ">
             <h3 className="my-2 shrink-0 max-w-full">
               <Link
                 href={`/topic/${subject.slug}/${topic.slug}`}
