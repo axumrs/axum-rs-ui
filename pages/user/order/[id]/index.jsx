@@ -424,6 +424,16 @@ function PayMethod({ order, setToastMsg, txId, setTxId }) {
               alt={toAddr}
             />
           </div>
+          <div className="mb-3 p-3 border bg-violet-500 text-white inline-block border-violet-600 rounded shadow">
+            已完成转账？请
+            <Link
+              href={`/user/order/${order.id}/apply`}
+              className="underline decoration-dashed"
+            >
+              填写支付证明
+            </Link>
+            ，以便管理员核对并完成此订单。
+          </div>
         </div>
         <ul className="list-decimal translate-x-4">
           <li>该支付方式需要管理员手动确认订单</li>
@@ -467,6 +477,16 @@ function PayMethod({ order, setToastMsg, txId, setTxId }) {
             className="w-48 object-cover border rounded lg:w-64"
             alt="支付宝"
           />
+        </div>
+        <div className="mb-3 p-3 border bg-violet-500 text-white inline-block border-violet-600 rounded shadow">
+          已完成转账？请
+          <Link
+            href={`/user/order/${order.id}/apply`}
+            className="underline decoration-dashed"
+          >
+            填写支付证明
+          </Link>
+          ，以便管理员核对并完成此订单。
         </div>
 
         <ul className="list-decimal translate-x-4">
