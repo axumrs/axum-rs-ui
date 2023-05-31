@@ -33,8 +33,17 @@ export default function TopicDetail({ resp }) {
   const [captchaIsLoading, setCaptchaLoading] = useState(false);
   const [protectedContentList, setProtectedContentList] = useState([]);
 
-  useEffect(() => {
+  function domInjector() {
+    document.querySelectorAll(".prose pre").forEach((pre) => {
+      pre.classList.add("pre");
+    });
+    document.querySelectorAll(".prose a").forEach((link) => {
+      link.setAttribute("target", "_blank");
+    });
     hljs.highlightAll();
+  }
+  useEffect(() => {
+    domInjector();
   }, []);
 
   useEffect(() => {
@@ -56,10 +65,12 @@ export default function TopicDetail({ resp }) {
     if (protectedContentList && protectedContentList.length > 0) {
       protectedContentList.map(({ id, content }) => {
         const element = document.getElementById(`protected_content_${id}`);
-        element.classList.remove("protected_content");
-        element.innerHTML = content;
+        const e = document.createElement("div");
+        e.innerHTML = content;
+        element.parentElement.insertBefore(e, element);
+        element.parentElement.removeChild(element);
       });
-      hljs.highlightAll();
+      domInjector();
     }
   }, [protectedContentList]);
 
