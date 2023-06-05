@@ -217,7 +217,7 @@ function _MoreMenuPop() {
           </li> */}
           <li className="px-3 py-2">
             <Link
-              href="donate"
+              href="/donate"
               className="hover:text-red-600 tracking-widest font-normal"
               onClick={() => {
                 toggle();

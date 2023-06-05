@@ -144,7 +144,7 @@ export default function About() {
           <h2>捐助</h2>
           <ul>
             <li>
-              USDT / TRX：<code>TMV6br9JGs6onRExf46JpTYJbxHV9k8888</code>
+              USDT / TRX：<code>TPGEtKJmPJU3naosCcRrVReE2ckFhE9sYM</code>
             </li>
           </ul>
         </div>

@@ -15,11 +15,11 @@ export default function Donate() {
           </p>
           <h2>USDT / TRX</h2>
           <p>
-            钱包地址：<code>TMV6br9JGs6onRExf46JpTYJbxHV9k8888</code>
+            钱包地址：<code>TPGEtKJmPJU3naosCcRrVReE2ckFhE9sYM</code>
           </p>
           <p>
             <img
-              src="https://file.axum.rs/pay/tron.png"
+              src="https://file.axum.rs/pay/tron1.png"
               alt="钱包二维码"
               className="w-40 object-cover border rounded p-1 lg:w-64"
             />
