@@ -1,5 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import { AxumrsCookieProvider } from "@/contexts/AxumrsCookieProvider";
 
 export const metadata: Metadata = {
   title: "AXUM中文网",
@@ -10,7 +12,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: ChildrenProps) {
   return (
     <html lang="zh-Hans">
-      <body>{children}</body>
+      <body>
+        <AxumrsCookieProvider value={cookies().getAll()}>
+          {children}
+        </AxumrsCookieProvider>
+      </body>
     </html>
   );
 }
