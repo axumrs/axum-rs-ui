@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { AxumrsCookieProvider } from "@/contexts/AxumrsCookieProvider";
