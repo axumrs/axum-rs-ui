@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: inherit;
+    @apply font-light;
+  }
+
+  body {
+    @apply bg-slate-50 relative box-border;
+  }
+}

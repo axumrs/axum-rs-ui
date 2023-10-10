@@ -2,6 +2,8 @@ type ChildrenProps = {
   children: React.ReactNode;
 };
 
-type classNameProps = {
+type ClassNameProps = {
   className?: string;
 };
+
+type ComponentProps = ChildrenProps & ClassNameProps;
