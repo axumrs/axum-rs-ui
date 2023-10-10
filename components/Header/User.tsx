@@ -26,6 +26,8 @@ function UserAction({
   setOpen: () => void;
 }) {
   const openCss = open ? "block" : "hidden";
+
+  return <NoAuth />;
   return (
     <>
       <div className="relative">
@@ -79,5 +81,24 @@ function UserActionItem({
         {children}
       </Link>
     </li>
+  );
+}
+
+function NoAuth() {
+  return (
+    <>
+      <Link
+        href="/register"
+        className="py-1 px-3 border rounded-full hidden lg:inline-block hover:bg-gray-50 hover:border-gray-300"
+      >
+        注册
+      </Link>
+      <Link
+        href="/login"
+        className="py-1 px-3 border rounded-full bg-blue-500 text-white border-blue-600 hover:bg-blue-600"
+      >
+        登录
+      </Link>
+    </>
   );
 }
