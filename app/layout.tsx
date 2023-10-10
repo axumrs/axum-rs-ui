@@ -5,6 +5,7 @@ import { AxumrsCookieProvider } from "@/contexts/AxumrsCookieProvider";
 import Header from "@/components/Header";
 import Container from "@/components/Container";
 import MainMenu from "@/components/MainMenu";
+import { MainMenuContextProvider } from "@/contexts/MainMenuContext";
 
 export const metadata: Metadata = {
   title: "AXUM中文网 - 带你使用 axum 构建企业应用 - axum.rs",
@@ -18,15 +19,17 @@ export default function RootLayout({ children }: ChildrenProps) {
     <html lang="zh-Hans">
       <body>
         <AxumrsCookieProvider value={cookies().getAll()}>
-          <Header />
-          <Container className="grid grid-cols-1 gap-0 lg:grid-cols-12 lg:gap-3">
-            <aside className="lg:col-span-2">
-              <MainMenu className="" open={false} />
-            </aside>
-            <main className="col-span-full lg:col-span-10 mt-6">
-              {children}
-            </main>
-          </Container>
+          <MainMenuContextProvider value={false}>
+            <Header />
+            <Container className="grid grid-cols-1 gap-0 lg:grid-cols-12 lg:gap-3">
+              <aside className="lg:col-span-2">
+                <MainMenu className="" />
+              </aside>
+              <main className="col-span-full lg:col-span-10 mt-6">
+                {children}
+              </main>
+            </Container>
+          </MainMenuContextProvider>
         </AxumrsCookieProvider>
       </body>
     </html>

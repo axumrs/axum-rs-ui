@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   NewspaperIcon,
   DocumentDuplicateIcon,
@@ -21,21 +21,25 @@ import Mask from "./Mask";
 import Item from "./Item";
 import { Blog, Email, Github, Telegram, Youtube } from "../Icons/Bootstrap";
 import Link from "next/link";
+import { useMainMenuContext } from "@/contexts/useMainMenuContext";
 
-export default function MainMenu({
-  className = "",
-  open = false,
-}: ClassNameProps & { open?: boolean }) {
+export default function MainMenu({ className = "" }: ClassNameProps) {
   const [token, setToken] = useState("");
+  const { isOpen, toggle } = useMainMenuContext();
 
   const fullClassName = `${
-    open ? "block" : "hidden"
+    isOpen() ? "block" : "hidden"
   } fixed left-0 top-0 bg-white w-3/4 h-screen  z-20 shadow-md lg:static lg:w-full lg:bg-transparent lg:z-auto lg:shadow-none lg:block ${className}`;
   const thisYear = new Date().getFullYear();
 
   return (
     <>
-      <Mask open={open} onClick={() => {}} />
+      <Mask
+        open={isOpen()}
+        onClick={() => {
+          toggle();
+        }}
+      />
 
       <div className={fullClassName}>
         <div className="flex flex-col space-y-3 relative mt-14 bg-white py-3 h-full  lg:mt-6 lg:border lg:rounded-md lg:h-auto lg:divide-y">
