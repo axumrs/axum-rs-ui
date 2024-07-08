@@ -1,8 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <Header />
-  <section>
-    <slot></slot>
-  </section>
+  <form class="col-span-6"></form>
 </template>

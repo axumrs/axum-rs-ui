@@ -1,8 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <Header />
-  <section>
-    <slot></slot>
-  </section>
+  <div class="container mx-auto"><slot></slot></div>
 </template>
