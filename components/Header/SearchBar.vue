@@ -11,7 +11,7 @@ const handleSearch = (e: Event) => {
 
 <template>
   <form
-    class="col-span-8 flex flex-col w-full items-center"
+    class="flex flex-col w-full items-center"
     action="https://www.google.com/search"
     method="get"
     target="_blank"
