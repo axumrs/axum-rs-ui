@@ -74,7 +74,7 @@ const { asideMenu } = use$status();
         </div>
       </div>
     </aside>
-    <main class="col-span-12 lg:col-start-3 lg:col-span-10 bg-green-50">
+    <main class="col-span-12 lg:col-start-3 lg:col-span-10">
       <slot></slot>
     </main>
   </Container>
