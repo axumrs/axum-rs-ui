@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { cucurrency } = use$cucurrency();
+const { page: pageParam } = useRoute().query;
+const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
 </script>
 
 <template>
@@ -34,4 +36,9 @@ const { cucurrency } = use$cucurrency();
   </section>
 
   <SubjectList class="my-3" />
+
+  <Pagination
+    class="justify-end my-3"
+    :p="{ page, page_size: 30, total: 301, total_page: 11 }"
+  />
 </template>
