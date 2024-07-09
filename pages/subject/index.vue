@@ -1,7 +1,37 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { cucurrency } = use$cucurrency();
+</script>
 
 <template>
-  <PageTitle title="专题" />
+  <section class="flex justify-between items-center">
+    <PageTitle title="专题" />
+    <ul class="flex justify-start items-center gap-x-2">
+      <li
+        class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
+        :class="{
+          'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
+            cucurrency === 'usdt',
+        }"
+        @click="cucurrency = 'usdt'"
+      >
+        <div>
+          <img src="/usdt.svg" class="w-4 object-cover" />
+        </div>
+        <div class="">USDT</div>
+      </li>
+      <li
+        class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
+        @click="cucurrency = 'trx'"
+        :class="{
+          'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
+            cucurrency === 'trx',
+        }"
+      >
+        <div><img src="/trx.png" class="w-4 object-cover" /></div>
+        <div class="">TRX</div>
+      </li>
+    </ul>
+  </section>
 
   <SubjectList class="my-3" />
 </template>
