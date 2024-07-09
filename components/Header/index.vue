@@ -1,10 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { asideMenu } = use$status();
+</script>
 
 <template>
   <header class="shadow-md bg-white">
     <Container class="grid grid-cols-12 items-center gap-x-4 py-3">
       <button
         class="col-span-1 flex flex-col justify-start items-center lg:col-auto lg:hidden"
+        @click="asideMenu = true"
       >
         <Icon name="lucide:align-justify" />
       </button>
