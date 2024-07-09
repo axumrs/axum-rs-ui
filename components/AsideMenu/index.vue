@@ -3,7 +3,9 @@
 <template>
   <div class="flex flex-col divide-y">
     <ul class="flex flex-col justify-start items-start py-3">
-      <AsideMenuItem icon="heroicons:newspaper">专题</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:newspaper" href="/subject"
+        >专题</AsideMenuItem
+      >
       <AsideMenuItem icon="heroicons:document-duplicate">文章</AsideMenuItem>
       <AsideMenuItem icon="heroicons:hashtag">标签</AsideMenuItem>
       <AsideMenuItem icon="heroicons:document-arrow-up">投稿</AsideMenuItem>
