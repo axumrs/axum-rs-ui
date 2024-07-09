@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ hiddenSubject?: boolean }>();
+defineProps<{ hiddenSubject?: boolean; tryRead?: boolean }>();
 </script>
 
 <template>
@@ -14,6 +14,13 @@ defineProps<{ hiddenSubject?: boolean }>();
       <Icon name="heroicons:newspaper" class="shrink-0" />
       <div class="grow truncate">漫游AXUM</div>
     </NuxtLink>
+
+    <div
+      v-if="tryRead === true"
+      class="absolute w-32 z-[1] top-2 -right-11 rotate-45 text-xs rounded-md bg-orange-600/90 text-gray-50 flex justify-center items-center py-1 border shadow"
+    >
+      支持试读
+    </div>
 
     <h3 class="grow lg:truncate">
       <NuxtLink class="text-lg font-semibold hover:text-red-800" to="/"
