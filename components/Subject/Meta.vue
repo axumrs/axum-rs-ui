@@ -22,7 +22,6 @@ const hanldChangeCur = () => {
     >
       免费
     </li>
-
     <li
       @click="hanldChangeCur"
       class="border border-gray-600 px-2 py-1 rounded flex justify-start items-center gap-x-1 shrink-0 cursor-pointer relative group"
