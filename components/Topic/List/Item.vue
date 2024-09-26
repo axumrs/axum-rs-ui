@@ -4,7 +4,7 @@ defineProps<{ hiddenSubject?: boolean; tryRead?: boolean }>();
 
 <template>
   <li
-    class="p-3 rounded border odd:bg-zinc-50 hover:bg-zinc-100 relative overflow-hidden"
+    class="p-3 rounded border odd:bg-zinc-50/30 even:bg-white hover:bg-zinc-100 relative overflow-hidden"
   >
     <NuxtLink
       v-if="hiddenSubject !== true"

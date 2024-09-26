@@ -6,8 +6,10 @@
       <AsideMenuItem icon="heroicons:newspaper" href="/subject"
         >专题</AsideMenuItem
       >
-      <AsideMenuItem icon="heroicons:document-duplicate">文章</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:hashtag">标签</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:document-duplicate" href="/topic"
+        >文章</AsideMenuItem
+      >
+      <AsideMenuItem icon="heroicons:hashtag" href="/tag">标签</AsideMenuItem>
       <AsideMenuItem icon="heroicons:document-arrow-up">投稿</AsideMenuItem>
       <AsideMenuItem icon="heroicons:building-storefront">商城</AsideMenuItem>
       <AsideMenuItem icon="heroicons:shopping-cart">购物车</AsideMenuItem>
