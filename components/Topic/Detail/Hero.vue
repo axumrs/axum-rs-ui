@@ -8,12 +8,13 @@ const toggleExpendMeta = () => {
 <template>
   <section class="flex flex-col justify-center items-center gap-y-3">
     <div class="flex justify-between items-center gap-x-1">
-      <h1 class="text-lg font-semibold">解析 derive(Db)</h1>
+      <h1 class="text-3xl font-bold lg:text-4xl">解析 derive(Db)</h1>
       <Icon
         name="heroicons:chevron-down"
-        class="text-gray-400 cursor-pointer transition-all duration-300"
+        class="text-gray-500 cursor-pointer transition-all duration-300"
         @click="toggleExpendMeta"
         :class="{ 'rotate-180': expendMeta }"
+        size="1rem"
       />
     </div>
     <div
@@ -37,7 +38,7 @@ const toggleExpendMeta = () => {
       </ul>
       <!-- 标签 -->
       <div class="flex justify-center items-center gap-x-1">
-        <Icon name="heroicons:tag" class="shrink-0" />
+        <Icon name="heroicons:bookmark" class="shrink-0" />
         <ul class="flex justify-start items-center gap-x-1 flex-wrap">
           <li>
             <NuxtLink
