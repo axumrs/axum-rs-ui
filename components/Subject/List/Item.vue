@@ -11,7 +11,9 @@
       </div>
       <div class="col-span-9 lg:col-span-10">
         <h3 class="mb-1">
-          <NuxtLink class="text-lg font-semibold hover:text-red-800"
+          <NuxtLink
+            class="text-lg font-semibold hover:text-red-800"
+            :to="`/subject/mall`"
             >使用axum打造你的分布式商城</NuxtLink
           >
         </h3>
