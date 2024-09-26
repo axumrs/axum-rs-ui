@@ -6,7 +6,7 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
 
 <template>
   <section class="flex justify-between items-center">
-    <PageTitle title="专题" />
+    <PageTitle title="专题" icon="heroicons:newspaper" />
     <ul class="flex justify-start items-center gap-x-2">
       <li
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
@@ -46,7 +46,7 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
     </ul>
   </section>
 
-  <SubjectList class="my-3" />
+  <SubjectList class="my-4" />
 
   <Pagination
     class="justify-end my-3"

@@ -20,7 +20,7 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
     </div>
   </section>
 
-  <section class="my-3">
+  <section class="my-4">
     <TopicList />
   </section>
 

@@ -4,9 +4,9 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
 </script>
 
 <template>
-  <PageTitle title="文章" />
+  <PageTitle title="文章" icon="heroicons:document-duplicate" />
 
-  <TopicList class="my-3" />
+  <TopicList class="my-4" />
 
   <Pagination
     class="justify-end my-3"

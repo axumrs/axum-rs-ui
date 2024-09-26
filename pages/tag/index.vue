@@ -4,8 +4,9 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
 </script>
 
 <template>
-  <PageTitle title="标签" />
-  <section class="bg-white p-3 border rounded-lg my-3">
+  <PageTitle title="标签" icon="heroicons:hashtag" />
+
+  <section class="bg-white p-3 border rounded-lg my-4">
     <TagList />
   </section>
 
