@@ -9,7 +9,7 @@ defineProps<{ hiddenSubject?: boolean; tryRead?: boolean }>();
     <NuxtLink
       v-if="hiddenSubject !== true"
       class="absolute w-36 z-[1] top-7 -right-8 rotate-45 text-xs rounded-md bg-purple-900/70 text-gray-50 flex justify-start items-center gap-x-1 shrink-0 py-1 px-7 border shadow hover:bg-purple-900/90"
-      to="/"
+      :to="`/subject/mall`"
     >
       <Icon name="heroicons:newspaper" class="shrink-0" />
       <div class="grow truncate">漫游AXUM</div>
@@ -23,7 +23,9 @@ defineProps<{ hiddenSubject?: boolean; tryRead?: boolean }>();
     </div>
 
     <h3 class="grow lg:truncate">
-      <NuxtLink class="text-lg font-semibold hover:text-red-800" to="/"
+      <NuxtLink
+        class="text-lg font-semibold hover:text-red-800"
+        :to="`/topic/db-derive/parse-derive`"
         >axum中的各种响应</NuxtLink
       >
     </h3>
