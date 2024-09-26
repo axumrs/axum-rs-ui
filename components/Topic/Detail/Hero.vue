@@ -17,40 +17,28 @@ const toggleExpendMeta = () => {
       />
     </div>
     <div
-      class="text-xs text-gray-500 flex-col gap-y-1 transition-all duration-300"
+      class="text-xs text-gray-500 flex flex-col gap-y-1 transition-all duration-300 lg:flex-row lg:gap-x-2 lg:gap-y-0"
       :class="{
         'visible opacity-100 h-auto': expendMeta,
         'invisible opacity-0 h-0': !expendMeta,
       }"
-      @click="toggleExpendMeta"
+      @click.self="toggleExpendMeta"
     >
       <!-- 查看、日期 -->
       <ul class="flex justify-center items-center gap-x-2">
         <li class="flex justify-start items-center gap-x-1">
-          <Icon name="heroicons:eye" />
+          <Icon name="heroicons:eye" class="shrink-0" />
           <span>10</span>
         </li>
-        <li class="flex justify-start items-center gap-x-1">
-          <Icon name="heroicons:calendar" />
+        <li class="flex justify-start items-center gap-x-1 text-nowrap">
+          <Icon name="heroicons:calendar" class="shrink-0" />
           <span>2022-10-10 13:39:05</span>
         </li>
       </ul>
       <!-- 标签 -->
       <div class="flex justify-center items-center gap-x-1">
-        <Icon name="heroicons:tag" />
-        <ul class="flex justify-start items-center gap-x-1">
-          <li>
-            <NuxtLink
-              class="before:content-['#'] hover:underline decoration-dotted"
-              >axum</NuxtLink
-            >
-          </li>
-          <li>
-            <NuxtLink
-              class="before:content-['#'] hover:underline decoration-dotted"
-              >axum</NuxtLink
-            >
-          </li>
+        <Icon name="heroicons:tag" class="shrink-0" />
+        <ul class="flex justify-start items-center gap-x-1 flex-wrap">
           <li>
             <NuxtLink
               class="before:content-['#'] hover:underline decoration-dotted"
