@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const needBuy = ref(!true);
+const needBuy = ref(true);
 </script>
 
 <template>

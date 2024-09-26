@@ -1,1 +1,0 @@
-type Cucurrency = "usdt" | "trx";

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { cucurrency } = use$cucurrency();
+const { currency } = use$currency();
 const { page: pageParam } = useRoute().query;
 const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
 </script>
@@ -12,9 +12,9 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
         :class="{
           'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
-            cucurrency === 'usdt',
+            currency === 'usdt',
         }"
-        @click="cucurrency = 'usdt'"
+        @click="currency = 'usdt'"
       >
         <div>
           <img src="/usdt.svg" class="w-4 object-cover" />
@@ -23,14 +23,25 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
       </li>
       <li
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
-        @click="cucurrency = 'trx'"
+        @click="currency = 'trx'"
         :class="{
           'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
-            cucurrency === 'trx',
+            currency === 'trx',
         }"
       >
         <div><img src="/trx.png" class="w-4 object-cover" /></div>
         <div class="">TRX</div>
+      </li>
+      <li
+        class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
+        @click="currency = 'pointer'"
+        :class="{
+          'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
+            currency === 'pointer',
+        }"
+      >
+        <div><img src="/pointer.svg" class="w-4 object-cover" /></div>
+        <div class="">积分</div>
       </li>
     </ul>
   </section>
