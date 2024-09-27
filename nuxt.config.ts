@@ -11,5 +11,12 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxt/icon"]
+  modules: ["@nuxt/icon"],
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.API_URL,
+      hcaptchaSiteKey: process.env.HCAPTCHA_SITE_KEY,
+      turnstileSiteKey: process.env.TURNSTILE_SITE_KEY,
+    },
+  },
 });

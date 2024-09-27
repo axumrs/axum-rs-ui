@@ -12,3 +12,9 @@
     @apply h-screen bg-zinc-50 text-gray-900;
   }
 }
+
+@layer components {
+  #__nuxt {
+    @apply min-h-full relative;
+  }
+}
