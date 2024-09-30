@@ -20,6 +20,7 @@ const sitekey = computed(() => {
 });
 
 const modelValue = defineModel<string>({ required: true });
+const emits = defineEmits(["willClear"]);
 </script>
 
 <template>
@@ -29,5 +30,10 @@ const modelValue = defineModel<string>({ required: true });
     v-model="modelValue"
     :action="action"
   />
-  <CaptchaHCaptcha v-else :sitekey="sitekey" v-model="modelValue" />
+  <CaptchaHCaptcha
+    v-else
+    :sitekey="sitekey"
+    v-model="modelValue"
+    @will-clear="emits('willClear')"
+  />
 </template>

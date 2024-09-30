@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { asideMenu } = use$status();
+const { $asideMenu: asideMenu } = use$status();
 </script>
 
 <template>

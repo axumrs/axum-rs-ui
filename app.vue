@@ -3,7 +3,7 @@ const { seoTitle, pageMeta } = use$seo();
 seoTitle();
 pageMeta();
 
-const { isLoading, toast, msg, announcements } = use$status();
+const { $isLoading, $toast, $msg, $announcements } = use$status();
 </script>
 
 <template>
@@ -12,11 +12,11 @@ const { isLoading, toast, msg, announcements } = use$status();
   </NuxtLayout>
 
   <ClientOnly>
-    <Loading v-if="isLoading" />
-    <Toast v-if="toast" @hide="toast = ''">{{ toast }}</Toast>
-    <Message v-if="msg" @hide="msg = ''">{{ msg }}</Message>
+    <Loading v-if="$isLoading" />
+    <Toast v-if="$toast" @hide="$toast = ''">{{ $toast }}</Toast>
+    <Message v-if="$msg" @hide="$msg = ''">{{ $msg }}</Message>
     <Announcement
-      v-if="announcements && announcements.length > 0"
-      :contents="announcements"
+      v-if="$announcements && $announcements.length > 0"
+      :contents="$announcements"
   /></ClientOnly>
 </template>

@@ -2,13 +2,14 @@ import type { UseFetchOptions } from "nuxt/app";
 
 type _FetchOptions<T> = UseFetchOptions<ApiResp<T>> & {
   noLoading?: boolean;
-  callback?: (data: T | null) => T | null;
+  callback?: (data: T | null) => T | null | void;
+  ifErr?: (e: AppFetchError) => void;
 };
 
 class AppFetchError extends Error {}
 
 function headers() {
-  const { token } = use$auth();
+  const { $token: token } = use$auth();
   const h: Record<string, string> = {
     "Content-Type": "application/json",
     "Cache-Control": "no-cache",
@@ -22,9 +23,9 @@ function headers() {
   return h;
 }
 export default function use$fetch() {
-  const { isLoading, toast } = use$status();
+  const { $isLoading, $toast } = use$status();
   const _fetch = <T>(url: string, opts?: _FetchOptions<T>) => {
-    isLoading.value = opts?.noLoading !== true;
+    $isLoading.value = opts?.noLoading !== true;
 
     const newOpts: UseFetchOptions<ApiResp<T>> = {
       ...opts,
@@ -32,6 +33,7 @@ export default function use$fetch() {
       headers: {
         ...headers(),
       },
+      baseURL: useRuntimeConfig().public.apiUrl,
     };
     return useFetch(url, newOpts)
       .then(({ data }) => {
@@ -50,13 +52,17 @@ export default function use$fetch() {
       .catch((e) => {
         console.log(e);
         if (e instanceof AppFetchError) {
-          toast.value = e.message;
+          if (opts?.ifErr) {
+            opts.ifErr(e);
+            return;
+          }
+          $toast.value = e.message;
           return;
         }
-        toast.value = "请检查网络";
+        $toast.value = "请检查网络";
       })
       .finally(() => {
-        isLoading.value = false;
+        $isLoading.value = false;
       });
   };
 
@@ -75,7 +81,8 @@ export default function use$fetch() {
   const $post = <T>(
     url: string,
     body?: string | Record<string, any>,
-    callback?: (data: T | null) => T | null,
+    callback?: (data: T | null) => T | null | void,
+
     opts?: _FetchOptions<T>
   ) => _fetch<T>(url, { ...opts, method: "POST", callback, body });
 
