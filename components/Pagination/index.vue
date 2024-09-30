@@ -20,14 +20,12 @@ const expanedPageList = ref(false);
         class="flex justify-start items-center gap-x-1 border px-1 py-0.5 bg-white w-full divide-x"
       >
         <div class="grow text-center">{{ p.page + 1 }}</div>
-        <button
-          class="shrink-0 flex flex-col items-center justify-center pl-0.5"
-        >
+        <span class="shrink-0 flex flex-col items-center justify-center pl-0.5">
           <Icon
             name="uil:angle-up"
             :class="{ 'rotate-180': expanedPageList }"
           />
-        </button>
+        </span>
       </button>
       <ul
         class="absolute w-[3.25rem] z-[1000] bottom-0 max-h-44 bg-white border shadow-md overflow-y-auto py-1 scroll-smooth"

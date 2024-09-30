@@ -2,6 +2,8 @@
 const { seoTitle, pageMeta } = use$seo();
 seoTitle();
 pageMeta();
+
+const { isLoading, toast, msg, announcements } = use$status();
 </script>
 
 <template>
@@ -9,16 +11,12 @@ pageMeta();
     <NuxtPage :key="useRoute().fullPath" />
   </NuxtLayout>
 
-  <Loading v-if="false" />
-  <Toast v-if="false"></Toast>
-  <Message v-if="false"></Message>
-  <Announcement
-    v-if="false"
-    :contents="
-      [1, 2, 3].map(
-        (i) =>
-          `${i}-公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告`
-      )
-    "
-  />
+  <ClientOnly>
+    <Loading v-if="isLoading" />
+    <Toast v-if="toast" @hide="toast = ''">{{ toast }}</Toast>
+    <Message v-if="msg" @hide="msg = ''">{{ msg }}</Message>
+    <Announcement
+      v-if="announcements && announcements.length > 0"
+      :contents="announcements"
+  /></ClientOnly>
 </template>
