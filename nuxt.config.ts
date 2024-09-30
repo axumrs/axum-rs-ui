@@ -17,6 +17,7 @@ export default defineNuxtConfig({
       apiUrl: process.env.API_URL,
       hcaptchaSiteKey: process.env.HCAPTCHA_SITE_KEY,
       turnstileSiteKey: process.env.TURNSTILE_SITE_KEY,
+      axum_csrf: process.env.AXUM_CSRF,
     },
   },
 });

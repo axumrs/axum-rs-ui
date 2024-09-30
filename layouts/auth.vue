@@ -3,7 +3,7 @@
 <template>
   <div class="bg-gray-100">
     <Header />
-    <div class="relative auth-container my-3"><slot></slot></div>
+    <div class="relative auth-container grid-bg"><slot></slot></div>
   </div>
 </template>
 <style scoped>

@@ -30,4 +30,11 @@
   #__nuxt {
     @apply min-h-full relative;
   }
+
+  /* 网格背景, 摘自 nodeseek */
+  .grid-bg {
+    background-image: linear-gradient(#d4d4d4 1px, transparent 0),
+      linear-gradient(90deg, #d4d4d4 1px, transparent 0);
+    background-size: 32px 32px;
+  }
 }

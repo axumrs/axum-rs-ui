@@ -4,9 +4,26 @@ definePageMeta({
 });
 
 const frm = reactive({ captcha: "" });
+
+const { $post } = use$fetch();
+const origin = ref("");
+
+onMounted(async () => {
+  await $post<any>(
+    "https://httpbin.org/post",
+    { foo: "张三" },
+    (data) => {
+      console.log("aaaa", data);
+
+      return data;
+    },
+    { noLoading: false }
+  );
+});
 </script>
 
 <template>
+  <div>{{ origin }}</div>
   <form
     class="bg-white rounded-md border absolute p-6 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-y-4 w-11/12 lg:w-1/4 lg:top-1/3 lg:-translate-y-1/3"
   >
