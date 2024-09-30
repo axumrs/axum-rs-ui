@@ -13,21 +13,21 @@ const frm = reactive({ captcha: "" });
     <label class="flex flex-col gap-y-2">
       <div>邮箱</div>
       <div class="border rounded px-3 py-2">
-        <input type="email" class="block w-full outline-none" />
+        <input type="email" class="block w-full outline-none" required />
       </div>
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>密码</div>
       <div class="border rounded px-3 py-2">
-        <input type="password" class="block w-full outline-none" />
+        <input type="password" class="block w-full outline-none" required />
       </div>
     </label>
 
-    <div class="flex flex-col gap-y-2">
+    <label class="flex flex-col gap-y-2">
       <div>人机验证</div>
-      <div><Captcha kind="HCaptcha" v-model="frm.captcha" /></div>
-    </div>
+      <div data-required><Captcha kind="HCaptcha" v-model="frm.captcha" /></div>
+    </label>
 
     <ul class="flex justify-between items-center gap-x-2">
       <li

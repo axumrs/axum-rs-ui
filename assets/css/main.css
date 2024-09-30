@@ -11,6 +11,19 @@
   body {
     @apply h-screen bg-zinc-50 text-gray-900;
   }
+
+  label > div:has(+ div > input[required]),
+  div > div:has(+ div[data-required]),
+  label > div:has(+ div[data-required]) {
+    @apply after:content-['*'] after:text-red-600 after:ml-1;
+  }
+  div > div:has(+ div[data-required]) {
+    @apply cursor-default;
+  }
+
+  input {
+    @apply outline-none;
+  }
 }
 
 @layer components {

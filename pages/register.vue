@@ -16,26 +16,26 @@ const handleSendEmailClick = () => {
 <template>
   <form
     autocomplete="off"
-    class="bg-white rounded-md border absolute p-6 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-y-6 w-11/12 lg:w-1/4"
+    class="flex flex-col gap-y-6 w-11/12 bg-white p-6 mx-auto rounded-lg my-6 lg:w-1/3 2xl:w-1/4 2xl:absolute 2xl:top-1/2 2xl:left-1/2 2xl:-translate-x-1/2 2xl:-translate-y-1/2"
   >
     <label class="flex flex-col gap-y-2">
       <div>昵称</div>
       <div class="border rounded px-3 py-2">
-        <input type="email" class="block w-full outline-none" />
+        <input type="email" class="block w-full outline-none" required />
       </div>
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>密码</div>
       <div class="border rounded px-3 py-2">
-        <input type="password" class="block w-full outline-none" />
+        <input type="password" class="block w-full outline-none" required />
       </div>
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>确认密码</div>
       <div class="border rounded px-3 py-2">
-        <input type="password" class="block w-full outline-none" />
+        <input type="password" class="block w-full outline-none" required />
       </div>
     </label>
 
@@ -47,6 +47,7 @@ const handleSendEmailClick = () => {
         <input
           type="email"
           class="px-3 py-2 outline-none w-full border rounded lg:grow lg:w-auto lg:border-y-0 lg:border-l-0 lg:rounded-none"
+          required
         />
         <button
           type="button"
@@ -61,7 +62,7 @@ const handleSendEmailClick = () => {
     <label class="flex flex-col gap-y-2">
       <div>邮箱验证码</div>
       <div class="border rounded px-3 py-2">
-        <input type="text" class="block w-full outline-none" />
+        <input type="text" class="block w-full outline-none" required />
       </div>
     </label>
 
@@ -91,7 +92,7 @@ const handleSendEmailClick = () => {
       class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 border rounded shadow flex flex-col gap-y-2"
     >
       <div>请完成人机验证</div>
-      <div>
+      <div data-required>
         <Captcha kind="HCaptcha" v-model="frm.captcha" />
       </div>
     </div>

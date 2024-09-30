@@ -26,6 +26,7 @@ const handleSendEmailClick = () => {
         <input
           type="email"
           class="px-3 py-2 outline-none w-full border rounded lg:grow lg:w-auto lg:border-y-0 lg:border-l-0 lg:rounded-none"
+          required
         />
         <button
           type="button"
@@ -40,21 +41,21 @@ const handleSendEmailClick = () => {
     <label class="flex flex-col gap-y-2">
       <div>邮箱验证码</div>
       <div class="border rounded px-3 py-2">
-        <input type="text" class="block w-full outline-none" />
+        <input type="text" class="block w-full outline-none" required />
       </div>
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>新密码</div>
       <div class="border rounded px-3 py-2">
-        <input type="password" class="block w-full outline-none" />
+        <input type="password" class="block w-full outline-none" required />
       </div>
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>确认新密码</div>
       <div class="border rounded px-3 py-2">
-        <input type="password" class="block w-full outline-none" />
+        <input type="password" class="block w-full outline-none" required />
       </div>
     </label>
 
@@ -70,7 +71,7 @@ const handleSendEmailClick = () => {
       class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 border rounded shadow flex flex-col gap-y-2"
     >
       <div>请完成人机验证</div>
-      <div>
+      <div data-required>
         <Captcha kind="HCaptcha" v-model="frm.captcha" />
       </div>
     </div>

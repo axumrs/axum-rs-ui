@@ -13,6 +13,7 @@ pageMeta();
   <Toast v-if="false"></Toast>
   <Message v-if="false"></Message>
   <Announcement
+    v-if="false"
     :contents="
       [1, 2, 3].map(
         (i) =>
