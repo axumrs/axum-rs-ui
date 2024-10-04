@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type Decimal from "decimal.js";
+
 const props = defineProps<{
   currency: Currency;
-  amount: number;
+  amount: Decimal;
   textClass: string;
   icon?: string;
   label?: string;

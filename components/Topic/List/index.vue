@@ -1,14 +1,21 @@
 <script setup lang="ts">
-defineProps<{ hiddenSubject?: boolean }>();
+defineProps<{
+  hiddenSubject?: boolean;
+  topicList: TopicWithSubjectAndTags[];
+  itemWithBorder?: boolean;
+  divide?: boolean;
+}>();
 </script>
 
 <template>
-  <ul class="flex flex-col gap-y-3 list-decimal">
+  <ul class="flex flex-col list-decimal" :class="{ 'divide-y': divide }">
     <TopicListItem
-      v-for="i in 30"
-      :key="`topic-item-${i}`"
+      v-for="t in topicList"
+      :key="t.id"
       :hidden-subject="hiddenSubject"
-      :try-read="i % 3 === 1"
+      :try-read="t.try_readable"
+      :topic="t"
+      :with-border="itemWithBorder"
     />
   </ul>
 </template>

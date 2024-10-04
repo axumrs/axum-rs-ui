@@ -3,3 +3,8 @@ type ApiResp<T> = {
   msg: string;
   data: T | null;
 };
+
+type SubjectDetailResp = {
+  subject: Subject;
+  topic_list: TopicWithSubjectAndTags[];
+};

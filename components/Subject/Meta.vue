@@ -1,7 +1,18 @@
 <script setup lang="ts">
+import Decimal from "decimal.js";
+
 const props = defineProps<{ subject: Subject }>();
 const { currency, changeCurrency } = use$currency();
 const { $value: price } = use$decimal(props.subject.price);
+
+const rtc = useRuntimeConfig();
+
+const amountList = computed(() => {
+  const usdt = price.value;
+  const pointer = price.value.mul(new Decimal(rtc.public.usdt_to_pointer));
+  const trx = price.value.mul(new Decimal(rtc.public.usdt_to_trx));
+  return { pointer, trx, usdt };
+});
 const hanldChangeCur = () => {
   changeCurrency();
 };
@@ -28,10 +39,7 @@ const hanldChangeCur = () => {
       免费
     </li>
     <li @click="hanldChangeCur" v-else>
-      <Currency
-        :currency="currency"
-        :amount-list="{ pointer: 99999, trx: 8888, usdt: 123 }"
-      />
+      <Currency :currency="currency" :amount-list="amountList" />
     </li>
 
     <li

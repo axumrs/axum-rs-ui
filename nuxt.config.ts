@@ -19,6 +19,8 @@ export default defineNuxtConfig({
       turnstileSiteKey: process.env.TURNSTILE_SITE_KEY,
       axum_csrf: process.env.AXUM_CSRF,
       fetch_timeout: process.env.FETCH_TIMEOUT,
+      usdt_to_trx: process.env.USDT_TO_TRX,
+      usdt_to_pointer: process.env.USDT_TO_POINTER,
     },
   },
 });

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { CurrencyPinter, CurrencyTrx, CurrencyUsdt } from "#components";
+import type Decimal from "decimal.js";
 const props = defineProps<{
   currency: Currency;
-  amountList: { [key in Currency]: number };
+  amountList: { [key in Currency]: Decimal };
 }>();
 
 const com = computed(() => {

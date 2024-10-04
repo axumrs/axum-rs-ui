@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineProps<{ amount: number }>();
+import type Decimal from "decimal.js";
+
+defineProps<{ amount: Decimal }>();
 </script>
 
 <template>
