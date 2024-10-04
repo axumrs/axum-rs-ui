@@ -6,5 +6,5 @@ type PaginationMeta = {
 };
 
 type Pagination<T> = PaginationMeta & {
-  data: T | null;
+  data: T[] | null;
 };

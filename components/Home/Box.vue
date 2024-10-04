@@ -13,8 +13,7 @@ defineProps<{ title: string; href: string; moreText: string }>();
         >{{ moreText }}</NuxtLink
       >
     </div>
-    <div>
-      <slot></slot>
-    </div>
+
+    <slot></slot>
   </div>
 </template>

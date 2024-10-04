@@ -2,6 +2,28 @@
 const { currency } = use$currency();
 const { page: pageParam } = useRoute().query;
 const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
+
+const pm = ref<PaginationMeta>();
+const subjectList = ref<Subject[]>([]);
+
+const frm = reactive({ page: page.value, page_size: 30 });
+
+const { $get } = use$fetch();
+
+const loadData = async () => {
+  await $get<Pagination<Subject>>(
+    "/user/subject",
+    (v) => {
+      if (v) {
+        pm.value = v;
+        subjectList.value = v.data || [];
+      }
+    },
+    { query: { ...frm } }
+  );
+};
+
+await loadData();
 </script>
 
 <template>
@@ -46,10 +68,11 @@ const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
     </ul>
   </section>
 
-  <SubjectList class="my-4" />
-
-  <Pagination
-    class="justify-end my-3"
-    :p="{ page, page_size: 30, total: 301, total_page: 11 }"
+  <SubjectList
+    class="my-4"
+    :list="subjectList"
+    v-if="subjectList && subjectList.length > 0"
   />
+
+  <Pagination class="justify-end my-3" v-if="pm && pm.total_page > 1" :p="pm" />
 </template>

@@ -68,13 +68,13 @@ export default function use$fetch() {
 
   const $get = <T>(
     url: string,
-    callback?: (data: T | null) => T | null,
+    callback?: (data: T | null) => T | null | void,
     opts?: _FetchOptions<T>
   ) => _fetch<T>(url, { ...opts, method: "GET", callback });
 
   const $del = <T>(
     url: string,
-    callback?: (data: T | null) => T | null,
+    callback?: (data: T | null) => T | null | void,
     opts?: _FetchOptions<T>
   ) => _fetch<T>(url, { ...opts, method: "DELETE", callback });
 
@@ -89,14 +89,14 @@ export default function use$fetch() {
   const $patch = <T>(
     url: string,
     body?: string | Record<string, any>,
-    callback?: (data: T | null) => T | null,
+    callback?: (data: T | null) => T | null | void,
     opts?: _FetchOptions<T>
   ) => _fetch<T>(url, { ...opts, method: "PATCH", callback, body });
 
   const $put = <T>(
     url: string,
     body?: string | Record<string, any>,
-    callback?: (data: T | null) => T | null,
+    callback?: (data: T | null) => T | null | void,
     opts?: _FetchOptions<T>
   ) => _fetch<T>(url, { ...opts, method: "PUT", callback, body });
 

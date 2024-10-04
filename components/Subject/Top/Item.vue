@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{ subject: Subject }>();
+</script>
 
 <template>
   <li
@@ -6,17 +8,19 @@
   >
     <div class="col-span-2 lg:col-span-1">
       <img
-        src="https://file.axum.rs/icons/shop.png"
-        class="w-10 object-cover"
+        :src="subject.cover || 'https://file.axum.rs/icons/rust/rust-plain.svg'"
+        class="w-full object-cover"
       />
     </div>
     <div class="col-span-10 lg:col-span-11">
       <h3>
-        <NuxtLink class="block w-full font-semibold hover:underline lg:text-lg"
-          >使用axum打造你的分布式商城</NuxtLink
+        <NuxtLink
+          class="block w-full font-semibold hover:underline lg:text-lg"
+          :to="`/subject/${subject.slug}`"
+          >{{ subject.name }}</NuxtLink
         >
       </h3>
-      <div class="truncate">本专题将带你从零开始实现一个分布式B2C商城</div>
+      <div class="truncate">{{ subject.summary }}</div>
     </div>
   </li>
 </template>

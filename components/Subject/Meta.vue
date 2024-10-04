@@ -1,5 +1,7 @@
 <script setup lang="ts">
+const props = defineProps<{ subject: Subject }>();
 const { currency, changeCurrency } = use$currency();
+const { $value: price } = use$decimal(props.subject.price);
 const hanldChangeCur = () => {
   changeCurrency();
 };
@@ -9,20 +11,23 @@ const hanldChangeCur = () => {
   <ul class="flex items-center gap-x-2 text-sm cursor-default">
     <li
       class="border border-green-600 bg-green-600 text-white px-2 py-1 rounded shrink-0"
+      v-if="subject.status === 'Finished'"
     >
       已完结
     </li>
     <li
       class="border border-orange-600 bg-orange-600 text-white px-2 py-1 rounded shrink-0"
+      v-else
     >
       连载中
     </li>
     <li
       class="border border-green-600 bg-green-600 text-white px-2 py-1 rounded shrink-0"
+      v-if="price.isZero()"
     >
       免费
     </li>
-    <li @click="hanldChangeCur">
+    <li @click="hanldChangeCur" v-else>
       <Currency
         :currency="currency"
         :amount-list="{ pointer: 99999, trx: 8888, usdt: 123 }"
@@ -31,6 +36,7 @@ const hanldChangeCur = () => {
 
     <li
       class="border border-blue-600 bg-blue-600 text-white px-2 py-1 rounded shrink-0"
+      v-if="!price.isZero()"
     >
       <button class="flex items-center justify-center gap-x-1">
         <Icon name="heroicons:shopping-cart-solid" size="1.25rem" />
