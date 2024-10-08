@@ -1,4 +1,5 @@
 <script setup lang="ts">
+defineProps<{ topicList: TopicWithSubjectAndTags[]; subject: Subject }>();
 const expendTopicList = ref(false);
 </script>
 
@@ -7,13 +8,14 @@ const expendTopicList = ref(false);
     <div class="flex justify-center items-center gap-x-1 lg:justify-start">
       <NuxtLink
         class="flex justify-start items-center gap-x-1 hover:text-red-800"
+        :to="`/subject/${subject.slug}`"
       >
         <img
           src="https://file.axum.rs/icons/shop.png"
           class="w-4 object-cover"
         />
         <h2 class="text-lg font-normal lg:text-xl">
-          使用axum打造你的分布式商城
+          {{ subject.name }}
         </h2>
       </NuxtLink>
       <Icon
@@ -31,7 +33,13 @@ const expendTopicList = ref(false);
         'visible opacity-100': expendTopicList,
       }"
     >
-      <TopicList :hidden-subject="true" class="p-3" />
+      <TopicList
+        :hidden-subject="true"
+        class="p-3 space-y-1"
+        :topic-list="topicList"
+        :item-with-border="true"
+        :divide="false"
+      />
     </section>
   </div>
 </template>

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+defineProps<{
+  topic: TopicWithSubjectAndTagsAndSections;
+}>();
 const expendMeta = ref(false);
 const toggleExpendMeta = () => {
   expendMeta.value = !expendMeta.value;
@@ -8,7 +11,7 @@ const toggleExpendMeta = () => {
 <template>
   <section class="flex flex-col justify-center items-center gap-y-3">
     <div class="flex justify-between items-center gap-x-1">
-      <h1 class="text-3xl font-bold lg:text-4xl">解析 derive(Db)</h1>
+      <h1 class="text-3xl font-bold lg:text-4xl">{{ topic.title }}</h1>
       <Icon
         name="heroicons:chevron-down"
         class="text-gray-500 cursor-pointer transition-all duration-300"
@@ -29,27 +32,25 @@ const toggleExpendMeta = () => {
       <ul class="flex justify-center items-center gap-x-2">
         <li class="flex justify-start items-center gap-x-1">
           <Icon name="heroicons:eye" class="shrink-0" />
-          <span>10</span>
+          <span>{{ topic.hit }}</span>
         </li>
         <li class="flex justify-start items-center gap-x-1 text-nowrap">
           <Icon name="heroicons:calendar" class="shrink-0" />
-          <span>2022-10-10 13:39:05</span>
+          <span>{{ topic.dateline }}</span>
         </li>
       </ul>
       <!-- 标签 -->
-      <div class="flex justify-center items-center gap-x-1">
+      <div
+        class="flex justify-center items-center gap-x-1"
+        v-if="topic.tags && topic.tags.length > 0"
+      >
         <Icon name="heroicons:bookmark" class="shrink-0" />
         <ul class="flex justify-start items-center gap-x-1 flex-wrap">
-          <li>
+          <li v-for="t in topic.tags" :key="t.id">
             <NuxtLink
               class="before:content-['#'] hover:underline decoration-dotted"
-              >axum</NuxtLink
-            >
-          </li>
-          <li>
-            <NuxtLink
-              class="before:content-['#'] hover:underline decoration-dotted"
-              >axum</NuxtLink
+              :to="`/tag/${t.name}`"
+              >{{ t.name }}</NuxtLink
             >
           </li>
         </ul>

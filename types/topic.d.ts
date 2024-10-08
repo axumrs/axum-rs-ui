@@ -25,3 +25,15 @@ type TopicWithSubjectAndTags = Topic & {
   subject_pin: number;
   tags: Tag[];
 };
+
+type TopicSection = {
+  id: string;
+  topic_id: string;
+  sort: number;
+  hash: string;
+  content: string;
+};
+
+type TopicWithSubjectAndTagsAndSections = TopicWithSubjectAndTags & {
+  sections: TopicSection[];
+};

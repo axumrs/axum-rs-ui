@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{ subject: Subject }>();
+</script>
 
 <template>
   <section
@@ -6,7 +8,7 @@
   >
     <div class="text-lg font-normal">你需要购买此专题才能查看本文内容</div>
     <div>
-      <SubjectMeta />
+      <SubjectMeta :subject="subject" />
     </div>
   </section>
 </template>

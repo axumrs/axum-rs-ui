@@ -30,7 +30,7 @@ defineProps<{
     <h3 class="grow lg:truncate">
       <NuxtLink
         class="text-lg font-semibold hover:text-red-800"
-        :to="`/topic/db-derive/parse-derive`"
+        :to="`/topic/${topic.subject_slug}/${topic.slug}`"
         >{{ topic.title }}</NuxtLink
       >
     </h3>
