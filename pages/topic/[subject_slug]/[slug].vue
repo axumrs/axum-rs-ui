@@ -7,7 +7,7 @@ const { $get } = use$fetch();
 
 const subjectTopicList = ref<TopicWithSubjectAndTags[]>([]);
 const subject = ref<Subject>();
-const detail = ref<TopicWithSubjectAndTagsAndSections>();
+const detail = ref<TopicWithSubjectAndTagsAndProtectedSections>();
 
 const loadSubjectCategoies = async () => {
   await $get<SubjectDetailResp>(
@@ -20,7 +20,7 @@ const loadSubjectCategoies = async () => {
 };
 
 const loadDetail = async () => {
-  await $get<TopicWithSubjectAndTagsAndSections>(
+  await $get<TopicWithSubjectAndTagsAndProtectedSections>(
     `/user/topic/detail/${subject_slug.value}/${slug.value}`,
     (v) => {
       if (v) {

@@ -37,4 +37,14 @@
       linear-gradient(90deg, #d4d4d4 1px, transparent 0);
     background-size: 32px 32px;
   }
+
+  .axum-topic-content pre {
+    padding: 1px !important;
+    border-radius: 2px !important;
+    background-color: rgb(209 213 219) !important;
+    @apply font-mono;
+  }
+  .axum-topic-content [data-procted-id] {
+    @apply border px-4 py-3 bg-gradient-to-tl from-cyan-500 to-cyan-600 shadow-sm text-white before:block before:content-['你需要完成人机验证才能查看这部分内容'];
+  }
 }

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-type CaptchaKind = "HCaptcha" | "Turnstile";
-
 const props = defineProps<{
   kind?: CaptchaKind;
   sitekey?: string;

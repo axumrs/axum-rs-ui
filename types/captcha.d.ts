@@ -1,0 +1,1 @@
+type CaptchaKind = "HCaptcha" | "Turnstile";

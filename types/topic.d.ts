@@ -37,3 +37,13 @@ type TopicSection = {
 type TopicWithSubjectAndTagsAndSections = TopicWithSubjectAndTags & {
   sections: TopicSection[];
 };
+
+type TopicProtectdMeta = {
+  ids: string[];
+  catpcha: CaptchaKind;
+};
+
+type TopicWithSubjectAndTagsAndProtectedSections =
+  TopicWithSubjectAndTagsAndSections & {
+    protected: TopicProtectdMeta;
+  };
