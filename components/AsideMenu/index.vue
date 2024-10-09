@@ -10,8 +10,10 @@
         >文章</AsideMenuItem
       >
       <AsideMenuItem icon="heroicons:hashtag" href="/tag">标签</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:document-arrow-up">投稿</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:building-storefront">商城</AsideMenuItem>
+      <!-- <AsideMenuItem icon="heroicons:document-arrow-up">投稿</AsideMenuItem> -->
+      <AsideMenuItem icon="heroicons:building-storefront" href="/subscribe"
+        >订阅</AsideMenuItem
+      >
       <AsideMenuItem icon="heroicons:shopping-cart">购物车</AsideMenuItem>
     </ul>
     <ul class="flex flex-col justify-start items-start py-3">
