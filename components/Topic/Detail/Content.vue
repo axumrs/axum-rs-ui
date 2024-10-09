@@ -1,14 +1,51 @@
 <script setup lang="ts">
-const props = defineProps<{
-  topic: TopicWithSubjectAndTagsAndProtectedSections;
-}>();
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 
-const sections = computed(() => props.topic.sections);
-const hasProtectdContents = ref(props.topic.protected.ids.length > 0);
+const props = defineProps<{
+  topic: TopicWithSubjectAndTagsAndProtectedSections;
+}>();
 
-const captch = ref("");
+const sections = ref(props.topic.sections.map((s) => s.content));
+const hasProtectdContents = ref(props.topic.protected.ids.length > 0);
+const captcha = ref("");
+
+const { $post } = use$fetch();
+const { $msg } = use$status();
+const loadProtectdContents = async () => {
+  $post<ProtectedContent[]>(
+    "/user/topic/protected-content",
+    {
+      topic_id: props.topic.id,
+      ids: [...props.topic.protected.ids],
+      captcha: captcha.value,
+    },
+    (v) => {
+      if (v) {
+        sections.value = props.topic.sections.map(
+          (s) => v.find((p) => p.section_id === s.id)?.content || s.content
+        );
+        hasProtectdContents.value = false;
+        const t = window.setTimeout(() => {
+          hljs.highlightAll();
+          $msg.value = "获取内容成功";
+          window.clearTimeout(t);
+        }, 100);
+      }
+    }
+  );
+  sections.value = [];
+};
+
+watch(
+  () => captcha.value,
+  (v) => {
+    if (v) {
+      loadProtectdContents().then();
+    }
+  }
+);
+
 onMounted(() => {
   hljs.highlightAll();
 });
@@ -16,8 +53,8 @@ onMounted(() => {
 
 <template>
   <div
-    class="axum-topic-content prose max-w-none lg:prose-xl bg-white p-4 border rounded-md"
-    v-html="sections.map((s) => s.content).join('\n')"
+    class="axum-topic-content prose max-w-none lg:prose-xl bg-white p-4 border rounded-md my-3"
+    v-html="sections.join('\n')"
   ></div>
 
   <Mask v-if="hasProtectdContents" @click="hasProtectdContents = false">
@@ -28,7 +65,7 @@ onMounted(() => {
         要查看完整内容，请完成人机验证
       </div>
       <div>
-        <Captcha :kind="topic.protected.catpcha" v-model="captch" />
+        <Captcha :kind="topic.protected.catpcha" v-model="captcha" />
       </div>
       <div class="lg:text-lg text-gray-500 cursor-default">
         <NuxtLink
