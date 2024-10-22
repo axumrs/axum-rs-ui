@@ -9,59 +9,14 @@ const frm = reactive({
   password: "",
   re_password: "",
   email: "",
-  activation_code: "",
+
   invite: "",
-  reg_captcha: "",
 });
 
-const showCaptchaDialog = ref(false);
 const showSubmitCaptchaDialog = ref(false);
-const sendEmailValitionCodeCountDown = reactive({ enable: false, count: 300 });
-const sendEmailValitionCodeCountDownTimer = ref<number>();
 
 const { $post } = use$fetch();
 const { $toast, $msg, $isLoading } = use$status();
-
-const handleSendEmailClick = () => {
-  if (!frm.email.trim()) {
-    $toast.value = "请输入邮箱";
-    return;
-  }
-  frm.captcha = "";
-  showCaptchaDialog.value = true;
-};
-
-const handleSendEmailValitionCodeCountDown = () => {
-  if (sendEmailValitionCodeCountDown.count > 1) {
-    sendEmailValitionCodeCountDown.enable = true;
-    sendEmailValitionCodeCountDown.count--;
-  } else {
-    sendEmailValitionCodeCountDown.enable = false;
-    sendEmailValitionCodeCountDown.count = 300;
-    window.clearInterval(sendEmailValitionCodeCountDownTimer.value);
-  }
-};
-const sendEmailValitionCode = async () => {
-  await $post<any>(
-    "/auth/register-send-code",
-    { email: frm.email, captcha: frm.captcha },
-    (data) => {
-      handleSendEmailValitionCodeCountDown();
-      sendEmailValitionCodeCountDownTimer.value = window.setInterval(() => {
-        handleSendEmailValitionCodeCountDown();
-      }, 1000);
-      showCaptchaDialog.value = false;
-      $msg.value = "验证码已发送至邮箱，请注意查收";
-      return data;
-    },
-    {
-      ifErr(e) {
-        $toast.value = e.message;
-        showCaptchaDialog.value = false;
-      },
-    }
-  );
-};
 
 const handleSubmit = async () => {
   if (frm.nickname.trim().length < 3 || frm.nickname.trim().length > 30) {
@@ -84,51 +39,33 @@ const handleSubmit = async () => {
     $toast.value = "邮箱过长";
     return;
   }
-  if (frm.activation_code.trim().length !== 20) {
-    $toast.value = "激活码错误";
-    return;
-  }
 
-  frm.reg_captcha = "";
+  frm.captcha = "";
   showSubmitCaptchaDialog.value = true;
 };
 
 const handleRegister = async () => {
   await $post<string>(
     "/auth/register",
-    { ...frm, captcha: frm.reg_captcha },
+    { ...frm, captcha: frm.captcha },
     () => {
       showSubmitCaptchaDialog.value = false;
       $msg.value = "注册成功";
       $isLoading.value = false;
-      return navigateTo("/login") as void;
-    },
-    {
-      ifErr(e) {
-        $toast.value = e.message;
-        showSubmitCaptchaDialog.value = false;
-      },
+      return navigateTo(`/activation/${frm.email}`) as void;
     }
+    // {
+    //   ifErr(e) {
+    //     $toast.value = e.message;
+    //     showSubmitCaptchaDialog.value = false;
+    //     frm.captcha = "";
+    //   },
+    // }
   );
 };
 
-onUnmounted(() => {
-  window.clearInterval(sendEmailValitionCodeCountDownTimer.value);
-});
-
 watch(
   () => frm.captcha,
-  (v) => {
-    if (v) {
-      // 发送验证码
-      sendEmailValitionCode().then();
-    }
-  },
-  { deep: true }
-);
-
-watch(
-  () => frm.reg_captcha,
   (v) => {
     if (v) {
       // 提交注册
@@ -182,35 +119,12 @@ watch(
 
     <label class="flex flex-col gap-y-2">
       <div>邮箱</div>
-      <div
-        class="flex flex-col gap-y-2 lg:flex-row lg:gap-y-0 lg:gap-x-0 lg:border lg:rounded lg:overflow-hidden"
-      >
-        <input
-          type="email"
-          class="px-3 py-2 outline-none w-full border rounded lg:grow lg:w-auto lg:border-y-0 lg:border-l-0 lg:rounded-none"
-          required
-          v-model="frm.email"
-        />
-        <button
-          type="button"
-          class="px-2 py-1 bg-gray-50 w-full text-sm border rounded lg:shrink-0 lg:w-auto lg:border-none lg:rounded-none lg:px-3 lg:py-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          @click="handleSendEmailClick"
-          :disabled="sendEmailValitionCodeCountDown.enable"
-        >
-          <span v-if="!sendEmailValitionCodeCountDown.enable">发送验证码</span>
-          <span v-else>等待{{ sendEmailValitionCodeCountDown.count }}秒</span>
-        </button>
-      </div>
-    </label>
-
-    <label class="flex flex-col gap-y-2">
-      <div>邮箱验证码</div>
       <div class="border rounded px-3 py-2">
         <input
-          type="text"
+          type="email"
           class="block w-full outline-none"
           required
-          v-model="frm.activation_code"
+          v-model="frm.email"
         />
       </div>
     </label>
@@ -222,6 +136,17 @@ watch(
           type="text"
           class="block w-full outline-none"
           v-model="frm.invite"
+        />
+      </div>
+    </label>
+
+    <label>
+      <div>人机验证</div>
+      <div data-required>
+        <Captcha
+          kind="HCaptcha"
+          v-model="frm.captcha"
+          @will-clear="frm.captcha = ''"
         />
       </div>
     </label>
@@ -240,7 +165,7 @@ watch(
     </ul>
   </form>
 
-  <Mask v-if="showCaptchaDialog" @click="showCaptchaDialog = false">
+  <Mask v-if="showSubmitCaptchaDialog" @click="showSubmitCaptchaDialog = false">
     <div
       class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 border rounded shadow flex flex-col gap-y-2"
     >
@@ -250,20 +175,6 @@ watch(
           kind="HCaptcha"
           v-model="frm.captcha"
           @will-clear="frm.captcha = ''"
-        />
-      </div>
-    </div>
-  </Mask>
-  <Mask v-if="showSubmitCaptchaDialog" @click="showSubmitCaptchaDialog = false">
-    <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 border rounded shadow flex flex-col gap-y-2"
-    >
-      <div>请完成人机验证</div>
-      <div data-required>
-        <Captcha
-          kind="Turnstile"
-          v-model="frm.reg_captcha"
-          @will-clear="frm.reg_captcha = ''"
         />
       </div>
     </div>

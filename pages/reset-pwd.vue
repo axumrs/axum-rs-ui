@@ -3,59 +3,104 @@ definePageMeta({
   layout: "auth",
 });
 
-const frm = reactive({ captcha: "" });
+const frm = reactive({
+  captcha: "",
+  email: "",
+  password: "",
+  re_password: "",
+  activation_code: "",
+  activation_kind: "ResetPassword" as ActivationKind,
+  submit_captcha: "",
+});
+
+const { $toast, $msg, $isLoading } = use$status();
+const { $post } = use$fetch();
 
 const showCaptchaDialog = ref(false);
 
-const handleSendEmailClick = () => {
-  // TODO：检测邮箱是否合法
+const handleSubmit = () => {
+  if (frm.password.trim().length < 6) {
+    $toast.value = "密码至少6位";
+    return;
+  }
+  if (frm.password !== frm.re_password) {
+    $toast.value = "两次输入的密码不一致";
+    return;
+  }
   showCaptchaDialog.value = true;
 };
+
+watch(
+  () => frm.submit_captcha,
+  (v) => {
+    if (v) {
+      $post(
+        "/auth/reset-pwd",
+        { ...frm, captcha: v },
+        () => {
+          $msg.value = "密码重置成功";
+          $isLoading.value = false;
+          frm.captcha = "";
+          return navigateTo("/login") as void;
+        },
+        {
+          ifErr(e) {
+            $toast.value = e.message;
+            frm.captcha = "";
+            $isLoading.value = false;
+            showCaptchaDialog.value = false;
+          },
+        }
+      ).then();
+    }
+  }
+);
 </script>
 
 <template>
   <form
     autocomplete="off"
     class="bg-white rounded-md border absolute p-6 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-y-6 w-11/12 lg:w-1/4"
+    @submit.prevent="handleSubmit"
   >
     <label class="flex flex-col gap-y-2">
       <div>邮箱</div>
-      <div
-        class="flex flex-col gap-y-2 lg:flex-row lg:gap-y-0 lg:gap-x-0 lg:border lg:rounded lg:overflow-hidden"
-      >
-        <input
-          type="email"
-          class="px-3 py-2 outline-none w-full border rounded lg:grow lg:w-auto lg:border-y-0 lg:border-l-0 lg:rounded-none"
-          required
-        />
-        <button
-          type="button"
-          class="px-2 py-1 bg-gray-50 w-full text-sm border rounded lg:shrink-0 lg:w-auto lg:border-none lg:rounded-none lg:px-3 lg:py-2"
-          @click="handleSendEmailClick"
-        >
-          发送验证码
-        </button>
-      </div>
+      <EmailInput v-model="frm" :is-reset="true" />
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>邮箱验证码</div>
       <div class="border rounded px-3 py-2">
-        <input type="text" class="block w-full outline-none" required />
+        <input
+          type="text"
+          class="block w-full outline-none"
+          required
+          v-model="frm.activation_code"
+        />
       </div>
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>新密码</div>
       <div class="border rounded px-3 py-2">
-        <input type="password" class="block w-full outline-none" required />
+        <input
+          type="password"
+          class="block w-full outline-none"
+          required
+          v-model="frm.password"
+        />
       </div>
     </label>
 
     <label class="flex flex-col gap-y-2">
       <div>确认新密码</div>
       <div class="border rounded px-3 py-2">
-        <input type="password" class="block w-full outline-none" required />
+        <input
+          type="password"
+          class="block w-full outline-none"
+          required
+          v-model="frm.re_password"
+        />
       </div>
     </label>
 
@@ -72,7 +117,7 @@ const handleSendEmailClick = () => {
     >
       <div>请完成人机验证</div>
       <div data-required>
-        <Captcha kind="HCaptcha" v-model="frm.captcha" />
+        <Captcha kind="Turnstile" v-model="frm.submit_captcha" />
       </div>
     </div>
   </Mask>

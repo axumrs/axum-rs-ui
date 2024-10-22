@@ -1,0 +1,1 @@
+type ActivationKind = "Active" | "ResetPassword";

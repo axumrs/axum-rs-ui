@@ -21,6 +21,8 @@ export default defineNuxtConfig({
       fetch_timeout: process.env.FETCH_TIMEOUT,
       usdt_to_trx: process.env.USDT_TO_TRX,
       usdt_to_pointer: process.env.USDT_TO_POINTER,
+      activeReceiver: process.env.ACTIVE_RECEIVER,
+      resetPasswordReceiver: process.env.RESET_PASSWORD_RECEIVER,
     },
   },
 });
