@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { $token } = use$auth();
+</script>
 
 <template>
   <div class="flex flex-col divide-y">
@@ -16,11 +18,8 @@
       >
       <AsideMenuItem icon="heroicons:shopping-cart">购物车</AsideMenuItem>
     </ul>
-    <ul class="flex flex-col justify-start items-start py-3">
-      <AsideMenuItem icon="heroicons:user">登录</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:user-plus">注册</AsideMenuItem>
-    </ul>
-    <ul class="flex flex-col justify-start items-start py-3">
+
+    <ul class="flex flex-col justify-start items-start py-3" v-if="$token">
       <AsideMenuItem icon="heroicons:identification">个人中心</AsideMenuItem>
       <AsideMenuItem icon="heroicons:credit-card">订单列表</AsideMenuItem>
       <AsideMenuItem icon="heroicons:server">已购项目</AsideMenuItem>
@@ -36,6 +35,10 @@
       <AsideMenuItem icon="heroicons:arrow-right-on-rectangle"
         >退出登录</AsideMenuItem
       >
+    </ul>
+    <ul class="flex flex-col justify-start items-start py-3" v-else>
+      <AsideMenuItem icon="heroicons:user">登录</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:user-plus">注册</AsideMenuItem>
     </ul>
     <ul class="flex flex-col justify-start items-start py-3">
       <AsideMenuItem icon="heroicons:light-bulb">关于我们</AsideMenuItem>
