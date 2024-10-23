@@ -24,6 +24,7 @@ function headers() {
 }
 export default function use$fetch() {
   const { $isLoading, $toast } = use$status();
+  const { $setAuth } = use$auth();
   const _fetch = <T>(url: string, opts?: _FetchOptions<T>) => {
     $isLoading.value = opts?.noLoading !== true;
 
@@ -41,6 +42,13 @@ export default function use$fetch() {
           throw new AppFetchError("请检查网络");
         }
         if (data.value && data.value.code !== 0) {
+          if (data.value.msg.startsWith("UNAUTHORIZED-")) {
+            const msg = data.value.msg.replace(/UNAUTHORIZED-/g, "");
+            $setAuth(null);
+            // $toast.value = msg;
+            // return navigateTo("/login") as void;
+            throw new AppFetchError(msg);
+          }
           throw new AppFetchError(data.value.msg);
         }
 

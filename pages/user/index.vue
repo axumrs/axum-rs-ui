@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
 
-const { $user } = use$auth();
+const { $user, $token } = use$auth();
 
 const { $get } = use$fetch();
 
@@ -49,7 +49,7 @@ await Promise.all([loadSessions(), loadLoginLogs()]);
   >
     <Icon name="uil:info-circle" size="1.25rem" />
     <span
-      >每个账号有登录设备数量限制，请通过正常途径退出登录，以免影响下一次登录。</span
+      >每个账号有同时在线设备数量限制，请通过正常途径退出登录，以免影响下一次登录。</span
     >
   </div>
 
@@ -124,14 +124,26 @@ await Promise.all([loadSessions(), loadLoginLogs()]);
             <th>#</th>
             <th>令牌</th>
             <th>IP</th>
+            <th>登录时间</th>
             <th>过期时间</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="s in sessionList" v-if="sessionList && sessionList.length">
-            <td class="font-mono">{{ s.id.toUpperCase() }}</td>
+            <td>
+              <div class="relative">
+                <div class="font-mono">{{ s.id.toUpperCase() }}</div>
+                <div
+                  class="absolute -top-1.5 right-0 bg-indigo-600/70 text-white border rounded-full text-xs px-0.5"
+                  v-if="$token === s.token"
+                >
+                  当前会话
+                </div>
+              </div>
+            </td>
             <td class="font-mono">{{ s.token }}</td>
             <td>{{ s.ip }}</td>
+            <td>{{ dayjs(s.dateline).format("YYYY-MM-DD HH:mm:ss") }}</td>
             <td>{{ dayjs(s.expire_time).format("YYYY-MM-DD HH:mm:ss") }}</td>
           </tr>
         </tbody>
