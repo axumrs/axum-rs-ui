@@ -50,7 +50,7 @@ const handleDel = () => {
     </li>
     <li
       v-if="$hasItem"
-      v-for="c in $cart"
+      v-for="(c, idx) in $cart"
       class="grid grid-cols-12 gap-x-1 p-3 odd:bg-gray-100/70 lg:hover:bg-gray-100 border-b"
     >
       <div class="col-span-5 flex justify-start items-center gap-x-1">
@@ -64,14 +64,9 @@ const handleDel = () => {
       <div class="col-span-2">{{ new Decimal(c.price) }}</div>
       <div class="col-span-2">
         <CartQuantity
-          v-model="c.quantity"
+          v-model="$cart[idx]"
           class="w-1/2 hidden lg:grid"
           :disabled-update="c.is_subject"
-          @change="
-            (quantity) => {
-              handleQuantityChange({ ...c, quantity });
-            }
-          "
         />
         <span class="lg:hidden">{{ c.quantity }}</span>
       </div>

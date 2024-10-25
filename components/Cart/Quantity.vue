@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Decimal from "decimal.js";
+
 const props = withDefaults(
   defineProps<{ disabledUpdate?: boolean; min?: number; max?: number }>(),
   {
@@ -6,22 +8,25 @@ const props = withDefaults(
     max: 96,
   }
 );
-const modelValue = defineModel<number>({ required: true });
+const modelValue = defineModel<Cart>({ required: true });
 
 const updateValue = (isDecrement: boolean = false) => {
   if (isDecrement) {
-    if (modelValue.value <= props.min) {
-      modelValue.value = props.min;
+    if (modelValue.value.quantity <= props.min) {
+      modelValue.value.quantity = props.min;
     } else {
-      modelValue.value--;
+      modelValue.value.quantity--;
     }
   } else {
-    if (modelValue.value >= props.max) {
-      modelValue.value = props.max;
+    if (modelValue.value.quantity >= props.max) {
+      modelValue.value.quantity = props.max;
     } else {
-      modelValue.value++;
+      modelValue.value.quantity++;
     }
   }
+  modelValue.value.amount = new Decimal(modelValue.value.price)
+    .mul(new Decimal(modelValue.value.quantity))
+    .toString();
 };
 </script>
 
@@ -40,7 +45,7 @@ const updateValue = (isDecrement: boolean = false) => {
       </button>
     </div>
     <div class="col-span-2 text-center bg-white px-1.5 py-0.5 border-x">
-      {{ modelValue }}
+      {{ modelValue.quantity }}
     </div>
     <div class="flex flex-col items-center justify-center col-span-1">
       <button
