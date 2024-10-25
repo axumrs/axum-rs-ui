@@ -23,6 +23,10 @@ export default defineNuxtConfig({
       usdt_to_pointer: process.env.USDT_TO_POINTER,
       activeReceiver: process.env.ACTIVE_RECEIVER,
       resetPasswordReceiver: process.env.RESET_PASSWORD_RECEIVER,
+      contactEmail: process.env.CONTACT_EMAIL,
+      tgGroup: process.env.TG_GROUP,
+      githubUrl: process.env.GITHUB_URL,
+      youtubeUrl: process.env.YOUTUBE_URL,
     },
   },
 });

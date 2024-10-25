@@ -13,8 +13,8 @@ const { $token } = use$auth();
       >
       <AsideMenuItem icon="heroicons:hashtag" href="/tag">标签</AsideMenuItem>
       <!-- <AsideMenuItem icon="heroicons:document-arrow-up">投稿</AsideMenuItem> -->
-      <AsideMenuItem icon="heroicons:building-storefront" href="/subscribe"
-        >订阅</AsideMenuItem
+      <AsideMenuItem icon="heroicons:building-storefront" href="/service"
+        >服务</AsideMenuItem
       >
       <AsideMenuItem icon="heroicons:shopping-cart">购物车</AsideMenuItem>
     </ul>

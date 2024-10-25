@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { $asideMenu: asideMenu } = use$status();
+const { tgGroup, githubUrl, youtubeUrl,contactEmail } = useRuntimeConfig().public;
 </script>
 
 <template>
@@ -30,7 +31,7 @@ const { $asideMenu: asideMenu } = use$status();
         >
           <li>
             <a
-              href=""
+              :href="githubUrl"
               target="_blank"
               class="block lg:transition-all lg:hover:-translate-y-1"
             >
@@ -40,7 +41,7 @@ const { $asideMenu: asideMenu } = use$status();
 
           <li>
             <a
-              href=""
+              :href="tgGroup"
               target="_blank"
               class="block lg:transition-all lg:hover:-translate-y-1"
             >
@@ -49,7 +50,7 @@ const { $asideMenu: asideMenu } = use$status();
           </li>
           <li>
             <a
-              href=""
+              :href="`mailto:${contactEmail}`"
               target="_blank"
               class="block lg:transition-all lg:hover:-translate-y-1"
             >
@@ -58,7 +59,7 @@ const { $asideMenu: asideMenu } = use$status();
           </li>
           <li>
             <a
-              href=""
+              :href="youtubeUrl"
               target="_blank"
               class="block lg:transition-all lg:hover:-translate-y-1"
             >

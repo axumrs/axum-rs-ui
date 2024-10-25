@@ -23,7 +23,7 @@ const expanedPageList = ref(false);
         <span class="shrink-0 flex flex-col items-center justify-center pl-0.5">
           <Icon
             name="uil:angle-up"
-            :class="{ 'rotate-180': expanedPageList }"
+            :class="{ 'rotate-180': !expanedPageList }"
           />
         </span>
       </button>
