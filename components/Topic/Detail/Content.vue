@@ -57,7 +57,11 @@ onMounted(() => {
     v-html="sections.join('\n')"
   ></div>
 
-  <Mask v-if="hasProtectdContents" @click="hasProtectdContents = false">
+  <Mask
+    class="backdrop-blur-sm"
+    v-if="hasProtectdContents"
+    @click="hasProtectdContents = false"
+  >
     <div
       class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg space-y-6"
     >

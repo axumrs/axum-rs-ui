@@ -15,6 +15,13 @@ const amountList = computed(() => {
   const trx = price.value.mul(new Decimal(rtc.public.usdt_to_trx));
   return { pointer, trx, usdt };
 });
+
+const { $addToCart } = use$cart();
+const handleBuy = () => {
+  console.log("a");
+
+  $addToCart(props.service);
+};
 </script>
 
 <template>
@@ -45,7 +52,10 @@ const amountList = computed(() => {
       <div
         class="border border-green-600 bg-green-600 text-white px-2 py-1 rounded text-sm"
       >
-        <button class="flex items-center justify-center gap-x-1">
+        <button
+          class="flex items-center justify-center gap-x-1"
+          @click="handleBuy"
+        >
           <Icon name="heroicons:shopping-cart-solid" size="1.25rem" />
           <div>购买</div>
         </button>

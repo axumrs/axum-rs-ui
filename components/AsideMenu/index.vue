@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { $token } = use$auth();
+const { $count } = use$cart();
 </script>
 
 <template>
@@ -16,7 +17,17 @@ const { $token } = use$auth();
       <AsideMenuItem icon="heroicons:building-storefront" href="/service"
         >服务</AsideMenuItem
       >
-      <AsideMenuItem icon="heroicons:shopping-cart">购物车</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:shopping-cart" href="/cart">
+        <div class="relative">
+          购物车
+          <div
+            v-if="$count > 0"
+            class="absolute animate-bounce top-0 -right-3 w-4 h-4 rounded-full bg-red-500 text-[0.5rem] leading-none flex flex-col justify-center items-center text-white"
+          >
+            {{ $count > 99 ? "99+" : `${$count}` }}
+          </div>
+        </div>
+      </AsideMenuItem>
     </ul>
 
     <ul class="flex flex-col justify-start items-start py-3" v-if="$token">
