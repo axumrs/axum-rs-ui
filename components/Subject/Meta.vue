@@ -16,6 +16,18 @@ const amountList = computed(() => {
 const hanldChangeCur = () => {
   changeCurrency();
 };
+
+const { $get } = use$fetch();
+const { $addToCart } = use$cart();
+const { $msg } = use$status();
+const addToCart = async () => {
+  await $get<Service>(`/user/service/subject/${props.subject.id}`, (v) => {
+    if (v) {
+      $addToCart(v);
+      $msg.value = "已添加到购物车";
+    }
+  });
+};
 </script>
 
 <template>
@@ -46,7 +58,10 @@ const hanldChangeCur = () => {
       class="border border-blue-600 bg-blue-600 text-white px-2 py-1 rounded shrink-0"
       v-if="!price.isZero()"
     >
-      <button class="flex items-center justify-center gap-x-1">
+      <button
+        class="flex items-center justify-center gap-x-1"
+        @click="addToCart"
+      >
         <Icon name="heroicons:shopping-cart-solid" size="1.25rem" />
         <div>购买</div>
       </button>

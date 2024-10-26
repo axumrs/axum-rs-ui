@@ -17,10 +17,10 @@ const amountList = computed(() => {
 });
 
 const { $addToCart } = use$cart();
+const { $msg } = use$status();
 const handleBuy = () => {
-  console.log("a");
-
   $addToCart(props.service);
+  $msg.value = "已添加到购物车";
 };
 </script>
 
@@ -35,7 +35,7 @@ const handleBuy = () => {
         v-if="service.is_subject && service.target_id"
         class="flex justify-start items-end text-gray-500"
         target="_blank"
-        :to="`/goto/subject/${service.target_id}`"
+        :to="`/goto/subject-${service.target_id}`"
         ><Icon name="uil:external-link-alt" size="0.75rem"
       /></NuxtLink>
     </div>
