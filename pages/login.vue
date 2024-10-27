@@ -8,6 +8,7 @@ const frm = reactive({ captcha: "", email: "", password: "" });
 const { $post } = use$fetch();
 const { $toast, $msg } = use$status();
 const { $setAuth } = use$auth();
+const { _r } = useRoute().query;
 
 const handleSubmit = async () => {
   if (!frm.email.trim()) {
@@ -33,7 +34,8 @@ const handleSubmit = async () => {
     (data) => {
       $setAuth(data);
       $msg.value = "登录成功";
-      return navigateTo("/") as void;
+      const rUrl = _r ? _r.toString() : "/";
+      return navigateTo(rUrl) as void;
     },
     {
       ifErr(e) {

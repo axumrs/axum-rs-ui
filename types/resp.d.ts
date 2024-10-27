@@ -8,3 +8,7 @@ type SubjectDetailResp = {
   subject: Subject;
   topic_list: TopicWithSubjectAndTags[];
 };
+
+type IDResp = {
+  id: string;
+};

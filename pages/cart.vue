@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import Decimal from "decimal.js";
 
-const {
-  $cart,
-  $hasItem,
-  $emptyCart,
-  $count,
-  $countAmount,
-  $updateItem,
-  $delItem,
-} = use$cart();
+const { $cart, $hasItem, $emptyCart, $count, $countAmount, $delItem } =
+  use$cart();
+const { $isValid } = use$auth();
+const { $post } = use$fetch();
+const { $toast, $msg } = use$status();
 
 const showClear = ref(false);
 const delItem = ref<Cart | null>(null);
@@ -19,19 +15,31 @@ const handleClear = () => {
   showClear.value = false;
 };
 
-const handleQuantityChange = (c: Cart) => {
-  const amount = new Decimal(c.price).mul(new Decimal(c.quantity)).toString();
-  const data = { ...c, amount };
-  console.log(data);
-
-  $updateItem(data);
-};
-
 const handleDel = () => {
   if (delItem.value) {
     $delItem(delItem.value);
     delItem.value = null;
   }
+};
+
+const handleSubmit = async () => {
+  if (!$isValid.value) {
+    $toast.value = "请登录后再进行结算";
+    return navigateTo({ path: "/login", query: { _r: "/cart" } }) as void;
+  }
+
+  const data = {
+    services: $cart.value.map((s) => ({ id: s.id, num: s.quantity })),
+    amount: $countAmount.value,
+    actual_amount: $countAmount.value,
+  };
+  await $post<IDResp>("/user/order", { ...data }, (v) => {
+    if (v) {
+      $msg.value = "下单成功";
+      $emptyCart();
+      return navigateTo(`/user/order/${v.id}`) as void;
+    }
+  });
 };
 </script>
 
@@ -101,8 +109,11 @@ const handleDel = () => {
       </div>
     </li>
     <li class="p-3 flex justify-end pr-4 lg:pr-8 xl:pr-12" v-if="$hasItem">
-      <button class="border text-white rounded-md px-2.5 py-1.5 bg-green-600">
-        结算
+      <button
+        class="border text-white rounded-md px-2.5 py-1.5 bg-green-600"
+        @click="handleSubmit"
+      >
+        下单
       </button>
     </li>
   </ul>
