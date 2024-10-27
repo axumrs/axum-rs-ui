@@ -51,7 +51,10 @@ const handleSubmit = async () => {
       <div class="col-span-5">服务</div>
       <div class="col-span-2">单价</div>
       <div class="col-span-2">数量</div>
-      <div class="col-span-2">金额</div>
+      <div class="col-span-2 flex justify-start items-center gap-x-1">
+        <div>金额</div>
+        <div><img src="/usdt.svg" class="w-4 object-cover" alt="USDT" /></div>
+      </div>
       <div class="col-span-1">
         <!-- 操作 -->
       </div>

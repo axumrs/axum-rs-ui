@@ -45,7 +45,7 @@ await Promise.all([loadSessions(), loadLoginLogs()]);
 <template>
   <PageTitle title="个人中心" icon="heroicons:identification" />
   <div
-    class="my-6 border px-2.5 py-1.5 rounded bg-white/70 text-gray-600 flex justify-start items-center gap-x-2 text-sm"
+    class="my-6 border px-2.5 py-1.5 rounded bg-yellow-50 text-orange-600 border-orange-600 flex justify-start items-center gap-x-2 text-sm"
   >
     <Icon name="uil:info-circle" size="1.25rem" />
     <span

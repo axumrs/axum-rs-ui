@@ -21,6 +21,7 @@ const { $msg } = use$status();
 const handleBuy = () => {
   $addToCart(props.service);
   $msg.value = "已添加到购物车";
+  return navigateTo("/cart") as void;
 };
 </script>
 

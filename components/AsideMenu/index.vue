@@ -31,8 +31,12 @@ const { $count } = use$cart();
     </ul>
 
     <ul class="flex flex-col justify-start items-start py-3" v-if="$token">
-      <AsideMenuItem icon="heroicons:identification">个人中心</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:credit-card">订单列表</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:identification" href="/user"
+        >个人中心</AsideMenuItem
+      >
+      <AsideMenuItem icon="heroicons:credit-card" href="/user/order"
+        >订单列表</AsideMenuItem
+      >
       <AsideMenuItem icon="heroicons:server">已购项目</AsideMenuItem>
       <AsideMenuItem icon="heroicons:document-text">学习记录</AsideMenuItem>
       <AsideMenuItem icon="heroicons:folder">随堂笔记</AsideMenuItem>

@@ -19,12 +19,14 @@ const hanldChangeCur = () => {
 
 const { $get } = use$fetch();
 const { $addToCart } = use$cart();
-const { $msg } = use$status();
+const { $msg, $isLoading } = use$status();
 const addToCart = async () => {
   await $get<Service>(`/user/service/subject/${props.subject.id}`, (v) => {
     if (v) {
       $addToCart(v);
       $msg.value = "已添加到购物车";
+      $isLoading.value = false;
+      return navigateTo("/cart") as void;
     }
   });
 };

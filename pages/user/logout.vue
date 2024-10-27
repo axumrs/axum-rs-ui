@@ -11,7 +11,7 @@ const handleLogout = async () => {
   await $del("/user/user/logout", () => {
     $msg.value = "退出成功";
     $setAuth(null);
-    return navigateTo("/login") as void;
+    return navigateTo("/") as void;
   });
 };
 </script>
