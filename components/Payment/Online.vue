@@ -36,7 +36,7 @@ const { $installedTronLink, $tron, $isConnected, $walletAddress, $connect } =
         v-if="$installedTronLink && $isConnected"
         class="space-y-2 bg-green-50 text-teal-600 p-3"
       >
-        <div>
+        <div class="overflow-x-auto">
           你已连接 TronLink 钱包，当前钱包地址:
           <code>{{ $walletAddress }}</code>
         </div>

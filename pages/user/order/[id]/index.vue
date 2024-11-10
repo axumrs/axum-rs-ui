@@ -58,17 +58,14 @@ await loadData();
         <div>状态：</div>
         <div class="flex justify-start items-center gap-x-1">
           <div>{{ $status(order.status) }}</div>
-          <div v-if="order.status === 'Pending'">
-            <NuxtLink
-              :to="`/user/order/${order.id}/pay?_rtd=1`"
-              class="border bg-green-600 text-white px-1.5 py-0.5 rounded hover:bg-green-700 no-underline"
-            >
-              付款
-            </NuxtLink>
-          </div>
         </div>
       </li>
     </ul>
+  </div>
+
+  <div class="my-6 bg-white p-6 border rounded-md space-y-4">
+    <div class="text-lg font-normal">支付信息</div>
+    <Pay />
   </div>
 
   <div
@@ -106,9 +103,5 @@ await loadData();
         </tbody>
       </table>
     </div>
-  </div>
-
-  <div class="my-6 bg-white p-6 border rounded-md space-y-4">
-    <div class="text-lg font-normal">支付信息</div>
   </div>
 </template>

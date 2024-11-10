@@ -4,7 +4,7 @@ import Decimal from "decimal.js";
 const tabList: { label: string; value: PaymentKind; disabled?: boolean }[] = [
   { label: "在线支付", value: "Online" },
   { label: "扫码支付", value: "QrCode" },
-  { label: "微信/支付宝", value: "WechatAlipay" },
+  { label: "微信支付", value: "WechatAlipay" },
   { label: "积分支付", value: "Pointer" },
 ];
 const curentTab = ref<PaymentKind>(tabList[0].value);
@@ -36,30 +36,26 @@ await loadData();
 </script>
 
 <template>
-  <PageTitle icon="heroicons:credit-card" title="付款" />
-
   <div v-if="order" class="my-6 bg-white p-6 border rounded-md space-y-4">
-    <!-- <div class="text-lg font-normal">订单摘要</div> -->
-    <ul class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <li>
-        订单号：
-        {{ order.id.toUpperCase() }}
-      </li>
-      <li class="flex justify-start items-center gap-x-2">
-        <div>金额：</div>
-        <div class="flex justify-start items-center gap-x-1">
-          <div
-            class="before:content-['原价：'] before:text-gray-500 text-xs text-gray-500 line-through"
-            v-if="order.amount !== order.actual_amount"
-          >
-            {{ new Decimal(order.amount) }}
-          </div>
-          <div @click="changeCurrency">
-            <Currency :currency="currency" :amount-list="amountList" />
-          </div>
+    <div class="flex justify-start items-center gap-x-2 relative">
+      <div>支付金额：</div>
+      <div class="flex justify-start items-center gap-x-1">
+        <div
+          class="before:content-['原价：'] before:text-gray-500 text-xs text-gray-500 line-through"
+          v-if="order.amount !== order.actual_amount"
+        >
+          {{ new Decimal(order.amount) }}
         </div>
-      </li>
-    </ul>
+        <div @click="changeCurrency">
+          <Currency :currency="currency" :amount-list="amountList" />
+        </div>
+      </div>
+      <div
+        class="absolute bg-white border rounded-sm p-0.5 border-red-800 -top-7 animate-bounce text-red-800 left-20 min-w-max text-xs leading-none after:absolute after:bg-green-800 after:border-[4.5px] after:border-white after:border-t-red-800 after:-bottom-2 after:left-1/2 after:-translate-x-1/2"
+      >
+        点击切换货币
+      </div>
+    </div>
   </div>
 
   <div class="my-6 bg-white p-6 border rounded-md space-y-4">
