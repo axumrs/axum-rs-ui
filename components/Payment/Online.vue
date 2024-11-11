@@ -1,6 +1,48 @@
 <script setup lang="ts">
-const { $installedTronLink, $tron, $isConnected, $walletAddress, $connect } =
-  use$tronLink();
+import type Decimal from "decimal.js";
+
+const props = defineProps<{
+  amount: Decimal;
+  order: Order;
+  currency: Currency;
+}>();
+
+const payStatus = ref<
+  "Pending" | "Success" | "Confirm" | "Update" | "Fail" | null
+>(null);
+const txid = ref<string | null>(null);
+
+const {
+  $installedTronLink,
+  $usdt,
+  $isConnected,
+  $walletAddress,
+  $connect,
+  $trx,
+} = use$tronLink();
+
+const handlePay = async () => {
+  payStatus.value = "Pending";
+  try {
+    if (props.currency === "trx") {
+      const resp = await $trx(props.amount);
+      if (resp.result) {
+        payStatus.value = "Confirm";
+        txid.value = resp.txid;
+      } else {
+        payStatus.value = "Fail";
+      }
+      return;
+    }
+
+    txid.value = await $usdt(props.amount);
+    payStatus.value = "Confirm";
+  } catch (e) {
+    // @ts-ignore
+    alert(e.message);
+    payStatus.value = "Fail";
+  }
+};
 </script>
 
 <template>
@@ -42,9 +84,14 @@ const { $installedTronLink, $tron, $isConnected, $walletAddress, $connect } =
         </div>
         <div>
           <button
-            class="border rounded-md px-2.5 py-1.5 bg-purple-600 text-white"
+            class="border rounded-md px-2.5 py-1.5 bg-purple-600 text-white flex justify-center items-center gap-x-1"
+            @click="handlePay"
           >
-            支付
+            <span>立即支付</span>
+            <span
+              class="bg-gray-100 text-purple-600 px-1.5 py-0.5 text-sm rounded-md"
+              >{{ amount }} {{ currency.toUpperCase() }}</span
+            >
           </button>
         </div>
       </div>
@@ -65,7 +112,19 @@ const { $installedTronLink, $tron, $isConnected, $walletAddress, $connect } =
     </ul>
   </div>
 
-  <ClientOnly>
-    <!-- <PaymentTronLink /> -->
-  </ClientOnly>
+  <Mask v-if="payStatus">
+    <div
+      class="bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6"
+    >
+      <div v-if="payStatus === 'Pending'">请在 TronLink 钱包中完成支付</div>
+      <div v-else-if="payStatus === 'Success'">支付成功</div>
+      <div v-else-if="payStatus === 'Confirm'">
+        <div>正在确认交易 {{ txid }}</div>
+        <div>区块链确认交易需要一定的时间，请耐心等待</div>
+      </div>
+      <div v-else-if="payStatus === 'Update'">
+        <div>正在更新订单状态和购买的服务</div>
+      </div>
+    </div>
+  </Mask>
 </template>

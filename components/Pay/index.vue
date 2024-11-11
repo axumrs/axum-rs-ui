@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Decimal from "decimal.js";
 
+const props = defineProps<{ order: Order }>();
+
 const tabList: { label: string; value: PaymentKind; disabled?: boolean }[] = [
   { label: "在线支付", value: "Online" },
   { label: "扫码支付", value: "QrCode" },
@@ -10,12 +12,7 @@ const tabList: { label: string; value: PaymentKind; disabled?: boolean }[] = [
 const curentTab = ref<PaymentKind>(tabList[0].value);
 const { currency, changeCurrency } = use$currency();
 
-const { id } = useRoute().params;
-const { $get } = use$fetch();
-
-const order = ref<Order>();
-
-const usdtAmount = computed(() => new Decimal(order.value?.actual_amount || 0));
+const usdtAmount = computed(() => new Decimal(props.order.actual_amount || 0));
 
 const rtc = useRuntimeConfig();
 const amountList = computed(() => {
@@ -24,15 +21,19 @@ const amountList = computed(() => {
   const trx = usdtAmount.value.mul(new Decimal(rtc.public.usdt_to_trx));
   return { pointer, trx, usdt };
 });
-const loadData = async () => {
-  await $get<Order>(`/user/order/${id}`, (v) => {
-    if (v) {
-      order.value = v;
-    }
-  });
-};
 
-await loadData();
+const currentCurrency = computed<Currency>(() => {
+  if (currency.value === "trx") {
+    return "trx";
+  }
+  return "usdt";
+});
+const currentAmount = computed(() => {
+  if (currency.value === "trx") {
+    return amountList.value.trx;
+  }
+  return amountList.value.usdt;
+});
 </script>
 
 <template>
@@ -80,7 +81,14 @@ await loadData();
       </li>
     </ul>
     <section class="bg-white">
-      <Payment :kind="curentTab" :amount="usdtAmount" />
+      <Payment
+        :kind="curentTab"
+        :amount="currentAmount"
+        :currency="currentCurrency"
+        :order="order"
+        :usdt-amount="usdtAmount"
+        v-if="order"
+      />
     </section>
   </div>
 </template>

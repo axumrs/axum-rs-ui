@@ -65,7 +65,7 @@ await loadData();
 
   <div class="my-6 bg-white p-6 border rounded-md space-y-4">
     <div class="text-lg font-normal">支付信息</div>
-    <Pay />
+    <Pay :order="order" v-if="order" />
   </div>
 
   <div
