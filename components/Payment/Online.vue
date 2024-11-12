@@ -8,7 +8,7 @@ const props = defineProps<{
 }>();
 
 const payStatus = ref<
-  "Pending" | "Success" | "Confirm" | "Update" | "Fail" | null
+  "Pending" | "Confirm" | "Update" | "Success" | "Fail" | null
 >(null);
 const txid = ref<string | null>(null);
 
@@ -19,30 +19,69 @@ const {
   $walletAddress,
   $connect,
   $trx,
+  $confirmTx,
 } = use$tronLink();
 
+const { $toast } = use$status();
 const handlePay = async () => {
   payStatus.value = "Pending";
   try {
     if (props.currency === "trx") {
       const resp = await $trx(props.amount);
-      if (resp.result) {
-        payStatus.value = "Confirm";
-        txid.value = resp.txid;
-      } else {
-        payStatus.value = "Fail";
+      if (!resp.result) {
+        throw new Error("TRX支付失败");
       }
-      return;
+      payStatus.value = "Confirm";
+      txid.value = resp.txid;
+    } else {
+      txid.value = await $usdt(props.amount);
+      payStatus.value = "Confirm";
     }
 
-    txid.value = await $usdt(props.amount);
-    payStatus.value = "Confirm";
+    // POST /user/pay { txid, order_id, currency, amount }
   } catch (e) {
-    // @ts-ignore
-    alert(e.message);
+    if (e instanceof Error) {
+      $toast.value = e.message;
+    } else if (typeof e === "string") {
+      if (e === "Confirmation declined by user") {
+        $toast.value = "你已取消支付";
+      } else {
+        $toast.value = e;
+      }
+    } else {
+      $toast.value = `${e}`;
+    }
     payStatus.value = "Fail";
   }
 };
+
+const confirmTransaction = async (t?: number) => {
+  if (txid.value && payStatus.value === "Confirm") {
+    const confirmed = await $confirmTx(txid.value);
+    if (confirmed) {
+      payStatus.value = "Update";
+      window.clearInterval(t);
+
+      // PUT /user/pay { txid, order_id, currency, amount }
+    } else {
+      payStatus.value = "Confirm";
+    }
+  }
+};
+
+watch(
+  () => txid.value,
+  (nv) => {
+    if (nv) {
+      payStatus.value = "Confirm";
+      const t = window.setInterval(async () => {
+        console.log("正在确认交易", nv, payStatus.value);
+
+        await confirmTransaction(t);
+      }, 1000);
+    }
+  }
+);
 </script>
 
 <template>
@@ -114,7 +153,7 @@ const handlePay = async () => {
 
   <Mask v-if="payStatus">
     <div
-      class="bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6"
+      class="bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 min-w-64 rounded-md shadow-md"
     >
       <div v-if="payStatus === 'Pending'">请在 TronLink 钱包中完成支付</div>
       <div v-else-if="payStatus === 'Success'">支付成功</div>
@@ -123,7 +162,21 @@ const handlePay = async () => {
         <div>区块链确认交易需要一定的时间，请耐心等待</div>
       </div>
       <div v-else-if="payStatus === 'Update'">
-        <div>正在更新订单状态和购买的服务</div>
+        <div>
+          正在更新订单状态和购买的服务
+          {{ { tx_id: txid, order_id: order.id, currency, amount } }}
+        </div>
+      </div>
+      <div v-else-if="payStatus === 'Fail'" class="space-y-4">
+        <div>支付失败</div>
+        <div class="flex justify-end items-center">
+          <button
+            class="border rounded-md px-2.5 py-1.5 bg-blue-500 text-white"
+            @click="payStatus = null"
+          >
+            关闭
+          </button>
+        </div>
       </div>
     </div>
   </Mask>

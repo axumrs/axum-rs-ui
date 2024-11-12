@@ -80,6 +80,15 @@ export default function use$tronLink() {
     return txId;
   };
 
+  // 确认交易
+  const $confirmTx = async (txId: string) => {
+    const resp = await $tron.value.trx.getConfirmedTransaction(txId);
+    // @ts-ignore
+    return (
+      resp && resp.ret && resp.ret[0] && resp.ret[0].contractRet === "SUCCESS"
+    );
+  };
+
   return {
     $installedTronLink,
     $tron,
@@ -88,5 +97,6 @@ export default function use$tronLink() {
     $connect,
     $trx,
     $usdt,
+    $confirmTx,
   };
 }
