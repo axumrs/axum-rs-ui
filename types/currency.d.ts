@@ -1,1 +1,1 @@
-type Currency = "usdt" | "trx" | "pointer";
+type Currency = "USDT" | "TRX" | "CNY" | "PNT";

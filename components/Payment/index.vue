@@ -7,6 +7,7 @@ defineProps<{
   order: Order;
   currency: Currency;
   usdtAmount: Decimal;
+  re_pay: boolean;
 }>();
 </script>
 
@@ -17,6 +18,7 @@ defineProps<{
       :order="order"
       :amount="amount"
       :currency="currency"
+      :re_pay="re_pay"
     />
     <PaymentQrCode v-else-if="kind === 'QrCode'" />
     <PaymentWechatAlipay

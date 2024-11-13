@@ -8,15 +8,15 @@ const props = defineProps<{
 
 const com = computed(() => {
   switch (props.currency) {
-    case "pointer":
+    case "PNT":
       return CurrencyPinter;
-    case "trx":
+    case "TRX":
       return CurrencyTrx;
   }
   return CurrencyUsdt;
 });
 
-const amount = computed(() => props.amountList[props.currency] || 0);
+const amount = computed(() => props.amountList[props.currency]);
 </script>
 
 <template>

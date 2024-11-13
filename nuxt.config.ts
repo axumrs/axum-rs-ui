@@ -31,6 +31,7 @@ export default defineNuxtConfig({
       wallet_addr: process.env.WALLET_ADDR,
       wallet_qrcode: process.env.WALLET_QRCODE,
       usdtContractAddr: process.env.USDT_CONTRACT_ADDR,
+      tronUrl: process.env.TRON_URL,
     },
   },
 });

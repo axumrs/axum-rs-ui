@@ -5,6 +5,7 @@ const props = defineProps<{
   amount: Decimal;
   order: Order;
   currency: Currency;
+  re_pay: boolean;
 }>();
 
 const payStatus = ref<
@@ -22,11 +23,15 @@ const {
   $confirmTx,
 } = use$tronLink();
 
-const { $toast } = use$status();
+const { $toast, $isLoading } = use$status();
+
+const { $post, $put } = use$fetch();
+
+const pay_id = ref<string>();
 const handlePay = async () => {
   payStatus.value = "Pending";
   try {
-    if (props.currency === "trx") {
+    if (props.currency === "TRX") {
       const resp = await $trx(props.amount);
       if (!resp.result) {
         throw new Error("TRX支付失败");
@@ -38,7 +43,28 @@ const handlePay = async () => {
       payStatus.value = "Confirm";
     }
 
-    // POST /user/pay { txid, order_id, currency, amount }
+    await $post<IDResp>(
+      "/user/pay",
+      {
+        order_id: props.order.id,
+        currency: props.currency,
+        method: "Online",
+        tx_id: txid.value,
+        amount: props.amount,
+        re_pay: props.re_pay,
+      },
+      (v) => {
+        if (v) {
+          pay_id.value = v.id;
+        }
+      },
+      {
+        ifErr(e) {
+          $isLoading.value = false;
+          throw e;
+        },
+      }
+    );
   } catch (e) {
     if (e instanceof Error) {
       $toast.value = e.message;
@@ -62,7 +88,25 @@ const confirmTransaction = async (t?: number) => {
       payStatus.value = "Update";
       window.clearInterval(t);
 
-      // PUT /user/pay { txid, order_id, currency, amount }
+      await $put(
+        "/user/pay",
+        {
+          order_id: props.order.id,
+          currency: props.currency,
+          pay_id: pay_id.value,
+          tx_id: txid.value,
+        },
+        () => {
+          payStatus.value = "Success";
+        },
+        {
+          ifErr(e) {
+            $isLoading.value = false;
+            payStatus.value = "Fail";
+            $toast.value = e.message;
+          },
+        }
+      );
     } else {
       payStatus.value = "Confirm";
     }
@@ -75,10 +119,8 @@ watch(
     if (nv) {
       payStatus.value = "Confirm";
       const t = window.setInterval(async () => {
-        console.log("正在确认交易", nv, payStatus.value);
-
         await confirmTransaction(t);
-      }, 1000);
+      }, 5000);
     }
   }
 );
@@ -155,27 +197,68 @@ watch(
     <div
       class="bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 min-w-64 rounded-md shadow-md"
     >
-      <div v-if="payStatus === 'Pending'">请在 TronLink 钱包中完成支付</div>
-      <div v-else-if="payStatus === 'Success'">支付成功</div>
-      <div v-else-if="payStatus === 'Confirm'">
-        <div>正在确认交易 {{ txid }}</div>
-        <div>区块链确认交易需要一定的时间，请耐心等待</div>
+      <div v-if="payStatus === 'Pending'" class="space-y-4">
+        <div class="flex flex-col items-center justify-center gap-y-2">
+          <div class="text-orange-500">
+            <Icon name="svg-spinners:blocks-wave" size="3rem" />
+          </div>
+          <div class="text-xl">请在 TronLink 钱包中完成支付</div>
+        </div>
+        <div class="text-sm">
+          TronLink钱包会弹出一个支付窗口，请在该窗口中完成支付
+        </div>
+      </div>
+      <div v-else-if="payStatus === 'Success'">
+        <div class="flex flex-col items-center justify-center gap-y-2">
+          <div class="text-green-500">
+            <Icon name="weui:done2-filled" size="3rem" />
+          </div>
+
+          <div class="text-xl flex justify-between items-center gap-x-2">
+            <div>支付成功</div>
+            <div>
+              <button
+                class="text-sm border px-1.5 py-0.5 bg-green-100 text-teal-600 border-teal-500 rounded"
+              >
+                确定
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else-if="payStatus === 'Confirm'" class="space-y-4">
+        <div class="flex flex-col items-center justify-center gap-y-2">
+          <div class="text-orange-500">
+            <Icon name="svg-spinners:blocks-wave" size="3rem" />
+          </div>
+          <div class="text-xl">正在确认交易</div>
+        </div>
+        <div class="text-sm">区块链确认交易需要一定的时间，请耐心等待</div>
       </div>
       <div v-else-if="payStatus === 'Update'">
-        <div>
-          正在更新订单状态和购买的服务
-          {{ { tx_id: txid, order_id: order.id, currency, amount } }}
+        <div class="flex flex-col items-center justify-center gap-y-2">
+          <div class="text-orange-500">
+            <Icon name="svg-spinners:blocks-wave" size="3rem" />
+          </div>
+          <div class="text-xl">正在更新订单状态和购买的服务</div>
         </div>
       </div>
       <div v-else-if="payStatus === 'Fail'" class="space-y-4">
-        <div>支付失败</div>
-        <div class="flex justify-end items-center">
-          <button
-            class="border rounded-md px-2.5 py-1.5 bg-blue-500 text-white"
-            @click="payStatus = null"
-          >
-            关闭
-          </button>
+        <div class="flex flex-col items-center justify-center gap-y-2">
+          <div class="text-red-500">
+            <Icon name="weui:close2-filled" size="3rem" />
+          </div>
+          <div class="flex justify-between items-center gap-x-2">
+            <div class="text-xl">支付失败</div>
+            <div>
+              <button
+                class="text-sm border px-1.5 py-0.5 bg-blue-50 text-blue-600 border-blue-200 rounded"
+                @click="payStatus = null"
+              >
+                关闭
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

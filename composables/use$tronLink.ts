@@ -1,6 +1,6 @@
 import Decimal from "decimal.js";
 
-const DIGIT = new Decimal(1);
+const DIGIT = new Decimal(1000000);
 
 export default function use$tronLink() {
   const rtc = useRuntimeConfig();
