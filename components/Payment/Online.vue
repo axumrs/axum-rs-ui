@@ -113,6 +113,8 @@ const confirmTransaction = async (t?: number) => {
   }
 };
 
+const emits = defineEmits(["payDone"]);
+
 watch(
   () => txid.value,
   (nv) => {
@@ -219,6 +221,7 @@ watch(
             <div>
               <button
                 class="text-sm border px-1.5 py-0.5 bg-green-100 text-teal-600 border-teal-500 rounded"
+                @click="emits('payDone')"
               >
                 确定
               </button>

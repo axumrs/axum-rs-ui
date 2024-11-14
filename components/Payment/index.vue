@@ -9,6 +9,7 @@ defineProps<{
   usdtAmount: Decimal;
   re_pay: boolean;
 }>();
+const emits = defineEmits(["payDone"]);
 </script>
 
 <template>
@@ -19,6 +20,7 @@ defineProps<{
       :amount="amount"
       :currency="currency"
       :re_pay="re_pay"
+      @pay-done="emits('payDone')"
     />
     <PaymentQrCode v-else-if="kind === 'QrCode'" />
     <PaymentWechatAlipay

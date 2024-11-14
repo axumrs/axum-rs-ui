@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { CurrencyPinter, CurrencyTrx, CurrencyUsdt } from "#components";
+import {
+  CurrencyPinter,
+  CurrencyTrx,
+  CurrencyUsdt,
+  CurrencyCny,
+} from "#components";
 import type Decimal from "decimal.js";
 const props = defineProps<{
   currency: Currency;
@@ -12,6 +17,8 @@ const com = computed(() => {
       return CurrencyPinter;
     case "TRX":
       return CurrencyTrx;
+    case "CNY":
+      return CurrencyCny;
   }
   return CurrencyUsdt;
 });

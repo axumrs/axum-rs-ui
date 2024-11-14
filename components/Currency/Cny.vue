@@ -6,10 +6,10 @@ defineProps<{ amount: Decimal }>();
 
 <template>
   <CurrencyItem
-    currency="USDT"
+    currency="CNY"
     :amount="amount"
-    text-class="text-cyan-600"
-    label="USDT"
-    border-class="border-cyan-600"
+    text-class="text-lime-600"
+    label="人民币"
+    border-class="border-lime-600"
   />
 </template>

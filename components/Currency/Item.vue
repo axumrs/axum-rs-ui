@@ -9,7 +9,9 @@ const props = defineProps<{
   label?: string;
   borderClass: string;
 }>();
-const icon = computed(() => props.icon || `/${props.currency}.svg`);
+const icon = computed(
+  () => props.icon || `/${props.currency.toLowerCase()}.svg`
+);
 const label = computed(
   () => props.label || props.currency.toString().toUpperCase()
 );

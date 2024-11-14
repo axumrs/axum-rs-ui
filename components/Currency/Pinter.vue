@@ -6,10 +6,11 @@ defineProps<{ amount: Decimal }>();
 
 <template>
   <CurrencyItem
-    currency="pointer"
+    currency="PNT"
     :amount="amount"
     text-class="text-orange-600"
     label="积分"
+    icon="/pointer.svg"
     border-class="border-orange-600"
   />
 </template>

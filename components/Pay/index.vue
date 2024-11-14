@@ -53,8 +53,10 @@ const rePay = () => {
   is_re_pay.value = true;
 };
 
-onMounted(() => {
-  loadPay().then();
+onMounted(async () => {
+  const t = setTimeout(async () => {
+    await loadPay();
+  }, 100);
 });
 </script>
 
@@ -113,6 +115,7 @@ onMounted(() => {
           :usdt-amount="usdtAmount"
           :re_pay="is_re_pay"
           v-if="order"
+          @pay-done="loadPay"
         />
       </section>
     </div>

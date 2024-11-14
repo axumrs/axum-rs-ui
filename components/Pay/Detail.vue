@@ -36,11 +36,19 @@ const tronUrl = useRuntimeConfig().public.tronUrl;
       <div class="truncate">
         <!-- https://tronscan.org/#/transaction/019dd64882df1cbe30f0bd7d6316a26907edc4cdd27dcfd263cceaa28584dd6c -->
         <a
+          v-if="pay.tx_id && pay.method === 'Online'"
           class="font-mono text-xs underline decoration-dotted"
           target="_blank"
           :href="`${tronUrl}/transaction/${pay.tx_id}`"
           >{{ pay.tx_id }}</a
         >
+        <span
+          v-else-if="pay.tx_id && pay.method !== 'Online'"
+          class="font-mono text-xs"
+        >
+          {{ pay.tx_id }}
+        </span>
+        <span v-else>N/A</span>
       </div>
     </li>
     <li class="flex justify-start items-center gap-x-2">

@@ -6,7 +6,7 @@ defineProps<{ amount: Decimal }>();
 
 <template>
   <CurrencyItem
-    currency="trx"
+    currency="TRX"
     :amount="amount"
     text-class="text-gray-600"
     icon="/trx.png"
