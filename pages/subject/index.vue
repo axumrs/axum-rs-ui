@@ -64,7 +64,7 @@ await loadData();
         <div>
           <img src="/usdt.svg" class="w-4 object-cover" />
         </div>
-        <div class="">USDT</div>
+        <div class="hidden lg:block">USDT</div>
       </li>
       <li
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
@@ -75,7 +75,7 @@ await loadData();
         }"
       >
         <div><img src="/trx.png" class="w-4 object-cover" /></div>
-        <div class="">TRX</div>
+        <div class="hidden lg:block">TRX</div>
       </li>
       <li
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
@@ -86,7 +86,7 @@ await loadData();
         }"
       >
         <div><img src="/pointer.svg" class="w-4 object-cover" /></div>
-        <div class="">积分</div>
+        <div class="hidden lg:block">积分</div>
       </li>
       <li
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
@@ -97,7 +97,7 @@ await loadData();
         }"
       >
         <div><img src="/cny.svg" class="w-4 object-cover" /></div>
-        <div class="">人民币</div>
+        <div class="hidden lg:block">人民币</div>
       </li>
     </ul>
   </section>

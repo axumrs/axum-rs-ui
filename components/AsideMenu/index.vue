@@ -39,12 +39,12 @@ const { $count } = use$cart();
       >
       <AsideMenuItem icon="heroicons:server">已购项目</AsideMenuItem>
       <AsideMenuItem icon="heroicons:document-text">学习记录</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:folder">随堂笔记</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:chat-bubble-bottom-center-text"
+      <!-- <AsideMenuItem icon="heroicons:folder">随堂笔记</AsideMenuItem> -->
+      <!-- <AsideMenuItem icon="heroicons:chat-bubble-bottom-center-text"
         >我的评论</AsideMenuItem
-      >
-      <AsideMenuItem icon="heroicons:document-check">已投稿件</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:link">我的邀请</AsideMenuItem>
+      > -->
+      <!-- <AsideMenuItem icon="heroicons:document-check">已投稿件</AsideMenuItem> -->
+      <!-- <AsideMenuItem icon="heroicons:link">我的邀请</AsideMenuItem> -->
       <AsideMenuItem icon="heroicons:user">个人信息</AsideMenuItem>
       <AsideMenuItem icon="heroicons:key">修改密码</AsideMenuItem>
       <AsideMenuItem icon="heroicons:arrow-right-on-rectangle"
@@ -57,7 +57,7 @@ const { $count } = use$cart();
     </ul>
     <ul class="flex flex-col justify-start items-start py-3">
       <AsideMenuItem icon="heroicons:light-bulb">关于我们</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:heart">小额捐赠</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:heart">小额赞助</AsideMenuItem>
     </ul>
   </div>
 </template>

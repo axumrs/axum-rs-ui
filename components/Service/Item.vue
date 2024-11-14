@@ -13,7 +13,8 @@ const amountList = computed(() => {
   const usdt = price.value;
   const pointer = price.value.mul(new Decimal(rtc.public.usdt_to_pointer));
   const trx = price.value.mul(new Decimal(rtc.public.usdt_to_trx));
-  return { pointer, trx, usdt };
+  const cny = price.value.mul(new Decimal(rtc.public.usdt_to_cny));
+  return { PNT: pointer, TRX: trx, USDT: usdt, CNY: cny };
 });
 
 const { $addToCart } = use$cart();
@@ -26,8 +27,10 @@ const handleBuy = () => {
 </script>
 
 <template>
-  <li class="bg-white border rounded-md shadow lg:shadow-md">
-    <div class="bg-gray-100 p-4 flex justify-start items-center gap-x-1">
+  <li class="bg-white border rounded-md shadow lg:shadow-md flex flex-col">
+    <div
+      class="bg-gray-100 p-4 flex justify-start items-center gap-x-1 shrink-0"
+    >
       <img :src="service.cover" class="w-5 object-cover" v-if="service.cover" />
       <h3 class="text-lg">
         {{ service.name }}
@@ -41,25 +44,27 @@ const handleBuy = () => {
       /></NuxtLink>
     </div>
 
-    <div
-      v-html="md.render(service.desc)"
-      class="min-h-32 lg:min-h-40 grow prose max-w-prose p-4"
-    ></div>
-
-    <div class="flex justify-end items-center gap-x-2 p-4">
-      <div @click="changeCurrency">
-        <Currency :currency="currency" :amount-list="amountList" />
-      </div>
+    <div class="grow flex flex-col">
       <div
-        class="border border-green-600 bg-green-600 text-white px-2 py-1 rounded text-sm"
-      >
-        <button
-          class="flex items-center justify-center gap-x-1"
-          @click="handleBuy"
+        v-html="md.render(service.desc)"
+        class="prose max-w-none p-4 grow"
+      ></div>
+
+      <div class="flex justify-end items-center gap-x-2 p-4 shrink-0">
+        <div @click="changeCurrency">
+          <Currency :currency="currency" :amount-list="amountList" />
+        </div>
+        <div
+          class="border border-green-600 bg-green-600 text-white px-2 py-1 rounded text-sm"
         >
-          <Icon name="heroicons:shopping-cart-solid" size="1.25rem" />
-          <div>购买</div>
-        </button>
+          <button
+            class="flex items-center justify-center gap-x-1"
+            @click="handleBuy"
+          >
+            <Icon name="heroicons:shopping-cart-solid" size="1.25rem" />
+            <div>购买</div>
+          </button>
+        </div>
       </div>
     </div>
   </li>

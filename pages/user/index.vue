@@ -66,21 +66,23 @@ await Promise.all([loadSessions(), loadLoginLogs()]);
       </div>
     </template>
 
-    <ul class="grid grid-cols-2 grid-rows-2 gap-y-4">
+    <ul class="grid lg:grid-cols-2 lg:grid-rows-2 lg:gap-y-4">
       <li class="flex justify-start items-center gap-x-2">
         <div>账户类型：</div>
         <div>
           <span
             v-if="$user?.kind === 'YearlySubscriber'"
-            class="px-1.5 py-0.5 text-white bg-gradient-to-br from-rose-500 to-rose-600 shadow-sm"
+            class="px-1.5 py-0.5 text-white bg-gradient-to-br from-rose-500 to-rose-600 shadow-sm text-sm lg:text-base"
             >年度订阅用户</span
           >
           <span
             v-else-if="$user?.kind === 'Subscriber'"
-            class="px-1.5 py-0.5 text-white bg-gradient-to-br from-teal-500 to-teal-600 shadow-sm"
+            class="px-1.5 py-0.5 text-white bg-gradient-to-br from-teal-500 to-teal-600 shadow-sm text-sm lg:text-base"
             >订阅用户</span
           >
-          <span v-else class="px-1.5 py-0.5">普通用户</span>
+          <span v-else class="px-1.5 py-0.5 text-sm lg:text-base"
+            >普通用户</span
+          >
         </div>
       </li>
       <li class="flex justify-start items-center gap-x-2">
