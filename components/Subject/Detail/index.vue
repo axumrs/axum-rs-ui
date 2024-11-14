@@ -1,9 +1,17 @@
 <script setup lang="ts">
-defineProps<{ topicList: TopicWithSubjectAndTags[]; subject: Subject }>();
+defineProps<{
+  topicList: TopicWithSubjectAndTags[];
+  subject: Subject;
+  isPurchased?: boolean;
+}>();
 </script>
 
 <template>
-  <SubjectDetailHero class="p-3 mb-3 lg:mb-6" :subject="subject" />
+  <SubjectDetailHero
+    class="p-3 mb-3 lg:mb-6"
+    :subject="subject"
+    :is-purchased="isPurchased"
+  />
 
   <section
     class="bg-white/90 border rounded-lg mb-3"

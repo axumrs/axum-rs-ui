@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ subject: Subject }>();
+defineProps<{ subject: Subject; isPurchased?: boolean }>();
 </script>
 
 <template>
@@ -27,6 +27,10 @@ defineProps<{ subject: Subject }>();
       </div>
     </div>
 
-    <SubjectMeta class="justify-end mt-3" :subject="subject" />
+    <SubjectMeta
+      class="justify-end mt-3"
+      :subject="subject"
+      :is-purchased="isPurchased"
+    />
   </li>
 </template>

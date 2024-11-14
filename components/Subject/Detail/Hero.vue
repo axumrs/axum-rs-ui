@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ subject: Subject }>();
+defineProps<{ subject: Subject; isPurchased?: boolean }>();
 </script>
 
 <template>
@@ -13,7 +13,7 @@ defineProps<{ subject: Subject }>();
       {{ subject.summary }}
     </p>
     <div>
-      <SubjectMeta :subject="subject" />
+      <SubjectMeta :subject="subject" :is-purchased="isPurchased" />
     </div>
   </section>
 </template>

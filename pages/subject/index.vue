@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import Decimal from "decimal.js";
+
 const { currency } = use$currency();
 const { page: pageParam } = useRoute().query;
 const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
 
 const pm = ref<PaginationMeta>();
 const subjectList = ref<Subject[]>([]);
+const purchasedSubjects = ref<{ [key: string]: boolean }>();
 
 const frm = reactive({ page: page.value, page_size: 30 });
 
@@ -17,9 +20,29 @@ const loadData = async () => {
       if (v) {
         pm.value = v;
         subjectList.value = v.data || [];
+
+        loadPurchasedServices().then();
       }
     },
     { query: { ...frm } }
+  );
+};
+
+const loadPurchasedServices = async () => {
+  const ids = subjectList.value
+    .filter((s) => new Decimal(s.price).gt(new Decimal(0)))
+    .map((s) => s.id)
+    .join(",");
+  await $get<{ [key: string]: boolean }>(
+    "/user/subject/purchased",
+    (v) => {
+      if (v) {
+        purchasedSubjects.value = v;
+      }
+    },
+    {
+      query: { ids },
+    }
   );
 };
 
@@ -34,9 +57,9 @@ await loadData();
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
         :class="{
           'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
-            currency === 'usdt',
+            currency === 'USDT',
         }"
-        @click="currency = 'usdt'"
+        @click="currency = 'USDT'"
       >
         <div>
           <img src="/usdt.svg" class="w-4 object-cover" />
@@ -45,10 +68,10 @@ await loadData();
       </li>
       <li
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
-        @click="currency = 'trx'"
+        @click="currency = 'TRX'"
         :class="{
           'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
-            currency === 'trx',
+            currency === 'TRX',
         }"
       >
         <div><img src="/trx.png" class="w-4 object-cover" /></div>
@@ -56,14 +79,25 @@ await loadData();
       </li>
       <li
         class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
-        @click="currency = 'pointer'"
+        @click="currency = 'PNT'"
         :class="{
           'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
-            currency === 'pointer',
+            currency === 'PNT',
         }"
       >
         <div><img src="/pointer.svg" class="w-4 object-cover" /></div>
         <div class="">积分</div>
+      </li>
+      <li
+        class="flex justify-start items-center gap-x-1 border text-xs cursor-pointer rounded px-2 py-1"
+        @click="currency = 'CNY'"
+        :class="{
+          'border-purple-500 text-purple-600 shadow shadow-purple-500/20':
+            currency === 'CNY',
+        }"
+      >
+        <div><img src="/cny.svg" class="w-4 object-cover" /></div>
+        <div class="">人民币</div>
       </li>
     </ul>
   </section>
@@ -71,6 +105,7 @@ await loadData();
   <SubjectList
     class="my-4"
     :list="subjectList"
+    :purchased-subjects="purchasedSubjects"
     v-if="subjectList && subjectList.length > 0"
   />
 

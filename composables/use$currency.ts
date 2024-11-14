@@ -5,6 +5,8 @@ export default function use$currency() {
       currency.value = "TRX";
     } else if (currency.value === "TRX") {
       currency.value = "PNT";
+    } else if (currency.value === "PNT") {
+      currency.value = "CNY";
     } else {
       currency.value = "USDT";
     }

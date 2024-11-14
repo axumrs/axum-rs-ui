@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Decimal from "decimal.js";
 
-const props = defineProps<{ subject: Subject }>();
+const props = defineProps<{ subject: Subject; isPurchased?: boolean }>();
 const { currency, changeCurrency } = use$currency();
 const { $value: price } = use$decimal(props.subject.price);
 
@@ -11,7 +11,8 @@ const amountList = computed(() => {
   const usdt = price.value;
   const pointer = price.value.mul(new Decimal(rtc.public.usdt_to_pointer));
   const trx = price.value.mul(new Decimal(rtc.public.usdt_to_trx));
-  return { pointer, trx, usdt };
+  const cny = price.value.mul(new Decimal(rtc.public.usdt_to_cny));
+  return { PNT: pointer, TRX: trx, USDT: usdt, CNY: cny };
 });
 const hanldChangeCur = () => {
   changeCurrency();
@@ -52,13 +53,13 @@ const addToCart = async () => {
     >
       免费
     </li>
-    <li @click="hanldChangeCur" v-else>
+    <li @click="hanldChangeCur" v-if="!price.isZero() && isPurchased !== true">
       <Currency :currency="currency" :amount-list="amountList" />
     </li>
 
     <li
       class="border border-blue-600 bg-blue-600 text-white px-2 py-1 rounded shrink-0"
-      v-if="!price.isZero()"
+      v-if="!price.isZero() && isPurchased !== true"
     >
       <button
         class="flex items-center justify-center gap-x-1"
@@ -67,6 +68,13 @@ const addToCart = async () => {
         <Icon name="heroicons:shopping-cart-solid" size="1.25rem" />
         <div>购买</div>
       </button>
+    </li>
+    <li
+      v-if="!price.isZero() && isPurchased === true"
+      class="flex justify-start items-center gap-x-1 border border-blue-600 bg-white text-blue-600 px-2 py-1 rounded shrink-0"
+    >
+      <Icon name="lets-icons:check-fill" size="1.15rem" />
+      <div>已购买</div>
     </li>
   </ul>
 </template>
