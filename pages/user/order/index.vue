@@ -6,17 +6,25 @@ const { $get, $put } = use$fetch();
 const { $status } = use$order();
 const { $msg } = use$status();
 
+const { page: pageParam } = useRoute().query;
+const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
+const frm = reactive({ page: page.value, page_size: 30 });
+
 const orderList = ref<Order[]>([]);
 const pm = ref<PaginationMeta>();
 const cancelOrder = ref<Order | null>(null);
 
 const loadData = async () => {
-  await $get<Pagination<Order>>("/user/order", (v) => {
-    if (v) {
-      orderList.value = v.data || [];
-      pm.value = v;
-    }
-  });
+  await $get<Pagination<Order>>(
+    "/user/order",
+    (v) => {
+      if (v) {
+        orderList.value = v.data || [];
+        pm.value = v;
+      }
+    },
+    { query: { ...frm } }
+  );
 };
 
 const handleCancelOrder = async () => {
@@ -89,6 +97,8 @@ await loadData();
       </tbody>
     </table>
   </div>
+
+  <Pagination class="justify-end my-3" v-if="pm" :p="pm" />
 
   <DialogConfirm
     v-if="cancelOrder"
