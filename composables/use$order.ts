@@ -13,5 +13,10 @@ export default function use$order() {
     return status;
   };
 
-  return { $status };
+  const $purchasedServices = (o: Order) => {
+    const s = JSON.parse(o.snapshot) as OrderSnapShot[];
+    return s;
+  };
+
+  return { $status, $purchasedServices };
 }
