@@ -37,8 +37,12 @@ const { $count } = use$cart();
       <AsideMenuItem icon="heroicons:credit-card" href="/user/order"
         >订单列表</AsideMenuItem
       >
-      <AsideMenuItem icon="heroicons:server">已购项目</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:document-text">学习记录</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:server" href="/user/purchased"
+        >已购服务</AsideMenuItem
+      >
+      <AsideMenuItem icon="heroicons:document-text" href="/user/history"
+        >学习记录</AsideMenuItem
+      >
       <!-- <AsideMenuItem icon="heroicons:folder">随堂笔记</AsideMenuItem> -->
       <!-- <AsideMenuItem icon="heroicons:chat-bubble-bottom-center-text"
         >我的评论</AsideMenuItem

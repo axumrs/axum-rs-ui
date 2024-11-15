@@ -2,11 +2,13 @@
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
 
-const { $get } = use$fetch();
+const { $get, $put } = use$fetch();
 const { $status } = use$order();
+const { $msg } = use$status();
 
 const orderList = ref<Order[]>([]);
 const pm = ref<PaginationMeta>();
+const cancelOrder = ref<Order | null>(null);
 
 const loadData = async () => {
   await $get<Pagination<Order>>("/user/order", (v) => {
@@ -16,6 +18,17 @@ const loadData = async () => {
     }
   });
 };
+
+const handleCancelOrder = async () => {
+  if (cancelOrder.value) {
+    await $put(`/user/order/${cancelOrder.value.id}`, {}, () => {
+      $msg.value = "订单取消成功";
+      cancelOrder.value = null;
+      loadData().then();
+    });
+  }
+};
+
 await loadData();
 </script>
 
@@ -66,20 +79,32 @@ await loadData();
               <button
                 v-if="o.status === 'Pending'"
                 class="border bg-orange-600 text-white px-1.5 py-0.5 text-sm rounded hover:bg-orange-700"
+                @click="cancelOrder = { ...o }"
               >
                 取消
               </button>
-              <NuxtLink
-                :to="`/user/order/${o.id}/pay`"
-                v-if="o.status === 'Pending'"
-                class="border bg-green-600 text-white px-1.5 py-0.5 text-sm rounded hover:bg-green-700 no-underline"
-              >
-                付款
-              </NuxtLink>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <DialogConfirm
+    v-if="cancelOrder"
+    @cancel="cancelOrder = null"
+    @ok="handleCancelOrder"
+  >
+    <template #header>
+      <h3>取消订单</h3>
+    </template>
+    <template #default>
+      <div>
+        确定要取消订单<span
+          class="text-orange-600 underline underline-offset-4 decoration-wavy mx-1"
+          >{{ cancelOrder.id.toUpperCase() }}</span
+        >吗?
+      </div>
+    </template>
+  </DialogConfirm>
 </template>

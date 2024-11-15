@@ -63,9 +63,15 @@ await loadData();
     </ul>
   </div>
 
-  <div class="my-6 bg-white p-6 border rounded-md space-y-4">
+  <div class="my-6 bg-white p-6 border rounded-md space-y-4" v-if="order">
     <div class="text-lg font-normal">支付信息</div>
-    <Pay :order="order" v-if="order" />
+    <Pay
+      :order="order"
+      v-if="!(order.status === 'Cancelled' || order.status === 'Closed')"
+    />
+    <div v-else>
+      该订单{{ $status(order.status) }}，无法支付。如需购买，请重新下单。
+    </div>
   </div>
 
   <div
