@@ -20,6 +20,6 @@ const rtc = useRuntimeConfig();
       />
     </p>
     <h2>微信/支付宝</h2>
-    <p>请和站长<a :href="rtc.public.contactTg">私聊</a>，获取收款码。</p>
+    <p>请和站长<a :href="rtc.public.contactTg">私聊</a>，获取付款码。</p>
   </div>
 </template>

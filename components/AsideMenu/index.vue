@@ -49,15 +49,23 @@ const { $count } = use$cart();
       > -->
       <!-- <AsideMenuItem icon="heroicons:document-check">已投稿件</AsideMenuItem> -->
       <!-- <AsideMenuItem icon="heroicons:link">我的邀请</AsideMenuItem> -->
-      <AsideMenuItem icon="heroicons:user">个人信息</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:key">修改密码</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:arrow-right-on-rectangle"
+      <AsideMenuItem icon="heroicons:user" href="/user/profile"
+        >个人信息</AsideMenuItem
+      >
+      <AsideMenuItem icon="heroicons:key" href="/user/change-pwd"
+        >修改密码</AsideMenuItem
+      >
+      <AsideMenuItem
+        icon="heroicons:arrow-right-on-rectangle"
+        href="/user/logout"
         >退出登录</AsideMenuItem
       >
     </ul>
     <ul class="flex flex-col justify-start items-start py-3" v-else>
-      <AsideMenuItem icon="heroicons:user">登录</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:user-plus">注册</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:user" href="/login">登录</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:user-plus" href="/register"
+        >注册</AsideMenuItem
+      >
     </ul>
     <ul class="flex flex-col justify-start items-start py-3">
       <AsideMenuItem icon="heroicons:light-bulb" href="/about"
