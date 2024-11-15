@@ -25,6 +25,7 @@ const cnyAmount = computed(() =>
     <div>
       <a
         class="border rounded-md px-2.5 py-1.5 bg-blue-500/80 text-white inline-flex items-center gap-x-1"
+        :href="rtc.public.contactTg"
       >
         <Icon name="ic:baseline-telegram" size="1.25rem" />
         与站长私聊

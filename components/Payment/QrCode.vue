@@ -15,7 +15,10 @@ const rtc = useRuntimeConfig();
       />
     </div>
     <ul class="space-y-2 list-decimal list-inside">
-      <li>完成支付后，请与管理员私聊以便确认支付结果</li>
+      <li>
+        完成支付后，请与管理员<a :href="rtc.public.contactTg">私聊</a
+        >以便确认支付结果
+      </li>
       <li>该支付方式需要管理员手动确认订单</li>
       <li>请再三确认收款地址已我们的钱包地址</li>
       <li>
