@@ -60,7 +60,9 @@ const { $count } = use$cart();
       <AsideMenuItem icon="heroicons:user-plus">注册</AsideMenuItem>
     </ul>
     <ul class="flex flex-col justify-start items-start py-3">
-      <AsideMenuItem icon="heroicons:light-bulb">关于我们</AsideMenuItem>
+      <AsideMenuItem icon="heroicons:light-bulb" href="/about"
+        >关于我们</AsideMenuItem
+      >
       <AsideMenuItem icon="heroicons:heart">小额赞助</AsideMenuItem>
     </ul>
   </div>

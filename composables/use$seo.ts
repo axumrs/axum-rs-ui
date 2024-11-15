@@ -3,7 +3,7 @@ export default function use$seo() {
     useSeoMeta({
       title: `${
         title ? `${title} - ` : ""
-      }AXUM中文网 - 带你使用 axum 构建企业应用 - axum.rs`,
+      }AXUM中文网 - 带你使用 axum 构建企业应用`,
     });
   const pageMeta = (description: string = "", keywords: string = "") =>
     useHead({
@@ -16,14 +16,14 @@ export default function use$seo() {
           name: "keywords",
           content: `${
             keywords ? `${keywords},` : ""
-          }axum,企业开发,教程,视频教程,axum.rs`,
+          }axum,企业开发,教程,视频教程`,
         },
       ],
       link: [
         {
           rel: "icon",
           type: "image/png",
-          href: "https://file.axum.rs/asset/logo.png",
+          href: "https://file.axum.eu.org/asset/logo.png",
         },
       ],
     });
