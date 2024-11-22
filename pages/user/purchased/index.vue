@@ -7,7 +7,7 @@ const pm = ref<PaginationMeta>();
 
 const { page: pageParam } = useRoute().query;
 const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
-const frm = reactive({ page: page.value, page_size: 30 });
+const frm = reactive({ page: page.value, page_size: 30, status: "Finished" });
 
 const { $get } = use$fetch();
 const { $purchasedServices } = use$order();
