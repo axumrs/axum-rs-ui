@@ -42,6 +42,9 @@ loadData();
       v-if="topSubjectList && topSubjectList.length > 0"
       :list="topSubjectList"
     />
+    <div v-else>
+      <Icon name="eos-icons:loading" size="3rem" class="text-purple-600" />
+    </div>
   </HomeBox>
 
   <HomeBox title="热门文章" href="/topic" more-text="全部文章" class="my-3">
@@ -51,5 +54,8 @@ loadData();
       v-if="topTopicList && topTopicList.length > 0"
       class="space-y-4"
     />
+    <div v-else>
+      <Icon name="eos-icons:loading" size="3rem" class="text-purple-600" />
+    </div>
   </HomeBox>
 </template>

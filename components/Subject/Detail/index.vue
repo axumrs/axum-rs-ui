@@ -1,9 +1,14 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   topicList: TopicWithSubjectAndTags[];
   subject: Subject;
   isPurchased?: boolean;
 }>();
+
+const { seoTitle } = use$seo();
+onMounted(() => {
+  seoTitle(props.subject.name);
+});
 </script>
 
 <template>

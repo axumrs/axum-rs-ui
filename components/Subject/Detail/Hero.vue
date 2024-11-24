@@ -5,7 +5,12 @@ defineProps<{ subject: Subject; isPurchased?: boolean }>();
 <template>
   <section class="flex flex-col gap-y-4 justify-center items-center lg:gap-y-6">
     <div class="flex justify-start items-center gap-x-2">
-      <img src="https://file.axum.rs/icons/shop.png" class="w-8 object-cover" />
+      <img
+        :src="`${
+          subject.cover || 'https://file.axum.eu.org/icons/rust/rust-plain.svg'
+        }`"
+        class="w-8 object-cover"
+      />
 
       <h1 class="text-2xl font-semibold">{{ subject.name }}</h1>
     </div>

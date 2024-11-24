@@ -105,6 +105,7 @@ onUnmounted(() => {
   </div>
   <div class="text-sm text-gray-600" v-if="modelValue.email && showManualLink">
     <NuxtLink
+      class="text-red-600"
       :to="{
         path: `/activation/${modelValue.email}/manual`,
         query: {

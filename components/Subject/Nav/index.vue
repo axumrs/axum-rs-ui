@@ -11,8 +11,11 @@ const expendTopicList = ref(false);
         :to="`/subject/${subject.slug}`"
       >
         <img
-          src="https://file.axum.rs/icons/shop.png"
-          class="w-4 object-cover"
+          :src="
+            `${subject.cover}` ||
+            'https://file.axum.eu.org/icons/rust/rust-plain.svg'
+          "
+          class="w-6 object-cover"
         />
         <h2 class="text-lg font-normal lg:text-xl">
           {{ subject.name }}

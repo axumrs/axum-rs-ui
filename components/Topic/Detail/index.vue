@@ -1,8 +1,12 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   topic: TopicWithSubjectAndTagsAndProtectedSections;
   subject: Subject;
 }>();
+const { seoTitle } = use$seo();
+onMounted(() => {
+  seoTitle(`${props.topic.title} - ${props.subject.name}`);
+});
 </script>
 
 <template>

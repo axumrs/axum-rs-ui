@@ -74,6 +74,7 @@ onMounted(() => {
       <div class="lg:text-lg text-gray-500 cursor-default">
         <NuxtLink
           class="underline decoration-dashed hover:text-red-600 cursor-pointer"
+          href="/service"
           >升级为订阅用户</NuxtLink
         >，可关闭人机验证。
       </div>
