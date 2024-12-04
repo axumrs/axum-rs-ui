@@ -12,6 +12,7 @@ const captcha = ref("");
 
 const { $post } = use$fetch();
 const { $msg } = use$status();
+const fullPath = useRoute().fullPath;
 const loadProtectdContents = async () => {
   $post<ProtectedContent[]>(
     "/user/topic/protected-content",
@@ -56,6 +57,28 @@ onMounted(() => {
     class="axum-topic-content prose max-w-none lg:prose-xl bg-white p-4 border rounded-md my-3"
     v-html="sections.join('\n')"
   ></div>
+
+  <Mask v-if="topic.need_login" class="backdrop-blur-sm">
+    <div
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg space-y-6"
+    >
+      <div class="">要查看完整内容，请先登录</div>
+      <div
+        class="lg:text-lg text-gray-500 cursor-default flex justify-center items-center gap-x-4"
+      >
+        <NuxtLink
+          class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md"
+          :href="`/login?_r=${fullPath}`"
+          >登录</NuxtLink
+        >
+        <NuxtLink
+          class="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded-md"
+          href="/register"
+          >注册</NuxtLink
+        >
+      </div>
+    </div>
+  </Mask>
 
   <Mask
     class="backdrop-blur-sm"

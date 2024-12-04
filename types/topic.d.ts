@@ -47,4 +47,5 @@ type TopicWithSubjectAndTagsAndProtectedSections =
   TopicWithSubjectAndTagsAndSections & {
     protected: TopicProtectdMeta;
     need_buy: boolean;
+    need_login: boolean;
   };
