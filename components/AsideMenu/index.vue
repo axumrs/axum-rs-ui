@@ -68,12 +68,13 @@ const { $count } = use$cart();
       >
     </ul>
     <ul class="flex flex-col justify-start items-start py-3">
+      <AsideMenuItem icon="heroicons:bell-alert" href="/announcement"
+        >公告</AsideMenuItem
+      >
       <AsideMenuItem icon="heroicons:light-bulb" href="/about"
-        >关于我们</AsideMenuItem
+        >关于</AsideMenuItem
       >
-      <AsideMenuItem icon="heroicons:heart" href="/donate"
-        >小额赞助</AsideMenuItem
-      >
+      <AsideMenuItem icon="heroicons:heart" href="/donate">赞助</AsideMenuItem>
     </ul>
   </div>
 </template>

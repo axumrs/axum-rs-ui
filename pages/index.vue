@@ -43,7 +43,7 @@ loadData();
       :list="topSubjectList"
     />
     <div v-else>
-      <Icon name="eos-icons:loading" size="3rem" class="text-purple-600" />
+      <Icon name="eos-icons:loading" size="1.5rem" class="text-gray-600" />
     </div>
   </HomeBox>
 
@@ -55,7 +55,7 @@ loadData();
       class="space-y-4"
     />
     <div v-else>
-      <Icon name="eos-icons:loading" size="3rem" class="text-purple-600" />
+      <Icon name="eos-icons:loading" size="1.5rem" class="text-gray-600" />
     </div>
   </HomeBox>
 </template>
