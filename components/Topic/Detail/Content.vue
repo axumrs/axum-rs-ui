@@ -8,6 +8,7 @@ const props = defineProps<{
 
 const sections = ref(props.topic.sections.map((s) => s.content));
 const hasProtectdContents = ref(props.topic.protected.ids.length > 0);
+const needLogin = ref(props.topic.need_login);
 const captcha = ref("");
 
 const { $post } = use$fetch();
@@ -58,7 +59,7 @@ onMounted(() => {
     v-html="sections.join('\n')"
   ></div>
 
-  <Mask v-if="topic.need_login" class="backdrop-blur-sm">
+  <Mask v-if="needLogin" class="backdrop-blur-sm" @click="needLogin = false">
     <div
       class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg space-y-6"
     >

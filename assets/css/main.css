@@ -47,4 +47,8 @@
   .axum-topic-content [data-procted-id] {
     @apply border px-4 py-3 bg-gradient-to-tl from-cyan-500 to-cyan-600 shadow-sm text-white before:block before:content-['你需要完成人机验证才能查看这部分内容'];
   }
+
+  .axum-topic-content [data-guess-id] {
+    @apply border px-4 py-3 bg-gradient-to-tl from-orange-500 to-orange-600 shadow-sm text-white before:block before:content-['你需要登录之后才能查看这部分内容'];
+  }
 }
