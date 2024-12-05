@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
-import markdownit from "markdown-it";
-const md = markdownit();
 
 const { page: pageParam } = useRoute().query;
 const page = computed(() => parseInt(pageParam?.toString() || "0", 10) || 0);
 
 const pm = ref<PaginationMeta>();
-const announcementList = ref<Announcement[]>([]);
-const selectedAnnouncement = ref<Announcement | null>(null);
+const announcementList = ref<AnnouncementLite[]>([]);
 
 const { $get } = use$fetch();
 const loadData = async () => {
-  await $get<Pagination<Announcement>>(
+  await $get<Pagination<AnnouncementLite>>(
     "/user/announcement",
     (v) => {
       if (v) {
@@ -45,12 +42,7 @@ await loadData();
           :key="a.id"
         >
           <td>
-            <button
-              @click="selectedAnnouncement = a"
-              class="underline underline-offset-2 hover:text-red-600"
-            >
-              {{ a.title }}
-            </button>
+            <NuxtLink :to="`/announcement/${a.id}`"> {{ a.title }}</NuxtLink>
           </td>
           <td>{{ dayjs(a.dateline).format("YYYY-MM-DD HH:mm:ss") }}</td>
         </tr>
@@ -62,14 +54,4 @@ await loadData();
   </div>
 
   <Pagination class="justify-end my-3" :p="pm" v-if="pm" />
-
-  <Dialog v-if="selectedAnnouncement" @click="selectedAnnouncement = null">
-    <div class="text-lg font-normal">
-      {{ selectedAnnouncement.title }}
-    </div>
-    <div
-      class="prose max-w-none lg:prose-lg"
-      v-html="md.render(selectedAnnouncement.content)"
-    ></div>
-  </Dialog>
 </template>
