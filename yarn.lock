@@ -666,6 +666,13 @@
   dependencies:
     vue "^3.2.19"
 
+"@iconify-json/uil@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@iconify-json/uil/-/uil-1.2.1.tgz#3743161135715b877acbb40aa3147797824e888a"
+  integrity sha512-bQPtDp1nVaDL+ejECPENHJalspCQCZreCJ2LHWazm0pfoz34afKAQKMSb1mH8K/CPnibCQTM29AvXrHMpyjbtg==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify/collections@^1.0.455":
   version "1.0.464"
   resolved "https://registry.yarnpkg.com/@iconify/collections/-/collections-1.0.464.tgz#59c3efb18e6cde2579c7e9ef7205a410ab4a5b63"
