@@ -20,5 +20,9 @@ await loadData();
 <template>
   <PageTitle title="公告" icon="heroicons:bell-alert" />
 
-  <AnnouncementDetail :announcement="announcement" v-if="announcement" />
+  <AnnouncementDetail
+    :announcement="announcement"
+    v-if="announcement"
+    class="my-6"
+  />
 </template>

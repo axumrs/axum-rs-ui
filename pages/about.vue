@@ -79,5 +79,34 @@ const rtc = useRuntimeConfig();
         USDT/TRX：<code>{{ rtc.public.wallet_addr }}</code>
       </li>
     </ul>
+    <h2>感谢</h2>
+    <p>
+      承蒙各位大善人的无私奉献，本站才得以用最低成本提供服务。我们对这些服务商表示由衷地感谢！
+    </p>
+    <ul>
+      <li><p>Oracle Cloud：提供免费服务器</p></li>
+      <li><p>Cloudflare：提供免费 CDN 服务、SSL 证书和人机验证</p></li>
+      <li><p>Backblaze：提供免费对象存储</p></li>
+      <li><p>Serv00：提供免费域名邮箱</p></li>
+      <li>
+        <p>我们发送邮箱验证码的免费邮箱由以下服务商提供</p>
+        <ul>
+          <li>COCK.LI</li>
+          <li>INLEED.XYZ</li>
+          <li>PISSMAIL.COM</li>
+          <li>CT8.PL</li>
+          <li>MAIL.EE</li>
+        </ul>
+      </li>
+      <li>
+        <p>我们的免费域名由以下服务商提供</p>
+        <ul>
+          <li>EU.ORG</li>
+          <li>PP.UA</li>
+          <li>NYC.MN</li>
+          <li>NOW.CC</li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </template>

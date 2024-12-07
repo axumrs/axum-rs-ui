@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import dayjs from "dayjs";
+
 defineProps<{
   topic: TopicWithSubjectAndTagsAndSections;
 }>();
@@ -36,7 +38,7 @@ const toggleExpendMeta = () => {
         </li>
         <li class="flex justify-start items-center gap-x-1 text-nowrap">
           <Icon name="heroicons:calendar" class="shrink-0" />
-          <span>{{ topic.dateline }}</span>
+          <span>{{ dayjs(topic.dateline).format("YYYY-MM-DD HH:mm:ss") }}</span>
         </li>
       </ul>
       <!-- 标签 -->

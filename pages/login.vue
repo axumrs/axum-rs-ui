@@ -34,7 +34,7 @@ const handleSubmit = async () => {
     (data) => {
       $setAuth(data);
       $msg.value = "登录成功";
-      const rUrl = _r ? _r.toString() : "/";
+      const rUrl = _r ? _r.toString() : "/user";
       return navigateTo(rUrl) as void;
     },
     {

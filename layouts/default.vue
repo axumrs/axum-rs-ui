@@ -73,7 +73,14 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
           <div
             class="p-3 text-xs text-center text-gray-600 absolute bottom-1 w-full lg:static"
           >
-            &copy; 2021-2024 AXUM中文网
+            <div>&copy; 2021-2024 AXUM中文网</div>
+            <div>
+              <a
+                :href="`${useRuntimeConfig().public.apiUrl}/rss`"
+                target="_blank"
+                >RSS</a
+              >
+            </div>
           </div>
         </div>
       </aside>
