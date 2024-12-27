@@ -19,6 +19,14 @@ const { $post } = use$fetch();
 const { $toast, $msg, $isLoading } = use$status();
 
 const handleSubmit = async () => {
+  if (!frm.email.trim()) {
+    $toast.value = "请输入邮箱";
+    return;
+  }
+  if (frm.email.trim().length > 255) {
+    $toast.value = "邮箱过长";
+    return;
+  }
   if (frm.nickname.trim().length < 3 || frm.nickname.trim().length > 30) {
     $toast.value = "昵称长度应在3-30位之间";
     return;
@@ -31,17 +39,7 @@ const handleSubmit = async () => {
     $toast.value = "两次密码输入不一致";
     return;
   }
-  if (!frm.email.trim()) {
-    $toast.value = "请输入邮箱";
-    return;
-  }
-  if (frm.email.trim().length > 255) {
-    $toast.value = "邮箱过长";
-    return;
-  }
-
-  frm.captcha = "";
-  showSubmitCaptchaDialog.value = true;
+  await handleRegister();
 };
 
 const handleRegister = async () => {
@@ -64,15 +62,23 @@ const handleRegister = async () => {
   );
 };
 
-watch(
-  () => frm.captcha,
-  (v) => {
-    if (v) {
-      // 提交注册
-      handleRegister().then();
-    }
+const handleUseEmailAsNickname = () => {
+  if (frm.email.trim() && frm.email.includes("@")) {
+    frm.nickname = (frm.email.trim().split("@")[0] || "").slice(0, 30);
+  } else {
+    $toast.value = "请输入正确的邮箱";
   }
-);
+};
+
+// watch(
+//   () => frm.captcha,
+//   (v) => {
+//     if (v) {
+//       // 提交注册
+//       handleRegister().then();
+//     }
+//   }
+// );
 </script>
 
 <template>
@@ -82,14 +88,33 @@ watch(
     class="flex flex-col gap-y-6 w-11/12 bg-white p-6 mx-auto rounded-lg my-12 lg:w-1/3 2xl:w-1/4 2xl:absolute 2xl:top-1/2 2xl:left-1/2 2xl:-translate-x-1/2 2xl:-translate-y-1/2"
   >
     <label class="flex flex-col gap-y-2">
-      <div>昵称</div>
+      <div>邮箱</div>
       <div class="border rounded px-3 py-2">
         <input
-          type="text"
+          type="email"
           class="block w-full outline-none"
+          required
+          v-model="frm.email"
+        />
+      </div>
+    </label>
+    <label class="flex flex-col gap-y-2">
+      <div>昵称</div>
+      <div class="border rounded flex justify-between overflow-hidden">
+        <input
+          type="text"
+          class="block grow outline-none px-3 py-2"
           required
           v-model="frm.nickname"
         />
+
+        <button
+          class="shrink-0 border-l px-3 py-2 bg-gray-100 block"
+          type="button"
+          @click="handleUseEmailAsNickname"
+        >
+          使用邮箱
+        </button>
       </div>
     </label>
 
@@ -117,19 +142,7 @@ watch(
       </div>
     </label>
 
-    <label class="flex flex-col gap-y-2">
-      <div>邮箱</div>
-      <div class="border rounded px-3 py-2">
-        <input
-          type="email"
-          class="block w-full outline-none"
-          required
-          v-model="frm.email"
-        />
-      </div>
-    </label>
-
-    <label class="flex flex-col gap-y-2">
+    <label class="flex flex-col gap-y-2" v-if="false">
       <div>邀请码</div>
       <div class="border rounded px-3 py-2">
         <input
