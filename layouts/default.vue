@@ -68,6 +68,19 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
                 <Icon name="mingcute:youtube-fill" size="1.85rem" />
               </a>
             </li>
+            <li class="relative group hidden lg:block">
+              <button
+                class="bg-[#111827] px-0.5 py-1 rounded overflow-hidden -translate-y-[0.135rem] block lg:transition-all lg:hover:-translate-y-2"
+              >
+                <VeryRealIcon class="h-3" />
+              </button>
+              <div
+                class="invisible opacity-0 absolute z-[1] w-64 border rounded-md bg-gray-100 flex flex-col gap-y-2 justify-center items-center shadow p-3 left-1/2 -translate-x-1/2 top-6 group-hover:visible group-hover:opacity-100 transition-all duration-300"
+              >
+                <div>打开 VeryReal App 扫码联系</div>
+                <div><VeryRealQrCode /></div>
+              </div>
+            </li>
           </ul>
 
           <div

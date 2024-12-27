@@ -72,6 +72,12 @@ const rtc = useRuntimeConfig();
           ><code>{{ rtc.public.contactEmail }}</code></a
         >
       </li>
+      <li>
+        VeryReal：
+        <div>
+          <VeryRealQrCode class="w-36" />
+        </div>
+      </li>
     </ul>
     <h2 id="赞助我们">赞助我们</h2>
     <ul>
