@@ -3,6 +3,7 @@ const { $asideMenu: asideMenu } = use$status();
 </script>
 
 <template>
+  <ToNewDomain />
   <header class="shadow-md bg-white">
     <Container class="grid grid-cols-12 items-center gap-x-4 py-3">
       <button
