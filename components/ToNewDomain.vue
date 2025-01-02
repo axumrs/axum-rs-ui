@@ -7,13 +7,13 @@ const toNewDomainCookie = useCookie<boolean>("TO_NEW_DOMAIN");
 <template>
   <Mask class="z-[100]" v-if="toNewDomainCookie !== true">
     <section
-      class="absolute bg-white p-6 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 border rounded-md shadow-md space-y-4 w-11/12 h-3/5 flex flex-col lg:max-w-max lg:w-fit lg:text-lg lg:h-auto"
+      class="absolute bg-white p-6 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 border rounded-md shadow-md space-y-4 w-11/12 h-3/5 flex flex-col lg:max-w-max lg:w-fit lg:text-lg lg:h-96 2xl:h-auto"
     >
       <div class="grow overflow-y-auto space-y-4">
         <div>
           域名 <span class="domain">AXUM.RS</span>
           将于<u>2025年10月</u>到期。我们无意再对其进行续费，我们希望你能够接续这个域名，让更多
-          AXUM 爱好者继续受益。
+          AXUM 开发者继续受益。
         </div>
         <ul class="space-y-2">
           <li>
@@ -24,10 +24,8 @@ const toNewDomainCookie = useCookie<boolean>("TO_NEW_DOMAIN");
             <span class="price">3000</span>
           </li>
           <li>
-            <span class="plan">方案2️⃣</span>：<span class="domain"
-              >AXUM.RS</span
-            >
-            域名 + <span class="item">本站所有专题原始 Markdown 文档</span> =
+            <span class="plan">方案2️⃣</span>：<span class="plan">方案1️⃣</span> +
+            <span class="item">本站所有专题原始 Markdown 文档</span> =
             <span class="price">5000</span>
           </li>
           <li>

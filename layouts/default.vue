@@ -29,7 +29,7 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
           </div>
 
           <ul
-            class="flex justify-center items-center gap-x-2 p-3 absolute bottom-10 w-full lg:static"
+            class="grid grid-cols-6 justify-center items-center gap-x-2 pl-5 pr-3 pb-6 pt-3 lg:p-3 absolute bottom-10 w-full lg:static lg:grid-cols-4 2xl:grid-cols-6"
           >
             <li>
               <a
@@ -61,6 +61,15 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
             </li>
             <li>
               <a
+                href="https://discord.gg/URxRjDBd"
+                target="_blank"
+                class="block lg:transition-all lg:hover:-translate-y-1"
+              >
+                <Icon name="ic:baseline-discord" size="1.85rem" />
+              </a>
+            </li>
+            <li>
+              <a
                 :href="youtubeUrl"
                 target="_blank"
                 class="block lg:transition-all lg:hover:-translate-y-1"
@@ -68,17 +77,23 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
                 <Icon name="mingcute:youtube-fill" size="1.85rem" />
               </a>
             </li>
-            <li class="relative group hidden lg:block">
+            <li class="relative group">
               <button
                 class="bg-[#111827] px-0.5 py-1 rounded overflow-hidden -translate-y-[0.135rem] block lg:transition-all lg:hover:-translate-y-2"
               >
                 <VeryRealIcon class="h-3" />
               </button>
               <div
-                class="invisible opacity-0 absolute z-[1] w-64 border rounded-md bg-gray-100 flex flex-col gap-y-2 justify-center items-center shadow p-3 left-1/2 -translate-x-1/2 top-6 group-hover:visible group-hover:opacity-100 transition-all duration-300"
+                class="invisible opacity-0 absolute z-[1] w-max lg:w-64 border rounded-md bg-gray-100 flex flex-col gap-y-2 justify-center items-center shadow p-3 left-1/2 -translate-x-1/2 -top-20 lg:top-6 group-hover:visible group-hover:opacity-100 transition-all duration-300"
               >
-                <div>打开 VeryReal App 扫码联系</div>
-                <div><VeryRealQrCode /></div>
+                <div class="hidden lg:block">
+                  <div>打开 VeryReal App 扫码联系</div>
+                  <div><VeryRealQrCode /></div>
+                </div>
+                <div class="lg:hidden text-sm">
+                  <div>打开 VeryReal App</div>
+                  <div>添加：<code>180576</code></div>
+                </div>
               </div>
             </li>
           </ul>

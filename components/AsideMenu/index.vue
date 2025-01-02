@@ -30,51 +30,21 @@ const { $count } = use$cart();
       </AsideMenuItem>
     </ul>
 
-    <ul class="flex flex-col justify-start items-start py-3" v-if="$token">
-      <AsideMenuItem icon="heroicons:identification" href="/user"
-        >个人中心</AsideMenuItem
-      >
-      <AsideMenuItem icon="heroicons:credit-card" href="/user/order"
-        >订单列表</AsideMenuItem
-      >
-      <AsideMenuItem icon="heroicons:server" href="/user/purchased"
-        >已购服务</AsideMenuItem
-      >
-      <AsideMenuItem icon="heroicons:document-text" href="/user/history"
-        >学习记录</AsideMenuItem
-      >
-      <!-- <AsideMenuItem icon="heroicons:folder">随堂笔记</AsideMenuItem> -->
-      <!-- <AsideMenuItem icon="heroicons:chat-bubble-bottom-center-text"
-        >我的评论</AsideMenuItem
-      > -->
-      <!-- <AsideMenuItem icon="heroicons:document-check">已投稿件</AsideMenuItem> -->
-      <!-- <AsideMenuItem icon="heroicons:link">我的邀请</AsideMenuItem> -->
-      <AsideMenuItem icon="heroicons:user" href="/user/profile"
-        >个人信息</AsideMenuItem
-      >
-      <AsideMenuItem icon="heroicons:key" href="/user/change-pwd"
-        >修改密码</AsideMenuItem
-      >
-      <AsideMenuItem
-        icon="heroicons:arrow-right-on-rectangle"
-        href="/user/logout"
-        >退出登录</AsideMenuItem
-      >
-    </ul>
-    <ul class="flex flex-col justify-start items-start py-3" v-else>
-      <AsideMenuItem icon="heroicons:user" href="/login">登录</AsideMenuItem>
-      <AsideMenuItem icon="heroicons:user-plus" href="/register"
-        >注册</AsideMenuItem
-      >
-    </ul>
     <ul class="flex flex-col justify-start items-start py-3">
       <AsideMenuItem icon="heroicons:bell-alert" href="/announcement"
         >公告</AsideMenuItem
       >
+
       <AsideMenuItem icon="heroicons:light-bulb" href="/about"
         >关于</AsideMenuItem
       >
       <AsideMenuItem icon="heroicons:heart" href="/donate">赞助</AsideMenuItem>
+      <AsideMenuItem
+        icon="heroicons:code-bracket-16-solid"
+        href="https://dev.to/axum"
+        new-window
+        >博客</AsideMenuItem
+      >
     </ul>
   </div>
 </template>

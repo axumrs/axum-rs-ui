@@ -123,11 +123,12 @@ await Promise.all([loadSessions(), loadLoginLogs()]);
       <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th>令牌</th>
-            <th>IP</th>
-            <th>登录时间</th>
-            <th>过期时间</th>
+            <th class="w-1/6">#</th>
+            <th class="w-1/6">令牌</th>
+            <th class="w-1/6">IP</th>
+            <th class="w-1/6">位置</th>
+            <th class="w-1/6">登录时间</th>
+            <th class="w-1/6">过期时间</th>
           </tr>
         </thead>
         <tbody>
@@ -143,8 +144,13 @@ await Promise.all([loadSessions(), loadLoginLogs()]);
                 </div>
               </div>
             </td>
-            <td class="font-mono">{{ s.token }}</td>
+            <td class="font-mono">
+              <div :title="s.token" class="cursor-default">
+                {{ s.token.slice(0, 6) }}...{{ s.token.slice(-6) }}
+              </div>
+            </td>
             <td>{{ s.ip }}</td>
+            <td>{{ s.loc }}</td>
             <td>{{ dayjs(s.dateline).format("YYYY-MM-DD HH:mm:ss") }}</td>
             <td>{{ dayjs(s.expire_time).format("YYYY-MM-DD HH:mm:ss") }}</td>
           </tr>

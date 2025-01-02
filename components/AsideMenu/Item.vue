@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NuxtLink } from "#components";
-defineProps<{ icon: string; href?: string }>();
+defineProps<{ icon: string; href?: string; newWindow?: boolean }>();
 const { $asideMenu } = use$status();
 
 const emits = defineEmits(["click"]);
@@ -19,6 +19,7 @@ const emits = defineEmits(["click"]);
     <component
       :is="href ? NuxtLink : 'button'"
       :to="href"
+      :target="newWindow ? '_blank' : '_self'"
       class="flex justify-start items-center text-lg gap-x-3 font-normal w-full pl-10 py-2 hover:bg-gray-100 lg:px-8"
     >
       <Icon :name="icon" class="" size="1.45rem" />

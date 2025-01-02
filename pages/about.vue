@@ -68,12 +68,22 @@ const rtc = useRuntimeConfig();
         >
       </li>
       <li>
+        Discord：<a href="https://discord.gg/URxRjDBd" target="_blank"
+          ><code>https://discord.gg/URxRjDBd</code></a
+        >
+      </li>
+      <li>
         邮件：<a :href="`mailto://${rtc.public.contactEmail}`"
           ><code>{{ rtc.public.contactEmail }}</code></a
         >
       </li>
       <li>
-        VeryReal：
+        博客：<a href="https://dev.to/axum" target="_blank"
+          ><code>https://dev.to/axum</code></a
+        >
+      </li>
+      <li>
+        VeryReal：<code>180576</code>，你可以直接扫描下面的二维码：
         <div>
           <VeryRealQrCode class="w-36" />
         </div>
