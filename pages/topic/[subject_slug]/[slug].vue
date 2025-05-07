@@ -8,6 +8,7 @@ const { $get } = use$fetch();
 const subjectTopicList = ref<TopicWithSubjectAndTags[]>([]);
 const subject = ref<Subject>();
 const detail = ref<TopicWithSubjectAndTagsAndProtectedSections>();
+const promotion = ref<Promotion>();
 
 const loadSubjectCategoies = async () => {
   await $get<SubjectDetailResp>(
@@ -30,7 +31,15 @@ const loadDetail = async () => {
   );
 };
 
-await Promise.all([loadSubjectCategoies(), loadDetail()]);
+const loadPromotion = async () => {
+  await $get<Promotion>(`/user/promotion/take`, (v) => {
+    if (v) {
+      promotion.value = v;
+    }
+  });
+};
+
+await Promise.all([loadSubjectCategoies(), loadDetail(), loadPromotion()]);
 </script>
 
 <template>
@@ -41,5 +50,10 @@ await Promise.all([loadSubjectCategoies(), loadDetail()]);
       v-if="subject"
     />
   </div>
-  <TopicDetail :topic="detail" :subject="subject" v-if="detail && subject" />
+  <TopicDetail
+    :topic="detail"
+    :subject="subject"
+    :promotion="promotion"
+    v-if="detail && subject && promotion"
+  />
 </template>

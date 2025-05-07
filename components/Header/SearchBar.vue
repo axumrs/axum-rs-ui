@@ -18,7 +18,7 @@ const handleSearch = (e: Event) => {
     autocomplete="off"
     @submit="handleSearch"
   >
-    <input type="hidden" name="q" value="site:axum.rs" />
+    <input type="hidden" name="q" value="site:axum.eu.org" />
     <div
       class="flex justify-start items-center gap-x-2 border rounded-full w-11/12 px-3 py-1.5 border-gray-200 text-gray-500 transition-all duration-300 focus-within:border-gray-300 focus-within:text-gray-600 focus-within:w-full focus-within:shadow-inner"
     >

@@ -33,6 +33,9 @@ export default defineNuxtConfig({
       usdtContractAddr: process.env.USDT_CONTRACT_ADDR,
       tronUrl: process.env.TRON_URL,
       contactTg: process.env.CONTACT_TG,
+      qqGroup: process.env.QQ_GROUP,
+      qqNum: process.env.QQ_NUM,
+      qqGroupNum: process.env.QQ_GROUP_NUM,
     },
   },
 });

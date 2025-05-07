@@ -4,9 +4,9 @@ import Decimal from "decimal.js";
 const props = defineProps<{ order: Order }>();
 
 const tabList: { label: string; value: PaymentKind; disabled?: boolean }[] = [
+  { label: "微信支付", value: "WechatAlipay" },
   { label: "在线支付", value: "Online" },
   { label: "扫码支付", value: "QrCode" },
-  { label: "微信支付", value: "WechatAlipay" },
   { label: "积分支付", value: "Pointer" },
 ];
 const curentTab = ref<PaymentKind>(tabList[0].value);

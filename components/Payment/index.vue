@@ -25,6 +25,7 @@ const emits = defineEmits(["payDone"]);
     <PaymentQrCode v-else-if="kind === 'QrCode'" />
     <PaymentWechatAlipay
       :amount="usdtAmount"
+      :order="order"
       v-else-if="kind === 'WechatAlipay'"
     />
     <PaymentPointer v-else-if="kind === 'Pointer'" />

@@ -63,6 +63,11 @@ const rtc = useRuntimeConfig();
     <h2 id="联系我们">联系我们</h2>
     <ul>
       <li>
+        QQ群：<a :href="rtc.public.qqGroup"
+          ><code>{{ rtc.public.qqGroupNum }}</code></a
+        >
+      </li>
+      <li>
         TG群：<a :href="rtc.public.tgGroup"
           ><code>{{ rtc.public.tgGroup }}</code></a
         >

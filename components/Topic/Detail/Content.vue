@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
+import type { VNodeRef } from "vue";
 
 const props = defineProps<{
   topic: TopicWithSubjectAndTagsAndProtectedSections;
+  promotion: Promotion;
 }>();
 
 const sections = ref(props.topic.sections.map((s) => s.content));
@@ -14,6 +16,9 @@ const captcha = ref("");
 const { $post } = use$fetch();
 const { $msg } = use$status();
 const fullPath = useRoute().fullPath;
+
+const contentRef = ref<HTMLDivElement | null>();
+
 const loadProtectdContents = async () => {
   $post<ProtectedContent[]>(
     "/user/topic/protected-content",
@@ -49,12 +54,43 @@ watch(
 );
 
 onMounted(() => {
-  hljs.highlightAll();
+  const t = setTimeout(() => {
+    const p = `<div data-promotion-id="${props.promotion.id}"><a href="/promotion/${props.promotion.id}" target="_blank">${props.promotion.content}</a></div>`;
+    if (contentRef.value) {
+      const arr = contentRef.value.innerHTML.split("\n");
+
+      const len = arr.length;
+      let idx = Math.floor(Math.random() * len);
+      let flag = false;
+      while (true) {
+        if (!/<\/[p|div]>$/.test(arr[idx])) {
+          idx = Math.floor(Math.random() * len);
+        } else {
+          flag = true;
+          break;
+        }
+
+        if (flag) break;
+      }
+
+      const contents: string[] = [];
+      for (let i = 0; i < len; i++) {
+        if (i === idx) {
+          contents.push(p);
+        }
+        contents.push(arr[i]);
+      }
+      contentRef.value.innerHTML = contents.join("\n");
+    }
+    hljs.highlightAll();
+    clearTimeout(t);
+  }, 1);
 });
 </script>
 
 <template>
   <div
+    ref="contentRef"
     class="axum-topic-content prose max-w-none lg:prose-xl bg-white p-4 border rounded-md my-3"
     v-html="sections.join('\n')"
   ></div>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import dayjs from "dayjs";
+
 const { $asideMenu: asideMenu } = use$status();
-const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
+const { tgGroup, githubUrl, youtubeUrl, contactEmail, qqGroup } =
   useRuntimeConfig().public;
 </script>
 
@@ -29,7 +31,7 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
           </div>
 
           <ul
-            class="grid grid-cols-6 justify-center items-center gap-x-2 pl-5 pr-3 pb-6 pt-3 lg:p-3 absolute bottom-10 w-full lg:static lg:grid-cols-4 2xl:grid-cols-6"
+            class="grid grid-cols-6 justify-center items-center gap-x-2 pl-5 pr-3 pb-6 pt-3 lg:p-6 lg:gap-2 absolute bottom-10 w-full lg:static lg:grid-cols-4 2xl:grid-cols-6"
           >
             <li>
               <a
@@ -59,7 +61,7 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
                 <Icon name="ic:outline-email" size="1.85rem" />
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a
                 href="https://discord.gg/URxRjDBd"
                 target="_blank"
@@ -67,7 +69,7 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
               >
                 <Icon name="ic:baseline-discord" size="1.85rem" />
               </a>
-            </li>
+            </li> -->
             <li>
               <a
                 :href="youtubeUrl"
@@ -77,7 +79,25 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
                 <Icon name="mingcute:youtube-fill" size="1.85rem" />
               </a>
             </li>
-            <li class="relative group">
+            <li>
+              <a
+                :href="qqGroup"
+                target="_blank"
+                class="block lg:transition-all lg:hover:-translate-y-1"
+              >
+                <Icon name="basil:qq-solid" size="1.85rem" />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://rss.axum.eu.org"
+                target="_blank"
+                class="block lg:transition-all lg:hover:-translate-y-1"
+              >
+                <Icon name="uil:rss-interface" size="1.85rem" />
+              </a>
+            </li>
+            <!-- <li class="relative group">
               <button
                 class="bg-[#111827] px-0.5 py-1 rounded overflow-hidden -translate-y-[0.135rem] block lg:transition-all lg:hover:-translate-y-2"
               >
@@ -95,20 +115,13 @@ const { tgGroup, githubUrl, youtubeUrl, contactEmail } =
                   <div>添加：<code>180576</code></div>
                 </div>
               </div>
-            </li>
+            </li> -->
           </ul>
 
           <div
             class="p-3 text-xs text-center text-gray-600 absolute bottom-1 w-full lg:static"
           >
-            <div>&copy; 2021-2024 AXUM中文网</div>
-            <div>
-              <a
-                :href="`${useRuntimeConfig().public.apiUrl}/rss`"
-                target="_blank"
-                >RSS</a
-              >
-            </div>
+            <div>&copy; 2021-{{ dayjs().year() }} AXUM中文网</div>
           </div>
         </div>
       </aside>

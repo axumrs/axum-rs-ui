@@ -51,4 +51,10 @@
   .axum-topic-content [data-guess-id] {
     @apply border px-4 py-3 bg-gradient-to-tl from-orange-500 to-orange-600 shadow-sm text-white before:block before:content-['你需要登录之后才能查看这部分内容'];
   }
+  .axum-topic-content [data-promotion-id] {
+    @apply relative py-2 my-1  before:absolute before:content-['推广'] before:text-xs before:-top-[1px] text-blue-500;
+  }
+  .axum-topic-content [data-promotion-id] > a {
+    @apply underline underline-offset-4 decoration-dotted text-blue-800 hover:text-blue-700;
+  }
 }
