@@ -12,12 +12,31 @@ const loadTopSubjectList = async () => {
         topSubjectList.value = v;
       }
     },
-    { noLoading: true }
+    { noLoading: false }
+  );
+};
+const loadLatestSubjectList = async () => {
+  $get<Subject[]>(
+    "/user/subject/latest",
+    (v) => {
+      if (v) {
+        topSubjectList.value = v;
+      }
+    },
+    { noLoading: false }
   );
 };
 
 const loadTopTopicList = async () => {
   $get<TopicWithSubjectAndTags[]>("/user/topic/top", (v) => {
+    if (v) {
+      topTopicList.value = v;
+    }
+  });
+};
+
+const loadLatestTopicList = async () => {
+  $get<TopicWithSubjectAndTags[]>("/user/topic/latest", (v) => {
     if (v) {
       topTopicList.value = v;
     }
@@ -33,11 +52,59 @@ const loadData = () => {
     });
 };
 
+const subjectTabs = ref<HomeBoxTab[]>([
+  {
+    key: "recommend",
+    title: "推荐专题",
+  },
+  {
+    key: "latest",
+    title: "最新专题",
+  },
+]);
+const topicTabs = ref<HomeBoxTab[]>([
+  {
+    key: "top",
+    title: "热门文章",
+  },
+  {
+    key: "latest",
+    title: "最新文章",
+  },
+]);
+
+const subjectCurrentTab = ref("recommend");
+const topicCurrentTab = ref("top");
+
+const changeSubjectTab = async (tab: string) => {
+  subjectCurrentTab.value = tab;
+  if (tab === "latest") {
+    await loadLatestSubjectList();
+  } else {
+    await loadTopSubjectList();
+  }
+};
+
+const changeTopicTab = async (tab: string) => {
+  topicCurrentTab.value = tab;
+  if (tab === "latest") {
+    await loadLatestTopicList();
+  } else {
+    await loadTopTopicList();
+  }
+};
+
 loadData();
 </script>
 
 <template>
-  <HomeBox title="推荐专题" href="/subject" more-text="全部专题">
+  <HomeBox
+    :tabs="subjectTabs"
+    :current-tab="subjectCurrentTab"
+    href="/subject"
+    more-text="全部专题"
+    @change="changeSubjectTab"
+  >
     <SubjectTop
       v-if="topSubjectList && topSubjectList.length > 0"
       :list="topSubjectList"
@@ -47,7 +114,14 @@ loadData();
     </div>
   </HomeBox>
 
-  <HomeBox title="热门文章" href="/topic" more-text="全部文章" class="my-3">
+  <HomeBox
+    :tabs="topicTabs"
+    :current-tab="topicCurrentTab"
+    href="/topic"
+    more-text="全部文章"
+    class="my-3"
+    @change="changeTopicTab"
+  >
     <TopicList
       :topic-list="topTopicList"
       :item-with-border="true"
