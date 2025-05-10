@@ -17,6 +17,7 @@ const { $count } = use$cart();
       <AsideMenuItem icon="heroicons:building-storefront" href="/service"
         >服务</AsideMenuItem
       >
+
       <AsideMenuItem icon="heroicons:shopping-cart" href="/cart">
         <div class="relative">
           购物车
@@ -28,6 +29,12 @@ const { $count } = use$cart();
           </div>
         </div>
       </AsideMenuItem>
+      <AsideMenuItem
+        class="text-green-600"
+        icon="ic:baseline-wechat"
+        href="/announcement/d0fjdbu2h1obnnsini8g"
+        >微信支付</AsideMenuItem
+      >
     </ul>
 
     <ul class="flex flex-col justify-start items-start py-3">
