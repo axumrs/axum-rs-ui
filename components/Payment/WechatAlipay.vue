@@ -6,6 +6,7 @@ const rtc = useRuntimeConfig();
 const cnyAmount = computed(() =>
   props.amount.mul(new Decimal(rtc.public.usdt_to_cny))
 );
+const { $user } = use$auth();
 </script>
 
 <template>
@@ -22,6 +23,16 @@ const cnyAmount = computed(() =>
         <span class="border p-1 font-mono bg-cyan-300 uppercase">{{
           order.id.slice(order.id.length - 6)
         }}</span>
+      </li>
+      <li>
+        已支付但未处理？请<a
+          class="underline decoration-dotted underline-offset-8 decoration-blue-600"
+          :href="`https://sms.axum.eu.org/#/u/${$user?.email}/o/${order.id
+            .slice(order.id.length - 6)
+            .toUpperCase()}`"
+          target="_blank"
+          >免费发送短信给站长</a
+        >提醒处理。
       </li>
     </ul>
 

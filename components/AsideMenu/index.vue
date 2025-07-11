@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { $token } = use$auth();
+const { $user } = use$auth();
 const { $count } = use$cart();
 </script>
 
@@ -34,6 +34,13 @@ const { $count } = use$cart();
         icon="ic:baseline-wechat"
         href="/announcement/d0fjdbu2h1obnnsini8g"
         >微信支付</AsideMenuItem
+      >
+      <AsideMenuItem
+        class="text-orange-600"
+        icon="heroicons:chat-bubble-bottom-center-text"
+        :href="`https://sms.axum.eu.org${$user ? '/#/u/' + $user.email : ''}`"
+        new-window
+        >免费短信</AsideMenuItem
       >
     </ul>
 

@@ -31,6 +31,15 @@ const msg = isReset.value ? "重置你的密码" : "激活你的账号";
     >
       {{ receiver }}
     </div>
-    <div>收到邮件后，我们将手动{{ msg }}。</div>
+    <div>
+      收到邮件后，我们将手动{{ msg }}。长时间没处理？你可以<a
+        :href="`https://sms.axum.eu.org/#/u/${emailRaw.toString()}/m/${
+          isReset ? 'reset' : 'active'
+        }`"
+        target="_blank"
+        class="underline underline-offset-8 decoration-dotted"
+        >发送短信给站长</a
+      >
+    </div>
   </div>
 </template>
