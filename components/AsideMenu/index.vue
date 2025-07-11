@@ -30,13 +30,11 @@ const { $count } = use$cart();
         </div>
       </AsideMenuItem>
       <AsideMenuItem
-        class="text-green-600"
         icon="ic:baseline-wechat"
-        href="/announcement/d0fjdbu2h1obnnsini8g"
+        href="/announcement/d0cb73e2h1o5mrframhg"
         >微信支付</AsideMenuItem
       >
       <AsideMenuItem
-        class="text-orange-600"
         icon="heroicons:chat-bubble-bottom-center-text"
         :href="`https://sms.axum.eu.org${$user ? '/#/u/' + $user.email : ''}`"
         new-window
