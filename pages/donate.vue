@@ -8,7 +8,7 @@ const rtc = useRuntimeConfig();
     <p>
       如果你觉得我们的教程给你带来了帮助，可以小额捐助，以支持我们继续提供更优质的服务。
     </p>
-    <h2>USDT/TRX</h2>
+    <!-- <h2>USDT/TRX</h2>
     <p>
       钱包地址：<code>{{ rtc.public.wallet_addr }}</code>
     </p>
@@ -18,7 +18,7 @@ const rtc = useRuntimeConfig();
         class="w-64 object-cover"
         alt="TRON钱包二维码"
       />
-    </p>
+    </p> -->
     <h2>微信</h2>
     <p>
       <img

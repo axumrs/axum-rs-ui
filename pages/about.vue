@@ -94,12 +94,12 @@ const rtc = useRuntimeConfig();
         </div>
       </li>
     </ul>
-    <h2 id="赞助我们">赞助我们</h2>
+    <!-- <h2 id="赞助我们">赞助我们</h2>
     <ul>
       <li>
         USDT/TRX：<code>{{ rtc.public.wallet_addr }}</code>
       </li>
-    </ul>
+    </ul> -->
     <h2>感谢</h2>
     <p>
       承蒙各位大善人的无私奉献，本站才得以用最低成本提供服务。我们对这些服务商表示由衷地感谢！

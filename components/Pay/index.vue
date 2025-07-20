@@ -3,11 +3,16 @@ import Decimal from "decimal.js";
 
 const props = defineProps<{ order: Order }>();
 
-const tabList: { label: string; value: PaymentKind; disabled?: boolean }[] = [
-  { label: "微信支付", value: "WechatAlipay" },
-  { label: "在线支付", value: "Online" },
-  { label: "扫码支付", value: "QrCode" },
-  { label: "积分支付", value: "Pointer" },
+const tabList: {
+  label: string;
+  value: PaymentKind;
+  disabled?: boolean;
+  badge?: string;
+}[] = [
+  { label: "微信支付", value: "WechatAlipay", badge: "测试" },
+  // { label: "在线支付", value: "Online" },
+  // { label: "扫码支付", value: "QrCode" },
+  // { label: "积分支付", value: "Pointer" },
 ];
 const curentTab = ref<PaymentKind>(tabList[0].value);
 const { currency, changeCurrency } = use$currency();
@@ -101,9 +106,14 @@ onMounted(async () => {
             'bg-gray-100': curentTab !== t.value,
             'cursor-not-allowed': t.disabled,
           }"
-          class="px-2.5 py-1 rounded cursor-pointer lg:hover:font-normal border"
+          class="px-2.5 py-1 rounded cursor-pointer lg:hover:font-normal border relative"
         >
           {{ t.label }}
+          <div
+            class="absolute -top-0 -right-6 text-xs text-gray-50 bg-orange-600/70 z-[1] px-1 py-0.5 rounded"
+          >
+            {{ t.badge }}
+          </div>
         </li>
       </ul>
       <section class="bg-white">

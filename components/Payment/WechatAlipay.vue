@@ -12,7 +12,14 @@ const { $user } = use$auth();
 <template>
   <div class="space-y-4">
     <ul class="space-y-2 list-decimal list-inside">
-      <li>现在我们接受微信支付<sup class="text-sky-800 mx-1">测试</sup></li>
+      <li>
+        现在我们接受<a
+          href="/announcement/d0cb73e2h1o5mrframhg"
+          class="underline decoration-dotted underline-offset-8 decoration-blue-600"
+          target="_blank"
+          >微信支付</a
+        >
+      </li>
       <li>
         汇率是 <code>1:{{ rtc.public.usdt_to_cny }}</code
         >，本订单你需要支付

@@ -14,20 +14,16 @@ const emits = defineEmits(["payDone"]);
 
 <template>
   <ClientOnly>
-    <PaymentOnline
+    <!-- <PaymentOnline
       v-if="kind === 'Online'"
       :order="order"
       :amount="amount"
       :currency="currency"
       :re_pay="re_pay"
       @pay-done="emits('payDone')"
-    />
-    <PaymentQrCode v-else-if="kind === 'QrCode'" />
-    <PaymentWechatAlipay
-      :amount="usdtAmount"
-      :order="order"
-      v-else-if="kind === 'WechatAlipay'"
-    />
-    <PaymentPointer v-else-if="kind === 'Pointer'" />
+    /> -->
+    <!-- <PaymentQrCode v-else-if="kind === 'QrCode'" /> -->
+    <PaymentWechatAlipay :amount="usdtAmount" :order="order" />
+    <!-- <PaymentPointer v-else-if="kind === 'Pointer'" /> -->
   </ClientOnly>
 </template>
